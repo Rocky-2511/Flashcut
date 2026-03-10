@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashCut | Professional Video Editing by Anurag Tiwari</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="loader">
+        <div class="loader-content">
+            <h1 class="loader-logo">FlashCut</h1>
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress"></div>
+                <div class="loader-neon-scan"></div>
+            </div>
+            <div class="loader-percentage">0%</div>
+        </div>
+    </div>
+
+    <nav class="navbar glass">
+        <div class="nav-brand">FlashCut</div>
+        <div class="nav-links">
+            <a href="#about" class="magnetic-link">About</a>
+            <a href="#portfolio" class="magnetic-link">Work</a>
+            <a href="#services" class="magnetic-link">Services</a>
+        </div>
+        <a href="#contact" class="btn btn-primary magnetic-link">Let's Talk</a>
+    </nav>
+
+    <main data-barba="wrapper">
+        <div data-barba="container" data-barba-namespace="home">
+            
+            <section class="hero" id="home">
+                <canvas id="webgl-canvas"></canvas>
+                
+                <div class="hero-content">
+                    <p class="hero-subtext text-reveal">Professional Video Editing by Anurag Tiwari</p>
+                    <h1 class="hero-headline text-reveal">Crafting Stories <br>Through <span class="glow-text">Precision</span> Editing</h1>
+                    <div class="hero-buttons fade-up">
+                        <a href="#portfolio" class="btn btn-primary magnetic-btn">View Portfolio</a>
+                        <a href="#contact" class="btn btn-outline magnetic-btn">Start a Project</a>
+                    </div>
+                </div>
+                <div class="scroll-indicator fade-up">
+                    <p>Scroll to explore</p>
+                    <div class="mouse"></div>
+                </div>
+            </section>
+
+            <section class="about" id="about">
+                <div class="container split-layout">
+                    <div class="about-left image-reveal">
+                        <div class="portrait-wrapper glass-panel">
+                            <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=800" alt="Anurag Tiwari" class="portrait-img">
+                            <div class="portrait-overlay"></div>
+                        </div>
+                    </div>
+                    <div class="about-right">
+                        <h2 class="section-title text-reveal">Elevating Visual Narratives</h2>
+                        <p class="section-desc fade-up">As the founder of FlashCut, I specialize in transforming raw footage into compelling, cinematic stories. With an obsessive attention to detail, I craft videos that don't just look premium—they perform.</p>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item fade-up">
+                                <h3 class="stat-number"><span class="counter" data-target="150">0</span>+</h3>
+                                <p class="stat-label">Projects Edited</p>
+                            </div>
+                            <div class="stat-item fade-up" style="transition-delay: 0.1s;">
+                                <h3 class="stat-number"><span class="counter" data-target="50">0</span>+</h3>
+                                <p class="stat-label">Clients</p>
+                            </div>
+                            <div class="stat-item fade-up" style="transition-delay: 0.2s;">
+                                <h3 class="stat-number"><span class="counter" data-target="20">0</span>M+</h3>
+                                <p class="stat-label">Views Generated</p>
+                            </div>
+                            <div class="stat-item fade-up" style="transition-delay: 0.3s;">
+                                <h3 class="stat-number"><span class="counter" data-target="3">0</span>+</h3>
+                                <p class="stat-label">Years Experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="showreel" id="showreel">
+                <div class="container">
+                    <div class="showreel-wrapper glass-panel magnetic-element">
+                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600" alt="Showreel Thumbnail" class="showreel-bg">
+                        <div class="play-button-wrapper">
+                            <button class="play-btn">
+                                <div class="play-icon"></div>
+                            </button>
+                            <div class="play-glow"></div>
+                        </div>
+                        <h2 class="showreel-title">2026 Showreel</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio" id="portfolio">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title text-reveal">Selected Works</h2>
+                        <div class="portfolio-filters fade-up">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="reels">Instagram Reels</button>
+                            <button class="filter-btn" data-filter="youtube">YouTube Videos</button>
+                            <button class="filter-btn" data-filter="commercial">Commercial Ads</button>
+                            <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item glass-panel tilt-card" data-category="commercial">
+                            <div class="portfolio-thumb">
+                                <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800" alt="Project 1">
+                                <div class="hover-video-preview"></div>
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>Tech Brand Anthem</h3>
+                                <p>Commercial Ads</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item glass-panel tilt-card" data-category="cinematic">
+                            <div class="portfolio-thumb">
+                                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800" alt="Project 2">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>Neon Nights</h3>
+                                <p>Cinematic Projects</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item glass-panel tilt-card" data-category="youtube">
+                            <div class="portfolio-thumb">
+                                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800" alt="Project 3">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>Creator Masterclass</h3>
+                                <p>YouTube Videos</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item glass-panel tilt-card" data-category="reels">
+                            <div class="portfolio-thumb">
+                                <img src="https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800" alt="Project 4">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>Fitness Apparel Launch</h3>
+                                <p>Instagram Reels</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="services" id="services">
+                <div class="container">
+                    <h2 class="section-title text-reveal">Post-Production <br>Excellence</h2>
+                    <div class="services-grid">
+                        <div class="service-card glass-panel tilt-card fade-up">
+                            <div class="service-icon glow-icon">📱</div>
+                            <h3>Social Media Editing</h3>
+                            <p>High-retention, punchy edits optimized for TikTok, Reels, and Shorts with dynamic captions.</p>
+                        </div>
+                        <div class="service-card glass-panel tilt-card fade-up" style="transition-delay: 0.1s;">
+                            <div class="service-icon glow-icon">▶️</div>
+                            <h3>YouTube Editing</h3>
+                            <p>Engaging storytelling, pacing, and sound design to maximize AVD and subscriber growth.</p>
+                        </div>
+                        <div class="service-card glass-panel tilt-card fade-up" style="transition-delay: 0.2s;">
+                            <div class="service-icon glow-icon">🎬</div>
+                            <h3>Commercial Video</h3>
+                            <p>Premium grade coloring, pacing, and visual polish for brands and agencies.</p>
+                        </div>
+                        <div class="service-card glass-panel tilt-card fade-up" style="transition-delay: 0.3s;">
+                            <div class="service-icon glow-icon">✨</div>
+                            <h3>Motion Graphics</h3>
+                            <p>Custom 2D/3D animations, lower thirds, and visual effects to elevate your narrative.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="process" id="process">
+                <div class="container">
+                    <h2 class="section-title text-reveal">The Workflow</h2>
+                    <div class="process-timeline">
+                        <div class="timeline-line">
+                            <div class="timeline-progress"></div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-dot glow-dot"></div>
+                            <div class="step-content glass-panel">
+                                <h3>01. Send Footage</h3>
+                                <p>Securely transfer raw files via frame.io or cloud drives.</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-dot glow-dot"></div>
+                            <div class="step-content glass-panel">
+                                <h3>02. Editing & Motion</h3>
+                                <p>Cutting, pacing, sound design, and custom graphics integration.</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-dot glow-dot"></div>
+                            <div class="step-content glass-panel">
+                                <h3>03. Review & Revisions</h3>
+                                <p>Collaborative feedback loops to ensure the vision is perfect.</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-dot glow-dot"></div>
+                            <div class="step-content glass-panel">
+                                <h3>04. Final Delivery</h3>
+                                <p>High-resolution exports optimized for all requested platforms.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact" id="contact">
+                <div class="container split-layout">
+                    <div class="contact-left">
+                        <h2 class="section-title text-reveal">Ready to create <br>something <span class="glow-text">epic?</span></h2>
+                        <p class="section-desc fade-up">Drop a message to discuss your next big project. Let's make it cinematic.</p>
+                    </div>
+                    <div class="contact-right fade-up">
+                        <form class="contact-form glass-panel">
+                            <div class="input-group">
+                                <input type="text" id="name" required placeholder=" ">
+                                <label for="name">Your Name</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="email" required placeholder=" ">
+                                <label for="email">Email Address</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="input-group">
+                                <select id="type" required>
+                                    <option value="" disabled selected>Select Project Type</option>
+                                    <option value="youtube">YouTube Video</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="reels">Social Media Reels</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="input-line"></div>
+                            </div>
+                            <div class="input-group">
+                                <textarea id="message" rows="4" required placeholder=" "></textarea>
+                                <label for="message">Project Details</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary magnetic-btn submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-neon-divider"></div>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h2>FlashCut</h2>
+                <p>by Anurag Tiwari</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home" class="magnetic-link">Home</a>
+                <a href="#portfolio" class="magnetic-link">Work</a>
+                <a href="mailto:hello@flashcut.studio" class="magnetic-link">hello@flashcut.studio</a>
+            </div>
+            <div class="footer-socials">
+                <a href="#" class="magnetic-link">Instagram</a>
+                <a href="#" class="magnetic-link">Twitter</a>
+                <a href="#" class="magnetic-link">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/@barba/core"></script>
+    <script src="script.js"></script>
+</body>
+</html>

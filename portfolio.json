@@ -1,0 +1,45 @@
+{
+  "showreel": {
+    "title": "2026 Cinematic Showreel",
+    "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1600",
+    "videoUrl": "assets/videos/main-showreel.mp4"
+  },
+  "projects": [
+    {
+      "id": "proj-1",
+      "title": "Tech Brand Anthem",
+      "category": "commercial",
+      "categoryLabel": "Commercial Ads",
+      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "assets/videos/tech-preview.mp4",
+      "featured": true
+    },
+    {
+      "id": "proj-2",
+      "title": "Neon Nights",
+      "category": "cinematic",
+      "categoryLabel": "Cinematic Projects",
+      "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "assets/videos/neon-preview.mp4",
+      "featured": true
+    },
+    {
+      "id": "proj-3",
+      "title": "Creator Masterclass",
+      "category": "youtube",
+      "categoryLabel": "YouTube Videos",
+      "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "assets/videos/creator-preview.mp4",
+      "featured": true
+    },
+    {
+      "id": "proj-4",
+      "title": "Fitness Apparel Launch",
+      "category": "reels",
+      "categoryLabel": "Instagram Reels",
+      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "assets/videos/fitness-preview.mp4",
+      "featured": true
+    }
+  ]
+}
