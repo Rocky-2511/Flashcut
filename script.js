@@ -272,27 +272,80 @@ function initThreeJS() {
 function initAnimations() {
     splitTextReveal();
     
-    // --- 1. Loader Sequence ---
+    // --- Cinematic Fast-Type + Lightning Loader Sequence ---
+    
+    // 1. Split text for typing effect
+    const brandText = document.getElementById('brand-text');
+    const textContent = brandText.innerText;
+    brandText.innerHTML = '';
+    
+    // Create individual spans for each character
+    textContent.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.classList.add('type-char');
+        span.innerText = char;
+        brandText.appendChild(span);
+    });
+
     const tlLoader = gsap.timeline({
         onComplete: () => {
             document.body.classList.remove('loading');
-            initScrollAnimations(); // Start scroll triggers only after load
+            initScrollAnimations(); // Trigger page scroll animations after load
         }
     });
 
-    tlLoader.to('.loader-logo', { opacity: 1, duration: 1, ease: "power2.out" })
-            .to('.loader-progress', { width: '100%', duration: 1.5, ease: "power3.inOut" }, "-=0.5")
-            .to('.loader-percentage', { 
-                innerHTML: "100%", 
-                duration: 1.5, 
-                snap: "innerHTML", 
-                ease: "power3.inOut" 
-            }, "-=1.5")
-            .to('.loader', { yPercent: -100, duration: 1, ease: "power4.inOut", delay: 0.2 })
-            // Hero Intro
-            .to('.hero-headline .word-inner', { y: 0, duration: 1, stagger: 0.1, ease: "power4.out" }, "-=0.5")
+    // Animate Percentage quickly
+    tlLoader.to('.loader-percentage', { opacity: 1, duration: 0.2 })
+            .to({ val: 0 }, {
+                val: 100,
+                duration: 1.5,
+                ease: "power4.inOut",
+                onUpdate: function() {
+                    document.getElementById('load-percent').innerText = 
+                        Math.round(this.targets()[0].val).toString().padStart(2, '0');
+                }
+            }, 0);
+
+    // Fast Typing Effect
+    tlLoader.to('.type-char', {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.1,
+        stagger: 0.05, // Insanely fast stagger
+        ease: "power2.out"
+    }, 0.2);
+
+    // Give specific letters a neon flicker (C & U in FlashCut)
+    tlLoader.to('.type-char:nth-child(6), .type-char:nth-child(7)', {
+        color: 'var(--acc)',
+        textShadow: '0 0 20px var(--acc-glow)',
+        duration: 0.1,
+        yoyo: true,
+        repeat: 3
+    }, "-=0.5");
+
+    // The Lightning Slash Effect
+    tlLoader.to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.2")
+            .to('.lightning-slash', { left: '150%', duration: 0.4, ease: "power4.in" }, "-=0.1")
+            .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1");
+
+    // Cinematic Flash Bang
+    tlLoader.to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
+            .to('.screen-flash', { opacity: 0, duration: 0.8, ease: "power2.out" }, "+=0.1");
+
+    // Open the Shutters
+    tlLoader.to('.top-shutter', { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, "-=0.8")
+            .to('.bottom-shutter', { yPercent: 100, duration: 1.2, ease: "power4.inOut" }, "-=1.2")
+            
+    // Hide Loader wrapper entirely
+            .set('.loader', { display: 'none' })
+
+    // Reveal Hero Content
+            .to('.hero-headline .word-inner', { y: 0, duration: 1, stagger: 0.05, ease: "power4.out" }, "-=0.6")
             .to('.hero-subtext .word-inner', { y: 0, duration: 1, ease: "power4.out" }, "-=0.8")
-            .to('.hero-buttons.fade-up, .scroll-indicator', { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.6");
+            .to('.hero-buttons.fade-up, .scroll-indicator', { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.6");
 }
 
 function initScrollAnimations() {
