@@ -22,14 +22,12 @@ gsap.ticker.lagSmoothing(0);
 lenis.stop();
 
 // ==========================================================================
-// NEW: Floating Ghost Logo Logic (Scroll to reveal)
+// Floating Ghost Logo Logic (Scroll to reveal)
 // ==========================================================================
 function initGhostLogo() {
     const ghostLogo = document.querySelector('.fixed-ghost-logo');
-    const heroSection = document.querySelector('.hero');
     
     window.addEventListener('scroll', () => {
-        // Show the ghost logo only when we've scrolled past the hero section's midpoint
         if (window.scrollY > (window.innerHeight * 0.5)) {
             ghostLogo.classList.add('visible');
         } else {
@@ -39,7 +37,7 @@ function initGhostLogo() {
 }
 
 // ==========================================================================
-// Fetching Data and DOM Loading
+// Fetching Data and DOM Loading (Grid & New Featured Accordion)
 // ==========================================================================
 async function loadPortfolioData() {
     try {
@@ -47,21 +45,44 @@ async function loadPortfolioData() {
         if (!response.ok) throw new Error("Data error");
         const data = await response.json();
         
+        // 1. Showreel
         const showreelBg = document.querySelector('.showreel-bg');
         const showreelTitle = document.querySelector('.showreel-title');
-        
         if (showreelBg && showreelTitle) {
             showreelBg.src = data.showreel.thumbnail;
             showreelTitle.innerText = data.showreel.title;
             document.querySelector('.play-btn').setAttribute('data-video', data.showreel.videoUrl);
         }
 
+        // 2. NEW: Featured Accordion Injection
+        const featuredGrid = document.querySelector('#dynamic-featured');
+        if(featuredGrid) {
+            featuredGrid.innerHTML = '';
+            // Get first 4 featured projects
+            const featuredProjects = data.projects.filter(p => p.featured).slice(0, 4);
+            
+            featuredProjects.forEach((project, index) => {
+                const isActive = index === 0 ? 'active' : ''; // First item is expanded by default
+                const projHTML = `
+                    <div class="accordion-item ${isActive}" data-video="${project.previewVideo}">
+                        <img src="${project.thumbnail}" alt="${project.title}" class="accordion-img">
+                        <div class="accordion-overlay"></div>
+                        <div class="accordion-content">
+                            <h3>${project.title}</h3>
+                            <p>${project.categoryLabel}</p>
+                        </div>
+                    </div>
+                `;
+                featuredGrid.insertAdjacentHTML('beforeend', projHTML);
+            });
+        }
+
+        // 3. Regular Portfolio Grid
         const portfolioGrid = document.querySelector('#dynamic-portfolio'); 
         if (portfolioGrid) {
             portfolioGrid.innerHTML = ''; 
             data.projects.forEach((project, index) => {
                 const delay = index * 0.1; 
-                
                 const projectHTML = `
                     <div class="portfolio-item tilt-card fade-up" data-category="${project.category}" style="transition-delay: ${delay}s;">
                         <div class="portfolio-thumb">
@@ -91,6 +112,7 @@ function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
     if (typeof initPortfolioFilters === "function") initPortfolioFilters();
+    if (typeof initFeaturedAccordion === "function") initFeaturedAccordion();
 
     setTimeout(() => {
         ScrollTrigger.refresh();
@@ -121,9 +143,32 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPortfolioData();
     initModalPlayer();
     initLenisAnchors(); 
-    initGhostLogo(); // Init the scroll listener for the logo
+    initGhostLogo(); 
 });
 
+
+// ==========================================================================
+// NEW: Featured Accordion Interaction Logic
+// ==========================================================================
+function initFeaturedAccordion() {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    
+    accordionItems.forEach(item => {
+        // Expand on hover/click
+        item.addEventListener('mouseenter', () => {
+            accordionItems.forEach(other => other.classList.remove('active'));
+            item.classList.add('active');
+        });
+        
+        // Modal trigger on click
+        item.addEventListener('click', () => {
+            const videoSrc = item.getAttribute('data-video');
+            if (videoSrc) {
+                openVideoModal(videoSrc);
+            }
+        });
+    });
+}
 
 // ==========================================================================
 // Utilities
@@ -165,7 +210,7 @@ gsap.ticker.add(() => {
 });
 
 const attachHoverStates = () => {
-    const links = document.querySelectorAll('a, button, .magnetic-element');
+    const links = document.querySelectorAll('a, button, .magnetic-element, .accordion-item');
     const portfolios = document.querySelectorAll('.portfolio-item, .showreel-wrapper');
 
     links.forEach(link => {
@@ -389,6 +434,27 @@ function initPortfolioFilters() {
     });
 }
 
+// Extracted Player Logic to be reusable for the Accordion clicks
+function openVideoModal(videoSrc) {
+    const modal = document.getElementById('videoModal');
+    const container = document.getElementById('modalVideoContainer');
+    
+    container.innerHTML = '';
+    if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
+        let videoId = '';
+        if (videoSrc.includes('youtu.be/')) {
+            videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
+        } else if (videoSrc.includes('youtube.com/watch?v=')) {
+            videoId = videoSrc.split('v=')[1].split('&')[0];
+        }
+        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else {
+        container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
+    }
+    gsap.to(modal, { autoAlpha: 1, duration: 0.6, ease: "power3.out" });
+    lenis.stop(); 
+}
+
 function initModalPlayer() {
     const modal = document.getElementById('videoModal');
     const container = document.getElementById('modalVideoContainer');
@@ -399,20 +465,7 @@ function initModalPlayer() {
         if (playBtn) {
             const videoSrc = playBtn.getAttribute('data-video');
             if (videoSrc) {
-                container.innerHTML = '';
-                if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
-                    let videoId = '';
-                    if (videoSrc.includes('youtu.be/')) {
-                        videoId = videoSrc.split('youtu.be/')[1].split('?')[0];
-                    } else if (videoSrc.includes('youtube.com/watch?v=')) {
-                        videoId = videoSrc.split('v=')[1].split('&')[0];
-                    }
-                    container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-                } else {
-                    container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
-                }
-                gsap.to(modal, { autoAlpha: 1, duration: 0.6, ease: "power3.out" });
-                lenis.stop(); 
+                openVideoModal(videoSrc);
             }
         }
     });

@@ -52,15 +52,9 @@
    ul { list-style: none; }
    img { max-width: 100%; display: block; }
    
-   .container {
-       max-width: 1400px;
-       margin: 0 auto;
-       padding: 0 5%;
-   }
-   
+   .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
    .section-title { font-size: var(--h2-size); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 400; }
    .section-desc { color: var(--muted); font-size: 1.125rem; max-width: 600px; margin-bottom: 4rem; font-weight: 300; }
-   
    .glow-text { color: var(--acc); }
    
    .split-layout { display: flex; flex-direction: column; gap: 4rem; }
@@ -69,7 +63,7 @@
    }
    
    /* ==========================================================================
-      Loader (Minimalist)
+      Loader (Fixed Logo Sizing for Mobile)
       ========================================================================== */
    .loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 100000; display: flex; justify-content: center; align-items: center; background: var(--bg); }
    .loader-shutter { position: absolute; left: 0; width: 100%; height: 50.5vh; background: var(--bg); z-index: 1; }
@@ -81,33 +75,21 @@
    .lightning-slash { position: absolute; top: 50%; left: -100%; width: 150%; height: 1px; background: var(--acc); transform: translateY(-50%) rotate(-5deg); opacity: 0; mix-blend-mode: screen; }
    .loader-percentage { margin-top: 2rem; font-family: var(--font-head); font-size: 0.8rem; color: var(--muted); letter-spacing: 4px; opacity: 0; }
    .screen-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 10; opacity: 0; pointer-events: none; mix-blend-mode: overlay; }
+   
+   /* MUCH BIGGER MINIMUM SIZE FOR MOBILE LOGO */
    .loader-logo-container { position: relative; margin-bottom: 2rem; overflow: hidden; }
-   .loader-logo-img { height: clamp(40px, 10vw, 80px); width: auto; opacity: 0; transform: scale(0.8); }
+   .loader-logo-img { height: clamp(80px, 20vw, 150px); width: auto; opacity: 0; transform: scale(0.8); }
    
    /* ==========================================================================
-      FLOATING GHOST LOGO (NEW)
+      FLOATING GHOST LOGO
       ========================================================================== */
    .fixed-ghost-logo {
-       position: fixed;
-       top: 30px;
-       left: 5%;
-       z-index: 1000;
-       opacity: 0;
-       pointer-events: none;
-       transition: opacity 0.5s ease, transform 0.5s ease;
+       position: fixed; top: 30px; left: 5%; z-index: 1000;
+       opacity: 0; pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease;
        transform: translateY(-20px);
    }
-   
-   .fixed-ghost-logo.visible {
-       opacity: 1;
-       pointer-events: auto;
-       transform: translateY(0);
-   }
-   
-   .fixed-ghost-logo img {
-       height: 25px;
-       object-fit: contain;
-   }
+   .fixed-ghost-logo.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+   .fixed-ghost-logo img { height: clamp(25px, 5vw, 35px); object-fit: contain; }
    
    /* ==========================================================================
       Buttons
@@ -126,14 +108,14 @@
    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; pointer-events: none; }
    
    /* ==========================================================================
-      Hero Section
+      Hero Section (Fixed Logo Visibility)
       ========================================================================== */
    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
    .hero-content { position: relative; z-index: 1; text-align: center; width: 100%; max-width: 1000px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
    
-   /* The clickable Hero Logo */
    .hero-logo-link { display: inline-block; margin-bottom: 3rem; }
-   .hero-logo { height: 35px; opacity: 0.8; transition: opacity 0.3s; }
+   /* MUCH BIGGER MINIMUM SIZE FOR HERO LOGO ON MOBILE */
+   .hero-logo { height: clamp(70px, 18vw, 130px); opacity: 0.9; transition: opacity 0.3s; }
    .hero-logo-link:hover .hero-logo { opacity: 1; }
    
    .hero-subtext { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 4px; color: var(--muted); font-size: clamp(0.7rem, 2vw, 0.85rem); margin-bottom: 2rem; font-weight: 500; }
@@ -158,7 +140,6 @@
       ========================================================================== */
    .about { padding: 8rem 0 12rem; }
    .portrait-wrapper { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 3/4; }
-   /* REMOVED GRAYSCALE FROM PORTRAIT */
    .portrait-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
    .portrait-wrapper:hover .portrait-img { transform: scale(1.05); }
    
@@ -167,7 +148,44 @@
    .stat-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
    
    /* ==========================================================================
-      Arsenal Section (360 SPINNING COINS - FULL COLOR)
+      NEW: INFINITE CLIENTS MARQUEE
+      ========================================================================== */
+   .clients-marquee {
+       padding: 2rem 0 6rem;
+       overflow: hidden;
+       position: relative;
+       width: 100%;
+   }
+   .marquee-wrapper {
+       width: 100vw;
+       overflow: hidden;
+       position: relative;
+   }
+   .marquee-track {
+       display: inline-flex;
+       white-space: nowrap;
+       animation: scroll-marquee 25s linear infinite;
+       gap: 6rem;
+       padding-right: 6rem;
+   }
+   .marquee-item {
+       font-family: var(--font-head);
+       font-size: clamp(1.5rem, 4vw, 2.5rem);
+       color: var(--muted);
+       font-weight: 300;
+       text-transform: uppercase;
+       letter-spacing: 2px;
+       transition: color 0.3s ease;
+   }
+   .marquee-item:hover { color: var(--acc); }
+   
+   @keyframes scroll-marquee {
+       0% { transform: translateX(0); }
+       100% { transform: translateX(-50%); } /* Scrolls precisely half width */
+   }
+   
+   /* ==========================================================================
+      Arsenal Section (360 SPINNING COINS)
       ========================================================================== */
    .arsenal { padding: 6rem 0 10rem; }
    .arsenal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; max-width: 900px; margin: 0 auto; perspective: 1000px; }
@@ -176,47 +194,13 @@
    .arsenal-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
    .arsenal-item p { font-family: var(--font-head); font-weight: 400; color: var(--text); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
    
-   /* The 3D Coin Magic */
-   .coin-wrapper {
-       width: clamp(80px, 10vw, 100px);
-       height: clamp(80px, 10vw, 100px);
-       perspective: 1000px;
-       margin: 0 auto;
-   }
-   .coin {
-       width: 100%;
-       height: 100%;
-       position: relative;
-       transform-style: preserve-3d;
-       animation: spinCoin 6s linear infinite;
-   }
-   .coin-face {
-       position: absolute;
-       width: 100%;
-       height: 100%;
-       border-radius: 50%;
-       backface-visibility: hidden;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       background: #0B0B0F; 
-       border: 1px solid var(--acc);
-       box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(212, 175, 55, 0.1);
-   }
-   .coin-back {
-       transform: rotateY(180deg);
-   }
-   /* NO GRAYSCALE - PURE FULL COLOR VIBRANCY */
-   .coin-face img {
-       width: 55%;
-       height: 55%;
-       object-fit: contain;
-   }
+   .coin-wrapper { width: clamp(80px, 10vw, 100px); height: clamp(80px, 10vw, 100px); perspective: 1000px; margin: 0 auto; }
+   .coin { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: spinCoin 6s linear infinite; }
+   .coin-face { position: absolute; width: 100%; height: 100%; border-radius: 50%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; background: #0B0B0F; border: 1px solid var(--acc); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(212, 175, 55, 0.1); }
+   .coin-back { transform: rotateY(180deg); }
+   .coin-face img { width: 55%; height: 55%; object-fit: contain; }
    
-   @keyframes spinCoin {
-       from { transform: rotateY(0deg); }
-       to { transform: rotateY(360deg); }
-   }
+   @keyframes spinCoin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
    
    /* ==========================================================================
       Showreel Section
@@ -224,7 +208,6 @@
    .showreel { padding: 4rem 0 8rem; }
    .showreel-wrapper { position: relative; width: 100%; height: 60vh; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; }
    @media(min-width: 768px){ .showreel-wrapper { height: 80vh; } }
-   /* REMOVED GRAYSCALE FROM SHOWREEL BG */
    .showreel-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s; }
    .showreel-wrapper:hover .showreel-bg { transform: scale(1.03); opacity: 0.9; }
    .play-button-wrapper { position: relative; z-index: 2; }
@@ -233,10 +216,93 @@
    .showreel-wrapper:hover .play-btn { border-color: var(--acc); transform: scale(1.1); background: var(--acc); }
    .showreel-wrapper:hover .play-icon { border-color: transparent transparent transparent var(--bg); }
    
+   
    /* ==========================================================================
-      Portfolio Grid
+      NEW: FEATURED PROJECTS EXPANDING ACCORDION (DeepXAsleep Style)
       ========================================================================== */
-   .portfolio { padding: 10rem 0; }
+   .featured-projects { padding: 8rem 0; }
+   .accordion-container {
+       display: flex;
+       flex-direction: column; /* Mobile first vertical stack */
+       height: 80vh;
+       gap: 15px;
+       width: 100%;
+   }
+   @media (min-width: 992px) {
+       .accordion-container {
+           flex-direction: row; /* Desktop horizontal stack */
+           height: 60vh;
+       }
+   }
+   
+   .accordion-item {
+       position: relative;
+       flex: 1; /* Default state */
+       border-radius: 20px; /* DeepXAsleep rounded corners */
+       overflow: hidden;
+       cursor: pointer;
+       transition: flex 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+   }
+   /* Active state expands it heavily */
+   .accordion-item.active { flex: 4; }
+   
+   .accordion-img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+       transition: transform 0.8s ease;
+   }
+   .accordion-item:hover .accordion-img { transform: scale(1.05); }
+   
+   .accordion-overlay {
+       position: absolute;
+       top: 0; left: 0; width: 100%; height: 100%;
+       background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+       pointer-events: none;
+   }
+   
+   .accordion-content {
+       position: absolute;
+       bottom: 30px;
+       left: 30px;
+       z-index: 2;
+       opacity: 0;
+       transform: translateY(20px);
+       transition: all 0.5s ease;
+       pointer-events: none;
+   }
+   .accordion-item.active .accordion-content {
+       opacity: 1;
+       transform: translateY(0);
+       transition-delay: 0.2s; /* Waits for expansion */
+   }
+   .accordion-content h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 600; margin-bottom: 5px; }
+   .accordion-content p { color: var(--acc); font-family: var(--font-head); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+   
+   /* Optional: Custom hover icon on active */
+   .accordion-item.active::after {
+       content: 'PLAY VIDEO';
+       position: absolute;
+       top: 50%; left: 50%;
+       transform: translate(-50%, -50%);
+       background: rgba(0,0,0,0.6);
+       backdrop-filter: blur(5px);
+       padding: 10px 20px;
+       border: 1px solid var(--acc);
+       border-radius: 30px;
+       color: var(--text);
+       font-family: var(--font-head);
+       font-size: 0.8rem;
+       letter-spacing: 2px;
+       opacity: 0;
+       transition: opacity 0.3s;
+   }
+   .accordion-item.active:hover::after { opacity: 1; }
+   
+   /* ==========================================================================
+      Portfolio Grid (Standard Works)
+      ========================================================================== */
+   .portfolio { padding: 4rem 0 10rem; }
    .section-header { display: flex; flex-direction: column; gap: 2rem; margin-bottom: 5rem; }
    @media (min-width: 768px) { .section-header { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
    .portfolio-filters { display: flex; gap: 2rem; flex-wrap: wrap; }
