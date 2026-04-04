@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | FlashCut Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="loading portfolio-page">
+
+    <canvas id="webgl-canvas"></canvas>
+    <div class="cinematic-vignette"></div>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="loader">
+        <div class="loader-shutter top-shutter"></div>
+        <div class="loader-shutter bottom-shutter"></div>
+        <div class="loader-content">
+            <div class="loader-text-wrapper">
+                <div class="loader-logo-container">
+                    <img src="flashcut-logo.png" alt="FlashCut Logo" class="loader-logo-img">
+                </div>
+            </div>
+            <div class="loader-percentage" id="load-percent">00</div>
+        </div>
+    </div>
+
+    <nav class="portfolio-nav glass fade-up">
+        <div class="nav-brand">
+            <img src="flashcut-logo.png" alt="FlashCut" class="nav-logo">
+        </div>
+        <div class="nav-actions">
+            <a href="index.html" class="btn btn-primary magnetic-btn" style="padding: 0.6rem 1.5rem; font-size: 0.75rem;">BACK TO HOME</a>
+        </div>
+    </nav>
+
+    <main data-barba="wrapper">
+        <div data-barba="container" data-barba-namespace="portfolio">
+            
+            <div style="padding-top: 15vh; text-align: center; margin-bottom: 5rem;">
+                <h1 class="section-title text-reveal">The <span class="glow-text">Archives</span></h1>
+                <p class="section-desc fade-up" style="margin: 0 auto;">Select a category to explore.</p>
+            </div>
+
+            <section class="portfolio-slider-section">
+                <div class="container-fluid">
+                    <div class="slider-header fade-up">
+                        <h2>Cinematic / Long Format</h2>
+                        <div class="slider-nav">
+                            <button class="slider-btn prev-16x9"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                            <button class="slider-btn next-16x9"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        </div>
+                    </div>
+                    <div class="swiper horizontal-swiper fade-up">
+                        <div class="swiper-wrapper" id="dynamic-16x9"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio-slider-section" style="margin-top: 6rem; margin-bottom: 10rem;">
+                <div class="container-fluid">
+                    <div class="slider-header fade-up">
+                        <h2>Shorts / Reels</h2>
+                        <div class="slider-nav">
+                            <button class="slider-btn prev-9x16"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                            <button class="slider-btn next-9x16"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        </div>
+                    </div>
+                    <div class="swiper vertical-swiper fade-up">
+                        <div class="swiper-wrapper" id="dynamic-9x16"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content" style="flex-direction: column; text-align: center; justify-content: center;">
+            <div class="footer-brand" style="margin-bottom: 1rem;">
+                <a href="index.html" class="magnetic-element" style="display: inline-block;">
+                    <img src="flashcut-logo.png" alt="FlashCut Logo" style="height: 40px; margin-bottom: 10px;">
+                </a>
+            </div>
+            <div class="footer-links" style="margin-bottom: 1rem;">
+                <a href="mailto:hello@flashcut.studio" class="magnetic-link" style="color: var(--text); font-size: 1.1rem; letter-spacing: 1px;">hello@flashcut.studio</a>
+            </div>
+            <div>
+                <p style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin:0;">© 2026 Anurag Tiwari All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cinematic-video-modal" id="videoModal">
+        <div class="modal-backdrop"></div>
+        <button class="modal-close-btn magnetic-element">Close [X]</button>
+        <div class="modal-video-container" id="modalVideoContainer"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/@barba/core"></script>
+    <script src="script.js"></script>
+</body>
+</html>
