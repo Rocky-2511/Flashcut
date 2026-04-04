@@ -96,26 +96,51 @@ function getSlideControls(videoSrc) {
 }
 
 // ==========================================================================
-// BULLETPROOF HOVER TO PLAY (Fixes the overlapping/cloning glitch completely)
+// FEATURED WORK: AUTO-PLAY CENTER LOGIC (Strictly When Stopped)
+// ==========================================================================
+function stopAllCoverflowVideos(swiper) {
+    swiper.slides.forEach(slide => {
+        const videoContainer = slide.querySelector('.coverflow-inline-video');
+        if (videoContainer && videoContainer.innerHTML !== '') {
+            gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => { videoContainer.innerHTML = ''; }});
+        }
+    });
+}
+
+function playCenterCoverflowVideo(swiper) {
+    stopAllCoverflowVideos(swiper); // Double check everything is clean
+    
+    // Play video ONLY on the center/active slide
+    const activeSlide = swiper.slides[swiper.activeIndex];
+    if (activeSlide) {
+        const videoSrc = activeSlide.getAttribute('data-preview-src');
+        const videoContainer = activeSlide.querySelector('.coverflow-inline-video');
+        if (videoContainer && videoSrc) {
+            videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
+            gsap.to(videoContainer, {opacity: 1, duration: 0.4});
+        }
+    }
+}
+
+// ==========================================================================
+// PORTFOLIO GRID: HOVER TO PLAY (Excludes Coverflow)
 // ==========================================================================
 let globalHoverTimer;
 let currentActiveVideoContainer = null;
 
 function initHoverToPlay() {
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        // Event delegation: Attaches to document so cloned Swiper slides are caught automatically
         document.addEventListener('mouseover', (e) => {
-            const card = e.target.closest('.tilt-card, .swiper-slide');
+            // EXCLUDE featured slider from hover logic
+            const card = e.target.closest('.portfolio-item, .portfolio-slider-section .swiper-slide');
             if (!card) return;
 
             const videoSrc = card.getAttribute('data-preview-src');
-            const videoContainer = card.querySelector('.coverflow-inline-video, .portfolio-inline-video');
+            const videoContainer = card.querySelector('.portfolio-inline-video');
             
-            // Only inject if it's a new container
             if (videoContainer && videoSrc && currentActiveVideoContainer !== videoContainer) {
                 clearTimeout(globalHoverTimer);
                 
-                // Immediately kill the previous video to free RAM and stop visual glitches
                 if (currentActiveVideoContainer) {
                     currentActiveVideoContainer.innerHTML = '';
                     gsap.to(currentActiveVideoContainer, {opacity: 0, duration: 0.1});
@@ -123,7 +148,6 @@ function initHoverToPlay() {
 
                 currentActiveVideoContainer = videoContainer;
 
-                // Debounce so quick mouse movements don't spawn 10 iframes
                 globalHoverTimer = setTimeout(() => {
                     videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
                     gsap.to(videoContainer, {opacity: 1, duration: 0.4});
@@ -132,14 +156,13 @@ function initHoverToPlay() {
         });
 
         document.addEventListener('mouseout', (e) => {
-            const card = e.target.closest('.tilt-card, .swiper-slide');
+            const card = e.target.closest('.portfolio-item, .portfolio-slider-section .swiper-slide');
             if (!card) return;
 
-            // If moving inside the same card, ignore
             const relatedTarget = e.relatedTarget;
             if (card.contains(relatedTarget)) return;
 
-            const videoContainer = card.querySelector('.coverflow-inline-video, .portfolio-inline-video');
+            const videoContainer = card.querySelector('.portfolio-inline-video');
             
             if (videoContainer) {
                 clearTimeout(globalHoverTimer);
@@ -147,7 +170,7 @@ function initHoverToPlay() {
                     opacity: 0, 
                     duration: 0.2, 
                     onComplete: () => {
-                        videoContainer.innerHTML = ''; // Nuke the iframe 
+                        videoContainer.innerHTML = ''; 
                         if(currentActiveVideoContainer === videoContainer) {
                             currentActiveVideoContainer = null;
                         }
@@ -275,7 +298,21 @@ function initializePostLoadEffects() {
             loop: true, loopedSlides: 5, 
             coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false },
             navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
-            slideToClickedSlide: true // PREMIUM Touch: clicking inactive slide centers it
+            slideToClickedSlide: true,
+            on: {
+                init: function () {
+                    // Play initial center video after a short delay to allow page load
+                    setTimeout(() => playCenterCoverflowVideo(this), 500);
+                },
+                slideChangeTransitionStart: function () {
+                    // Stop video strictly when user moves slider
+                    stopAllCoverflowVideos(this);
+                },
+                slideChangeTransitionEnd: function () {
+                    // Play video strictly when slider stops at the new center
+                    playCenterCoverflowVideo(this);
+                }
+            }
         });
     }
 
