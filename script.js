@@ -76,7 +76,7 @@ function getYouTubeId(url) {
     return null;
 }
 
-// PREMIUM FIX: Only return iframe string when active (saves 100% RAM on load)
+// Generates HTML exactly when needed
 function buildInlineVideoHTML(src) {
     if (!src) return '';
     const ytId = getYouTubeId(src);
@@ -96,36 +96,62 @@ function getSlideControls(videoSrc) {
 }
 
 // ==========================================================================
-// HOVER TO PLAY ENGINE (Zero Initial Iframes)
+// BULLETPROOF HOVER TO PLAY (Fixes the overlapping/cloning glitch completely)
 // ==========================================================================
+let globalHoverTimer;
+let currentActiveVideoContainer = null;
+
 function initHoverToPlay() {
-    // Only apply hover logic on devices with a real mouse
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        const cards = document.querySelectorAll('.tilt-card, .swiper-slide');
-        
-        cards.forEach(card => {
-            let hoverTimer;
+        // Event delegation: Attaches to document so cloned Swiper slides are caught automatically
+        document.addEventListener('mouseover', (e) => {
+            const card = e.target.closest('.tilt-card, .swiper-slide');
+            if (!card) return;
+
             const videoSrc = card.getAttribute('data-preview-src');
             const videoContainer = card.querySelector('.coverflow-inline-video, .portfolio-inline-video');
             
-            if (videoContainer && videoSrc) {
-                card.addEventListener('mouseenter', () => {
-                    // Small delay prevents lag from accidental fast scrolling over multiple cards
-                    hoverTimer = setTimeout(() => {
-                        videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
-                        gsap.to(videoContainer, {opacity: 1, duration: 0.3});
-                    }, 300);
-                });
+            // Only inject if it's a new container
+            if (videoContainer && videoSrc && currentActiveVideoContainer !== videoContainer) {
+                clearTimeout(globalHoverTimer);
                 
-                card.addEventListener('mouseleave', () => {
-                    clearTimeout(hoverTimer);
-                    gsap.to(videoContainer, {
-                        opacity: 0, 
-                        duration: 0.3, 
-                        onComplete: () => {
-                            videoContainer.innerHTML = ''; // Destroys Iframe immediately when mouse leaves
+                // Immediately kill the previous video to free RAM and stop visual glitches
+                if (currentActiveVideoContainer) {
+                    currentActiveVideoContainer.innerHTML = '';
+                    gsap.to(currentActiveVideoContainer, {opacity: 0, duration: 0.1});
+                }
+
+                currentActiveVideoContainer = videoContainer;
+
+                // Debounce so quick mouse movements don't spawn 10 iframes
+                globalHoverTimer = setTimeout(() => {
+                    videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
+                    gsap.to(videoContainer, {opacity: 1, duration: 0.4});
+                }, 350); 
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            const card = e.target.closest('.tilt-card, .swiper-slide');
+            if (!card) return;
+
+            // If moving inside the same card, ignore
+            const relatedTarget = e.relatedTarget;
+            if (card.contains(relatedTarget)) return;
+
+            const videoContainer = card.querySelector('.coverflow-inline-video, .portfolio-inline-video');
+            
+            if (videoContainer) {
+                clearTimeout(globalHoverTimer);
+                gsap.to(videoContainer, {
+                    opacity: 0, 
+                    duration: 0.2, 
+                    onComplete: () => {
+                        videoContainer.innerHTML = ''; // Nuke the iframe 
+                        if(currentActiveVideoContainer === videoContainer) {
+                            currentActiveVideoContainer = null;
                         }
-                    });
+                    }
                 });
             }
         });
@@ -241,14 +267,15 @@ function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
     
-    initHoverToPlay(); // Initializes the ultra-fast hover logic
+    initHoverToPlay();
 
     if(document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {
             effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto',
             loop: true, loopedSlides: 5, 
             coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false },
-            navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' }
+            navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
+            slideToClickedSlide: true // PREMIUM Touch: clicking inactive slide centers it
         });
     }
 
