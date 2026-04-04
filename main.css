@@ -16,8 +16,8 @@
        
        --bg: #0B0B0F;
        --sec: #0F0F13;
-       --acc: #D4AF37;
-       --acc-glow: rgba(212, 175, 55, 0.4);
+       --acc: #E2B938; /* Slightly brighter, more premium gold */
+       --acc-glow: rgba(226, 185, 56, 0.4);
        --text: #F5F5F5;
        --muted: #888C94;
        
@@ -47,11 +47,14 @@
    ul { list-style: none; }
    img { max-width: 100%; display: block; }
    
+   /* Hardware Acceleration for Smoother Scrolling */
+   .fade-up, .tilt-card, .swiper-slide { will-change: transform, opacity; }
+   
    .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
    .container-fluid { width: 100%; padding: 0 5%; overflow: hidden;}
    .section-title { font-size: var(--h2-size); line-height: 1.1; margin-bottom: 1.5rem; font-weight: 400; }
    .section-desc { color: var(--muted); font-size: 1.125rem; max-width: 600px; margin-bottom: 4rem; font-weight: 300; }
-   .glow-text { color: var(--acc); }
+   .glow-text { color: var(--acc); text-shadow: 0 0 20px var(--acc-glow); }
    
    .split-layout { display: flex; flex-direction: column; gap: 4rem; }
    @media (min-width: 992px) { .split-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 8rem; } }
@@ -89,7 +92,8 @@
    .portfolio-nav {
        position: fixed; top: 0; left: 0; width: 100%;
        padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-       z-index: 1000; background: rgba(11, 11, 15, 0.8); backdrop-filter: blur(20px);
+       z-index: 1000; background: rgba(11, 11, 15, 0.7); backdrop-filter: blur(15px);
+       -webkit-backdrop-filter: blur(15px);
        border-bottom: 1px solid rgba(255,255,255,0.05);
    }
    .portfolio-nav .nav-logo { height: 25px; object-fit: contain; }
@@ -103,12 +107,12 @@
        border-radius: 4px; transition: var(--transition); cursor: pointer;
        text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;
    }
-   .btn-primary { background: var(--acc); color: var(--bg); }
-   .btn-primary:hover { background: #E5C354; transform: translateY(-2px); }
+   .btn-primary { background: var(--acc); color: var(--bg); font-weight: 600;}
+   .btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text); }
    .btn-outline:hover { border-color: var(--acc); color: var(--acc); }
    
-   #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; pointer-events: none; }
+   #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; }
    
    /* ==========================================================================
       Hero Section 
@@ -116,13 +120,13 @@
    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
    
    .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.5; pointer-events: none; }
-   .hero-video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(11,11,15,0.3) 20%, var(--bg) 100%); z-index: 0; }
+   .hero-video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(11,11,15,0.4) 10%, var(--bg) 100%); z-index: 0; }
    
    .hero-content { position: relative; z-index: 1; text-align: center; width: 100%; max-width: 1000px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
    .hero-logo-link { display: inline-block; margin-bottom: 1.5rem; }
    .hero-logo { height: clamp(80px, 20vw, 150px); opacity: 0.9; transition: opacity 0.3s; }
-   .hero-logo-link:hover .hero-logo { opacity: 1; }
-   .hero-subtext { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 4px; color: var(--text); font-size: clamp(0.7rem, 2vw, 0.9rem); margin-bottom: 2rem; font-weight: 400; }
+   .hero-logo-link:hover .hero-logo { opacity: 1; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));}
+   .hero-subtext { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 5px; color: var(--text); font-size: clamp(0.7rem, 2vw, 0.9rem); margin-bottom: 2rem; font-weight: 300; }
    .hero-buttons { display: flex; flex-direction: row; gap: 1.5rem; width: auto; }
    
    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 2; opacity: 0.5; }
@@ -141,47 +145,45 @@
    .clients-marquee { padding: 2rem 0 6rem; overflow: hidden; position: relative; width: 100%; }
    .marquee-wrapper { width: 100vw; overflow: hidden; position: relative; }
    .marquee-track { display: inline-flex; white-space: nowrap; animation: scroll-marquee 25s linear infinite; gap: 6rem; padding-right: 6rem; }
-   .marquee-item { font-family: var(--font-head); font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--muted); font-weight: 300; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s ease; }
-   .marquee-item:hover { color: var(--acc); }
+   .marquee-item { font-family: var(--font-head); font-size: clamp(1.5rem, 4vw, 2.5rem); color: rgba(255,255,255,0.15); font-weight: 400; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s ease; }
+   .marquee-item:hover { color: var(--text); }
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      Universal Slide Controls (Play/Pause, Mute, View Full)
+      PREMIUM VIDEO PLAY OVERLAY (Replaces heavy slide-controls)
       ========================================================================== */
-   .slide-controls {
+   .play-overlay {
        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
-       opacity: 0; transition: opacity 0.3s; z-index: 10;
-       background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);
-       pointer-events: none; /* Allows hover to register */
+       background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
+       opacity: 0; transition: var(--transition); z-index: 5; pointer-events: none;
    }
    
-   /* Show controls on hover for Desktop */
+   .play-btn-circle {
+       width: 70px; height: 70px; border-radius: 50%;
+       background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+       border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
+       transform: scale(0.8); transition: var(--transition); color: #fff;
+   }
+   
+   /* Trigger hover states */
    @media (min-width: 992px) {
-       .portfolio-item:hover .slide-controls,
-       .swiper-slide-active:hover .slide-controls,
-       .swiper-slide:hover .slide-controls {
+       .coverflow-swiper .swiper-slide:hover .play-overlay,
+       .portfolio-item:hover .play-overlay,
+       .portfolio-slider-section .swiper-slide:hover .play-overlay {
            opacity: 1; pointer-events: auto;
        }
-   }
-   
-   /* Always show controls on Mobile for active/visible items */
-   @media (max-width: 991px) {
-       .swiper-slide-active .slide-controls,
-       .portfolio-item .slide-controls {
-           opacity: 1; pointer-events: auto; background: rgba(0,0,0,0.3);
+       .coverflow-swiper .swiper-slide:hover .play-btn-circle,
+       .portfolio-item:hover .play-btn-circle,
+       .portfolio-slider-section .swiper-slide:hover .play-btn-circle {
+           transform: scale(1); box-shadow: 0 0 30px rgba(226, 185, 56, 0.3); border-color: var(--acc); color: var(--acc);
        }
    }
    
-   .controls-row { display: flex; gap: 10px; }
-   
-   .control-btn {
-       background: rgba(11,11,15,0.8); border: 1px solid var(--acc); color: var(--text);
-       padding: 0.6rem 1.5rem; border-radius: 30px; font-family: var(--font-head);
-       font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-       cursor: pointer; transition: all 0.3s;
+   /* Mobile: Always slightly visible play button for intuition */
+   @media (max-width: 991px) {
+       .play-overlay { opacity: 1; background: rgba(0,0,0,0.2); }
+       .play-btn-circle { transform: scale(0.9); background: rgba(11,11,15,0.6); }
    }
-   .control-btn:hover { background: var(--acc); color: var(--bg); }
    
    /* ==========================================================================
       3D COVERFLOW FEATURED PROJECTS
@@ -190,44 +192,35 @@
    .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
    
    .coverflow-swiper .swiper-slide {
-       width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: grayscale(100%); opacity: 0.5;
+       width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; 
+       transition: all 0.5s ease; filter: brightness(0.5); cursor: pointer;
    }
    
    @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
    
-   .coverflow-swiper .swiper-slide-active { filter: grayscale(0%); opacity: 1; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+   .coverflow-swiper .swiper-slide-active { filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
    
    .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
    
-   /* SMART YOUTUBE SCALING: Hide titles/black bars */
-   .coverflow-inline-video { 
-       position: absolute; top:0; left:0; width: 100%; height: 100%; 
-       opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1; overflow: hidden;
-   }
-   .coverflow-inline-video video { width: 100%; height: 100%; object-fit: cover; }
-   .coverflow-inline-video iframe { width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; }
-   
-   .coverflow-swiper .swiper-slide-active .coverflow-inline-video { opacity: 1; }
-   
-   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 2; }
+   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem 2rem 2rem; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 10; }
    .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; }
-   .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 600; }
+   .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 500; }
    .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
    
-   /* Swiper Circular Arrows Fixed */
+   /* Universal Circular Slider Buttons (Now same for home and portfolio) */
    .featured-prev, .featured-next, .slider-btn { 
-       color: var(--acc); background: rgba(11,11,15,0.8); border: 1px solid var(--acc); 
-       width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(5px); 
-       display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;
+       color: var(--text); background: rgba(11,11,15,0.5); border: 1px solid rgba(255,255,255,0.1); 
+       width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+       display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition);
        position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; margin: 0;
    }
    .featured-prev::after, .featured-next::after, .slider-btn::after { font-size: 1.2rem; }
-   .featured-prev, .prev-16x9, .prev-9x16 { left: 5%; }
-   .featured-next, .next-16x9, .next-9x16 { right: 5%; }
    
-   .featured-prev:hover, .featured-next:hover, .slider-btn:hover { background: var(--acc); color: var(--bg); }
+   .featured-prev, .prev-16x9, .prev-9x16 { left: 2%; }
+   .featured-next, .next-16x9, .next-9x16 { right: 2%; }
    
-   /* Hide arrows on mobile to force touch swipe */
+   .featured-prev:hover, .featured-next:hover, .slider-btn:hover { background: var(--acc); color: var(--bg); border-color: var(--acc); transform: translateY(-50%) scale(1.1); }
+   
    @media (max-width: 991px) { .featured-prev, .featured-next, .slider-btn { display: none !important; } }
    
    /* ==========================================================================
@@ -236,18 +229,15 @@
    .portfolio { padding: 4rem 0 10rem; }
    .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 5rem 3rem; }
    @media (min-width: 768px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
-   .portfolio-item { position: relative; border-radius: 4px; overflow: hidden; }
-   .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 4px; }
+   .portfolio-item { position: relative; border-radius: 8px; overflow: hidden; cursor: pointer; }
+   
+   .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 8px; }
    .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
    .portfolio-item:hover .portfolio-thumb img { transform: scale(1.05); }
-   .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; }
-   .portfolio-info p { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
    
-   /* Grid Video Previews */
-   .portfolio-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; overflow: hidden;}
-   .portfolio-inline-video video { width: 100%; height: 100%; object-fit: cover; }
-   .portfolio-inline-video iframe { width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; }
-   .portfolio-item:hover .portfolio-inline-video, .portfolio-page .swiper-slide:hover .portfolio-inline-video { opacity: 1; }
+   .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; transition: color 0.3s;}
+   .portfolio-info p { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+   .portfolio-item:hover .portfolio-info h3 { color: var(--acc); }
    
    /* ==========================================================================
       Dedicated Portfolio Page Sliders
@@ -255,14 +245,15 @@
    .portfolio-page { background: var(--bg); }
    .portfolio-slider-section { position: relative; }
    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 0 5%; }
-   .slider-header h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 300; }
-   .slider-nav { position: static; display: flex; gap: 1rem; }
-   .slider-nav .slider-btn { position: relative; transform: none; top: auto; left: auto; right: auto; } /* Reset positioning for header */
+   .slider-header h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 300; border-left: 3px solid var(--acc); padding-left: 15px;}
    
-   .horizontal-swiper { padding-bottom: 3rem; overflow: visible !important;}
-   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; }
-   .vertical-swiper { padding-bottom: 3rem; overflow: visible !important;}
-   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; }
+   /* Ensure horizontal/vertical sliders respect absolute positioning of nav buttons */
+   .horizontal-swiper, .vertical-swiper { padding-bottom: 3rem; overflow: visible !important; position: relative; }
+   
+   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+   
+   .horizontal-swiper .swiper-slide:hover, .vertical-swiper .swiper-slide:hover { transform: translateY(-10px); }
    
    /* ==========================================================================
       Contact Form
@@ -290,17 +281,28 @@
    .insta-color:hover { color: #E1306C; }
    .wa-color:hover { color: #25D366; }
    
-   .cinematic-vignette { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, transparent 40%, rgba(11, 11, 15, 0.9) 150%); pointer-events: none; z-index: 90; }
+   .cinematic-vignette { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, transparent 40%, rgba(11, 11, 15, 0.95) 150%); pointer-events: none; z-index: 90; }
    
+   /* ==========================================================================
+      MODAL VIDEO PLAYER (High Performance)
+      ========================================================================== */
    .cinematic-video-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; }
-   .modal-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.98); }
-   .modal-close-btn { position: absolute; top: 30px; right: 5%; z-index: 2; background: transparent; border: none; color: var(--text); font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: color 0.3s; }
-   .modal-close-btn:hover { color: var(--acc); }
+   .modal-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+   .modal-close-btn { position: absolute; top: 30px; right: 5%; z-index: 2; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 10px 20px; color: var(--text); font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: var(--transition); backdrop-filter: blur(5px); }
+   .modal-close-btn:hover { background: var(--acc); color: var(--bg); border-color: var(--acc); }
    
-   .modal-video-container { position: relative; z-index: 1; width: 90%; max-width: 1400px; aspect-ratio: 16/9; background: #000; border-radius: 4px; overflow: hidden; }
+   .modal-video-container { position: relative; z-index: 1; width: 90%; max-width: 1200px; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
    .modal-video-container video, .modal-video-container iframe { width: 100%; height: 100%; object-fit: cover; border: none; outline: none; display: block; }
    
-   .cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%); }
+   /* Custom Cursor */
+   .cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%); will-change: transform; }
+   .cursor { width: 8px; height: 8px; background: var(--acc); }
+   .cursor-follower { width: 40px; height: 40px; border: 1px solid rgba(226, 185, 56, 0.5); transition: width 0.3s, height 0.3s, background 0.3s; }
+   
+   .cursor.hover-btn { opacity: 0; }
+   .cursor-follower.hover-btn { width: 60px; height: 60px; background: rgba(226, 185, 56, 0.1); border-color: var(--acc); }
+   .cursor-follower.hover-portfolio { width: 80px; height: 80px; border-color: transparent; background: rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
+   
    @media (hover: none) and (pointer: coarse), (max-width: 768px) {
        .cursor, .cursor-follower { display: none !important; }
    }
