@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// BULLETPROOF PORTFOLIO DATA (All Your Actual Links)
+// BULLETPROOF PORTFOLIO DATA
 // ==========================================================================
 const portfolioData = {
   "projects": [
@@ -68,9 +68,6 @@ const portfolioData = {
   ]
 };
 
-// ==========================================================================
-// Video URL Parser (MP4 vs YouTube)
-// ==========================================================================
 function getYouTubeId(url) {
     if (!url) return null;
     if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
@@ -79,29 +76,51 @@ function getYouTubeId(url) {
     return null;
 }
 
-// PREMIUM FIX: Removed massive background iframe injection to stop Mobile crashing.
-function getPlayOverlayHTML() {
+// PREMIUM FIX: Inline video previews are back, but with 'data-src' so we can lazy-load them
+function buildInlineVideoHTML(src) {
+    const ytId = getYouTubeId(src);
+    if (ytId) {
+        return `<iframe data-src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" class="lazy-video" title="YouTube video player"></iframe>`;
+    } else {
+        return `<video data-src="${src}" loop playsinline muted preload="none" class="lazy-video"></video>`;
+    }
+}
+
+function getSlideControls(videoSrc) {
     return `
-        <div class="play-overlay">
-            <div class="play-btn-circle">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            </div>
+        <div class="slide-controls">
+            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); openVideoModal('${videoSrc}')">View Full Video</button>
         </div>
     `;
+}
+
+// Observer to only load videos when they are near the screen (Fixes Mobile Crash)
+function initLazyVideos() {
+    const lazyVideos = document.querySelectorAll('.lazy-video');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+                if (!el.src) {
+                    el.src = el.getAttribute('data-src');
+                    if(el.tagName === 'VIDEO') el.play().catch(e=>console.log(e));
+                }
+            } else {
+                // Free up RAM on mobile by unloading off-screen iframes
+                if (window.innerWidth < 992 && el.tagName === 'IFRAME') {
+                    el.src = ''; 
+                }
+            }
+        });
+    }, { rootMargin: '300px' });
+    
+    lazyVideos.forEach(v => observer.observe(v));
 }
 
 // ==========================================================================
 // Lenis Smooth Scroll Engine
 // ==========================================================================
-const lenis = new Lenis({
-    duration: 1.2, // Faster, smoother premium feel
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    smoothTouch: false,
-});
-
+const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
@@ -111,17 +130,11 @@ function initGhostLogo() {
     const ghostLogo = document.querySelector('.fixed-ghost-logo');
     if(!ghostLogo) return;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > (window.innerHeight * 0.5)) {
-            ghostLogo.classList.add('visible');
-        } else {
-            ghostLogo.classList.remove('visible');
-        }
+        if (window.scrollY > (window.innerHeight * 0.5)) { ghostLogo.classList.add('visible'); } 
+        else { ghostLogo.classList.remove('visible'); }
     });
 }
 
-// ==========================================================================
-// DOM Loading & Injection
-// ==========================================================================
 function loadPortfolioData() {
     try {
         const data = portfolioData; 
@@ -139,9 +152,10 @@ function loadPortfolioData() {
 
                 featuredProjects.forEach((project) => {
                     const projHTML = `
-                        <div class="swiper-slide" onclick="openVideoModal('${project.previewVideo}')">
+                        <div class="swiper-slide tilt-card">
                             <img src="${project.thumbnail}" alt="${project.title}" class="coverflow-img">
-                            ${getPlayOverlayHTML()}
+                            <div class="coverflow-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                            ${getSlideControls(project.previewVideo)}
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
                                 <p>${project.categoryLabel}</p>
@@ -160,10 +174,11 @@ function loadPortfolioData() {
                 top4Projects.forEach((project, index) => {
                     const delay = index * 0.1; 
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" onclick="openVideoModal('${project.previewVideo}')">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;">
                             <div class="portfolio-thumb">
                                 <img src="${project.thumbnail}" alt="${project.title}">
-                                ${getPlayOverlayHTML()}
+                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                                ${getSlideControls(project.previewVideo)}
                             </div>
                             <div class="portfolio-info">
                                 <h3>${project.title}</h3>
@@ -186,10 +201,11 @@ function loadPortfolioData() {
 
                 data.projects.forEach(project => {
                     const slideHTML = `
-                        <div class="swiper-slide tilt-card" onclick="openVideoModal('${project.previewVideo}')">
+                        <div class="swiper-slide tilt-card">
                             <div class="portfolio-thumb" style="margin:0; height:100%;">
                                 <img src="${project.thumbnail}" alt="${project.title}">
-                                ${getPlayOverlayHTML()}
+                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                                ${getSlideControls(project.previewVideo)}
                             </div>
                         </div>
                     `;
@@ -209,6 +225,7 @@ function loadPortfolioData() {
 function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
+    initLazyVideos(); // Initializes intersection observer for videos
 
     if(document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {
@@ -236,10 +253,8 @@ function splitTextReveal() {
         el.innerHTML = '';
         const words = text.split(' ');
         words.forEach(word => {
-            const wordSpan = document.createElement('span');
-            wordSpan.classList.add('word');
-            const innerSpan = document.createElement('span');
-            innerSpan.classList.add('word-inner');
+            const wordSpan = document.createElement('span'); wordSpan.classList.add('word');
+            const innerSpan = document.createElement('span'); innerSpan.classList.add('word-inner');
             if (word === '<br>') { el.appendChild(document.createElement('br')); } 
             else { innerSpan.innerHTML = word + '&nbsp;'; wordSpan.appendChild(innerSpan); el.appendChild(wordSpan); }
         });
@@ -261,7 +276,7 @@ gsap.ticker.add(() => {
 });
 
 const attachHoverStates = () => {
-    const links = document.querySelectorAll('a, button, .magnetic-element, .slider-btn');
+    const links = document.querySelectorAll('a, button, .magnetic-element, .slider-btn, .control-btn');
     const portfolios = document.querySelectorAll('.portfolio-item, .swiper-slide');
 
     links.forEach(link => {
@@ -277,7 +292,6 @@ const attachHoverStates = () => {
 function initThreeJS() {
     const canvas = document.querySelector('#webgl-canvas');
     if (!canvas) return;
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
@@ -285,7 +299,7 @@ function initThreeJS() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 400; // PREMIUM FIX: Reduced from 800 to stop Mobile lag
+    const particlesCount = 400; 
     const posArray = new Float32Array(particlesCount * 3);
     for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 20; 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -333,36 +347,28 @@ function initAnimations() {
     
     textContent.split('').forEach(char => {
         const span = document.createElement('span');
-        span.classList.add('type-char');
-        span.innerText = char;
+        span.classList.add('type-char'); span.innerText = char;
         brandText.appendChild(span);
     });
 
     const tlLoader = gsap.timeline({
         onComplete: () => {
             document.body.classList.remove('loading');
-            lenis.start(); 
-            initScrollAnimations(); 
+            lenis.start(); initScrollAnimations(); 
         }
     });
 
     tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" })
             .to('.loader-percentage', { opacity: 1, duration: 0.2 }, "-=0.2")
-            .to({ val: 0 }, {
-                val: 100, duration: 1.2, ease: "power3.inOut",
-                onUpdate: function() { document.getElementById('load-percent').innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); }
-            }, "-=0.5");
+            .to({ val: 0 }, { val: 100, duration: 1.2, ease: "power3.inOut", onUpdate: function() { document.getElementById('load-percent').innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); } }, "-=0.5");
 
     tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.1, stagger: 0.05, ease: "power2.out" }, "-=1.0");
     tlLoader.to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 3 }, "-=0.5");
-
     tlLoader.to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.2")
             .to('.lightning-slash', { left: '150%', duration: 0.4, ease: "power4.in" }, "-=0.1")
             .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1");
-
     tlLoader.to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
             .to('.screen-flash', { opacity: 0, duration: 0.8, ease: "power2.out" }, "+=0.1");
-
     tlLoader.to('.top-shutter', { yPercent: -100, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
             .to('.bottom-shutter', { yPercent: 100, duration: 1.2, ease: "power3.inOut" }, "-=1.2")
             .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2") 
@@ -374,7 +380,6 @@ function initAnimations() {
 function initScrollAnimations() {
     const textReveals = document.querySelectorAll('section:not(.hero) .text-reveal');
     textReveals.forEach(text => { gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" }); });
-
     const fadeUps = document.querySelectorAll('.fade-up');
     fadeUps.forEach(el => { gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }); });
 }
@@ -384,11 +389,9 @@ function initTilt() {
         const cards = document.querySelectorAll('.tilt-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
                 const centerX = rect.width / 2; const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5; 
-                const rotateY = ((x - centerX) / centerX) * 5;
+                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
             });
             card.addEventListener('mouseleave', () => {
@@ -403,12 +406,9 @@ function initTilt() {
 function openVideoModal(videoSrc) {
     const modal = document.getElementById('videoModal');
     const container = document.getElementById('modalVideoContainer');
-    
     container.innerHTML = '';
     const ytId = getYouTubeId(videoSrc);
-    
     if (ytId) {
-        // High quality YouTube embed
         container.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
@@ -423,12 +423,9 @@ function initModalPlayer() {
     const closeBtn = document.querySelector('.modal-close-btn');
 
     const closeModal = () => {
-        gsap.to(modal, { autoAlpha: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
-            container.innerHTML = ''; 
-        }});
+        gsap.to(modal, { autoAlpha: 0, duration: 0.4, ease: "power2.in", onComplete: () => { container.innerHTML = ''; }});
         lenis.start(); 
     };
-
     closeBtn.addEventListener('click', closeModal);
     document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
 }
@@ -442,12 +439,8 @@ barba.init({
         name: 'opacity-transition',
         leave(data) { return gsap.to(data.current.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" }); },
         enter(data) {
-            window.scrollTo(0, 0);
-            lenis.scrollTo(0, { immediate: true });
-            
-            loadPortfolioData();
-            attachHoverStates(); 
-            initTilt(); 
+            window.scrollTo(0, 0); lenis.scrollTo(0, { immediate: true });
+            loadPortfolioData(); attachHoverStates(); initTilt(); 
             return gsap.from(data.next.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" });
         }
     }]

@@ -16,7 +16,7 @@
        
        --bg: #0B0B0F;
        --sec: #0F0F13;
-       --acc: #E2B938; /* Slightly brighter, more premium gold */
+       --acc: #E2B938; 
        --acc-glow: rgba(226, 185, 56, 0.4);
        --text: #F5F5F5;
        --muted: #888C94;
@@ -42,13 +42,12 @@
    section { background: transparent; }
    body.loading { overflow: hidden; }
    
+   .fade-up, .tilt-card, .swiper-slide { will-change: transform, opacity; }
+   
    h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); font-weight: 300; letter-spacing: -0.02em; }
    a { text-decoration: none; color: inherit; }
    ul { list-style: none; }
    img { max-width: 100%; display: block; }
-   
-   /* Hardware Acceleration for Smoother Scrolling */
-   .fade-up, .tilt-card, .swiper-slide { will-change: transform, opacity; }
    
    .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
    .container-fluid { width: 100%; padding: 0 5%; overflow: hidden;}
@@ -75,38 +74,19 @@
    .loader-logo-container { position: relative; margin-bottom: 2rem; overflow: hidden; }
    .loader-logo-img { height: clamp(80px, 20vw, 150px); width: auto; opacity: 0; transform: scale(0.8); }
    
-   /* ==========================================================================
-      FLOATING GHOST LOGO
-      ========================================================================== */
-   .fixed-ghost-logo {
-       position: fixed; top: 30px; left: 5%; z-index: 1000;
-       opacity: 0; pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease;
-       transform: translateY(-20px);
-   }
+   .fixed-ghost-logo { position: fixed; top: 30px; left: 5%; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.5s ease, transform 0.5s ease; transform: translateY(-20px); }
    .fixed-ghost-logo.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
    .fixed-ghost-logo img { height: clamp(25px, 5vw, 35px); object-fit: contain; }
    
-   /* ==========================================================================
-      Portfolio Navigation Menu
-      ========================================================================== */
-   .portfolio-nav {
-       position: fixed; top: 0; left: 0; width: 100%;
-       padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-       z-index: 1000; background: rgba(11, 11, 15, 0.7); backdrop-filter: blur(15px);
-       -webkit-backdrop-filter: blur(15px);
-       border-bottom: 1px solid rgba(255,255,255,0.05);
-   }
+   .portfolio-nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(11, 11, 15, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
    .portfolio-nav .nav-logo { height: 25px; object-fit: contain; }
    
-   /* ==========================================================================
-      Buttons
-      ========================================================================== */
-   .btn {
-       display: inline-flex; align-items: center; justify-content: center;
-       padding: 1.2rem 2.5rem; font-family: var(--font-head); font-weight: 400;
-       border-radius: 4px; transition: var(--transition); cursor: pointer;
-       text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem;
-   }
+   /* Back to Home Button Prominent Styling */
+   .back-home-btn { position: absolute; left: 5%; top: 15vh; padding: 0.8rem 1.5rem; font-size: 0.85rem; border-radius: 30px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); z-index: 10; }
+   @media (max-width: 991px) { .back-home-btn { position: relative; top: 0; left: 0; margin-bottom: 2rem; } }
+   
+   /* Buttons */
+   .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1.2rem 2.5rem; font-family: var(--font-head); font-weight: 400; border-radius: 4px; transition: var(--transition); cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; }
    .btn-primary { background: var(--acc); color: var(--bg); font-weight: 600;}
    .btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text); }
@@ -114,34 +94,25 @@
    
    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.3; pointer-events: none; }
    
-   /* ==========================================================================
-      Hero Section 
-      ========================================================================== */
+   /* Hero */
    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-   
    .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.5; pointer-events: none; }
    .hero-video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(11,11,15,0.4) 10%, var(--bg) 100%); z-index: 0; }
-   
    .hero-content { position: relative; z-index: 1; text-align: center; width: 100%; max-width: 1000px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
    .hero-logo-link { display: inline-block; margin-bottom: 1.5rem; }
    .hero-logo { height: clamp(80px, 20vw, 150px); opacity: 0.9; transition: opacity 0.3s; }
    .hero-logo-link:hover .hero-logo { opacity: 1; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));}
    .hero-subtext { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 5px; color: var(--text); font-size: clamp(0.7rem, 2vw, 0.9rem); margin-bottom: 2rem; font-weight: 300; }
    .hero-buttons { display: flex; flex-direction: row; gap: 1.5rem; width: auto; }
-   
    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 2; opacity: 0.5; }
    .mouse { width: 25px; height: 40px; border: 2px solid var(--muted); border-radius: 20px; position: relative; }
    .mouse::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px; background: var(--acc); border-radius: 2px; animation: scrollDrop 1.5s infinite; }
-   
    @keyframes scrollDrop { 0% { transform: translate(-50%, 0); opacity: 1; } 100% { transform: translate(-50%, 15px); opacity: 0; } }
    
    .text-reveal { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
    .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
    .word-inner { display: inline-block; transform: translateY(110%); }
    
-   /* ==========================================================================
-      INFINITE CLIENTS MARQUEE
-      ========================================================================== */
    .clients-marquee { padding: 2rem 0 6rem; overflow: hidden; position: relative; width: 100%; }
    .marquee-wrapper { width: 100vw; overflow: hidden; position: relative; }
    .marquee-track { display: inline-flex; white-space: nowrap; animation: scroll-marquee 25s linear infinite; gap: 6rem; padding-right: 6rem; }
@@ -150,39 +121,47 @@
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      PREMIUM VIDEO PLAY OVERLAY (Replaces heavy slide-controls)
+      INLINE PREVIEW VIDEOS (Responsive & Lazily Loaded)
       ========================================================================== */
-   .play-overlay {
+   .coverflow-inline-video, .portfolio-inline-video { 
+       position: absolute; top:0; left:0; width: 100%; height: 100%; 
+       z-index: 1; overflow: hidden; pointer-events: none;
+   }
+   /* Scale up by 150% and pull back -25% to hide YouTube titles and black bars completely */
+   .coverflow-inline-video iframe, .portfolio-inline-video iframe { 
+       width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; border: none;
+   }
+   .coverflow-inline-video video, .portfolio-inline-video video { 
+       width: 100%; height: 100%; object-fit: cover; border: none;
+   }
+   
+   /* ==========================================================================
+      SLIDE CONTROLS OVERLAY (View Full Video)
+      ========================================================================== */
+   .slide-controls {
        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-       background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
-       opacity: 0; transition: var(--transition); z-index: 5; pointer-events: none;
+       display: flex; flex-direction: column; align-items: center; justify-content: center;
+       opacity: 0; transition: opacity 0.4s; z-index: 10;
+       background: rgba(0,0,0,0.6); backdrop-filter: blur(2px);
+       pointer-events: none; 
    }
    
-   .play-btn-circle {
-       width: 70px; height: 70px; border-radius: 50%;
-       background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-       border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
-       transform: scale(0.8); transition: var(--transition); color: #fff;
+   .control-btn {
+       background: rgba(11,11,15,0.9); border: 1px solid var(--acc); color: var(--text);
+       padding: 0.8rem 2rem; border-radius: 30px; font-family: var(--font-head);
+       font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+       cursor: pointer; transition: all 0.3s; pointer-events: auto;
    }
+   .control-btn:hover { background: var(--acc); color: var(--bg); transform: scale(1.05); }
    
-   /* Trigger hover states */
    @media (min-width: 992px) {
-       .coverflow-swiper .swiper-slide:hover .play-overlay,
-       .portfolio-item:hover .play-overlay,
-       .portfolio-slider-section .swiper-slide:hover .play-overlay {
-           opacity: 1; pointer-events: auto;
-       }
-       .coverflow-swiper .swiper-slide:hover .play-btn-circle,
-       .portfolio-item:hover .play-btn-circle,
-       .portfolio-slider-section .swiper-slide:hover .play-btn-circle {
-           transform: scale(1); box-shadow: 0 0 30px rgba(226, 185, 56, 0.3); border-color: var(--acc); color: var(--acc);
-       }
+       .portfolio-item:hover .slide-controls,
+       .swiper-slide:hover .slide-controls { opacity: 1; }
    }
-   
-   /* Mobile: Always slightly visible play button for intuition */
+   /* On Mobile, show "View Full" directly when active in Swiper, or keep a small button */
    @media (max-width: 991px) {
-       .play-overlay { opacity: 1; background: rgba(0,0,0,0.2); }
-       .play-btn-circle { transform: scale(0.9); background: rgba(11,11,15,0.6); }
+       .slide-controls { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); align-items: flex-end; padding-bottom: 20px; }
+       .control-btn { padding: 0.5rem 1.2rem; font-size: 0.7rem; border: none; background: var(--acc); color: var(--bg); font-weight: 600;}
    }
    
    /* ==========================================================================
@@ -190,37 +169,21 @@
       ========================================================================== */
    .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
    .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
-   
-   .coverflow-swiper .swiper-slide {
-       width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; 
-       transition: all 0.5s ease; filter: brightness(0.5); cursor: pointer;
-   }
-   
+   .coverflow-swiper .swiper-slide { width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: brightness(0.5); }
    @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
-   
    .coverflow-swiper .swiper-slide-active { filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+   .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
    
-   .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
-   
-   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem 2rem 2rem; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 10; }
+   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem 2rem 2rem; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 11; }
    .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; }
    .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 500; }
    .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
    
-   /* Universal Circular Slider Buttons (Now same for home and portfolio) */
-   .featured-prev, .featured-next, .slider-btn { 
-       color: var(--text); background: rgba(11,11,15,0.5); border: 1px solid rgba(255,255,255,0.1); 
-       width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-       display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition);
-       position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; margin: 0;
-   }
+   .featured-prev, .featured-next, .slider-btn { color: var(--text); background: rgba(11,11,15,0.5); border: 1px solid rgba(255,255,255,0.1); width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; margin: 0; }
    .featured-prev::after, .featured-next::after, .slider-btn::after { font-size: 1.2rem; }
-   
    .featured-prev, .prev-16x9, .prev-9x16 { left: 2%; }
    .featured-next, .next-16x9, .next-9x16 { right: 2%; }
-   
    .featured-prev:hover, .featured-next:hover, .slider-btn:hover { background: var(--acc); color: var(--bg); border-color: var(--acc); transform: translateY(-50%) scale(1.1); }
-   
    @media (max-width: 991px) { .featured-prev, .featured-next, .slider-btn { display: none !important; } }
    
    /* ==========================================================================
@@ -229,15 +192,11 @@
    .portfolio { padding: 4rem 0 10rem; }
    .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 5rem 3rem; }
    @media (min-width: 768px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
-   .portfolio-item { position: relative; border-radius: 8px; overflow: hidden; cursor: pointer; }
-   
+   .portfolio-item { position: relative; border-radius: 8px; overflow: hidden; }
    .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 8px; }
-   .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-   .portfolio-item:hover .portfolio-thumb img { transform: scale(1.05); }
-   
+   .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; z-index: 0; position: absolute;}
    .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; transition: color 0.3s;}
    .portfolio-info p { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-   .portfolio-item:hover .portfolio-info h3 { color: var(--acc); }
    
    /* ==========================================================================
       Dedicated Portfolio Page Sliders
@@ -247,13 +206,9 @@
    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 0 5%; }
    .slider-header h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 300; border-left: 3px solid var(--acc); padding-left: 15px;}
    
-   /* Ensure horizontal/vertical sliders respect absolute positioning of nav buttons */
    .horizontal-swiper, .vertical-swiper { padding-bottom: 3rem; overflow: visible !important; position: relative; }
-   
-   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-   
-   .horizontal-swiper .swiper-slide:hover, .vertical-swiper .swiper-slide:hover { transform: translateY(-10px); }
+   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
    
    /* ==========================================================================
       Contact Form
@@ -275,7 +230,6 @@
       Footer
       ========================================================================== */
    .footer { padding: 4rem 0 3rem; background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05); }
-   
    .social-icon { color: var(--muted); transition: color 0.3s, transform 0.3s; display: flex; align-items: center; justify-content: center; }
    .social-icon:hover { transform: scale(1.1); }
    .insta-color:hover { color: #E1306C; }
@@ -284,13 +238,12 @@
    .cinematic-vignette { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, transparent 40%, rgba(11, 11, 15, 0.95) 150%); pointer-events: none; z-index: 90; }
    
    /* ==========================================================================
-      MODAL VIDEO PLAYER (High Performance)
+      MODAL VIDEO PLAYER
       ========================================================================== */
    .cinematic-video-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; }
    .modal-backdrop { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
    .modal-close-btn { position: absolute; top: 30px; right: 5%; z-index: 2; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 10px 20px; color: var(--text); font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: var(--transition); backdrop-filter: blur(5px); }
    .modal-close-btn:hover { background: var(--acc); color: var(--bg); border-color: var(--acc); }
-   
    .modal-video-container { position: relative; z-index: 1; width: 90%; max-width: 1200px; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
    .modal-video-container video, .modal-video-container iframe { width: 100%; height: 100%; object-fit: cover; border: none; outline: none; display: block; }
    
@@ -298,11 +251,7 @@
    .cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%); will-change: transform; }
    .cursor { width: 8px; height: 8px; background: var(--acc); }
    .cursor-follower { width: 40px; height: 40px; border: 1px solid rgba(226, 185, 56, 0.5); transition: width 0.3s, height 0.3s, background 0.3s; }
-   
    .cursor.hover-btn { opacity: 0; }
    .cursor-follower.hover-btn { width: 60px; height: 60px; background: rgba(226, 185, 56, 0.1); border-color: var(--acc); }
    .cursor-follower.hover-portfolio { width: 80px; height: 80px; border-color: transparent; background: rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
-   
-   @media (hover: none) and (pointer: coarse), (max-width: 768px) {
-       .cursor, .cursor-follower { display: none !important; }
-   }
+   @media (hover: none) and (pointer: coarse), (max-width: 768px) { .cursor, .cursor-follower { display: none !important; } }
