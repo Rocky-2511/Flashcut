@@ -8,61 +8,61 @@ const portfolioData = {
     {
       "id": "proj-1", "title": "Naavdurga", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "previewVideo": "https://www.youtube.com/watch?v=vT-GP604Wds",
       "featured": true
     },
     {
       "id": "proj-2", "title": "Saarthi", "categoryLabel": "Cinematic Projects", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      "previewVideo": "https://www.youtube.com/watch?v=S1CySzctSc8",
       "featured": true
     },
     {
       "id": "proj-3", "title": "Shiv ki raat", "categoryLabel": "YouTube Videos", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      "previewVideo": "https://www.youtube.com/watch?v=YmiamwKatpM",
       "featured": true
     },
     {
       "id": "proj-4", "title": "Maa", "categoryLabel": "Instagram Reels", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+      "previewVideo": "https://www.youtube.com/shorts/WkALdRotTwo",
       "featured": true
     },
     {
       "id": "proj-5", "title": "Saarthi Short", "categoryLabel": "TikTok Ads", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+      "previewVideo": "https://www.youtube.com/shorts/_2LczNDo2sM",
       "featured": false
     },
     {
       "id": "proj-6", "title": "Shubh Shuruvat", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      "previewVideo": "https://www.youtube.com/watch?v=vixRM6LHjJQ",
       "featured": false
     },
     {
-      "id": "proj-7", "title": "Fashion Week", "categoryLabel": "Cinematic", "format": "16x9",
+      "id": "proj-7", "title": "HalalVish paan", "categoryLabel": "Cinematic", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+      "previewVideo": "youtube.com/watch?v=zyITGGf4Grw&pp=0gcJCdkKAYcqIYzv",
       "featured": false
     },
     {
-      "id": "proj-8", "title": "Gym Motivation", "categoryLabel": "Instagram Reels", "format": "9x16",
+      "id": "proj-8", "title": "Krishna's Flute", "categoryLabel": "Instagram Reels", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+      "previewVideo": "https://www.youtube.com/shorts/hvkY3cVQ5zU",
       "featured": false
     },
     {
-      "id": "proj-9", "title": "Tech Review", "categoryLabel": "YouTube", "format": "16x9",
+      "id": "proj-9", "title": "Shyam jab koi Raha nhi dikhe to tu raha banjata hai", "categoryLabel": "YouTube", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "previewVideo": "https://www.youtube.com/shorts/6WKfTHZVpPU",
       "featured": false
     },
     {
-      "id": "proj-10", "title": "Brand Story", "categoryLabel": "Documentary", "format": "16x9",
+      "id": "proj-10", "title": "Sukoon", "categoryLabel": "Documentary", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+      "previewVideo": "https://www.youtube.com/shorts/3sR_0v7wIsc",
       "featured": false
     }
   ]
