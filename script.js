@@ -76,13 +76,14 @@ function getYouTubeId(url) {
     return null;
 }
 
-// PREMIUM FIX: Inline video previews are back, but with 'data-src' so we can lazy-load them
+// PREMIUM FIX: Only return iframe string when active (saves 100% RAM on load)
 function buildInlineVideoHTML(src) {
+    if (!src) return '';
     const ytId = getYouTubeId(src);
     if (ytId) {
-        return `<iframe data-src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" class="lazy-video" title="YouTube video player"></iframe>`;
+        return `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
     } else {
-        return `<video data-src="${src}" loop playsinline muted preload="none" class="lazy-video"></video>`;
+        return `<video src="${src}" loop playsinline muted autoplay></video>`;
     }
 }
 
@@ -94,27 +95,41 @@ function getSlideControls(videoSrc) {
     `;
 }
 
-// Observer to only load videos when they are near the screen (Fixes Mobile Crash)
-function initLazyVideos() {
-    const lazyVideos = document.querySelectorAll('.lazy-video');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const el = entry.target;
-            if (entry.isIntersecting) {
-                if (!el.src) {
-                    el.src = el.getAttribute('data-src');
-                    if(el.tagName === 'VIDEO') el.play().catch(e=>console.log(e));
-                }
-            } else {
-                // Free up RAM on mobile by unloading off-screen iframes
-                if (window.innerWidth < 992 && el.tagName === 'IFRAME') {
-                    el.src = ''; 
-                }
+// ==========================================================================
+// HOVER TO PLAY ENGINE (Zero Initial Iframes)
+// ==========================================================================
+function initHoverToPlay() {
+    // Only apply hover logic on devices with a real mouse
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        const cards = document.querySelectorAll('.tilt-card, .swiper-slide');
+        
+        cards.forEach(card => {
+            let hoverTimer;
+            const videoSrc = card.getAttribute('data-preview-src');
+            const videoContainer = card.querySelector('.coverflow-inline-video, .portfolio-inline-video');
+            
+            if (videoContainer && videoSrc) {
+                card.addEventListener('mouseenter', () => {
+                    // Small delay prevents lag from accidental fast scrolling over multiple cards
+                    hoverTimer = setTimeout(() => {
+                        videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
+                        gsap.to(videoContainer, {opacity: 1, duration: 0.3});
+                    }, 300);
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    clearTimeout(hoverTimer);
+                    gsap.to(videoContainer, {
+                        opacity: 0, 
+                        duration: 0.3, 
+                        onComplete: () => {
+                            videoContainer.innerHTML = ''; // Destroys Iframe immediately when mouse leaves
+                        }
+                    });
+                });
             }
         });
-    }, { rootMargin: '300px' });
-    
-    lazyVideos.forEach(v => observer.observe(v));
+    }
 }
 
 // ==========================================================================
@@ -152,9 +167,9 @@ function loadPortfolioData() {
 
                 featuredProjects.forEach((project) => {
                     const projHTML = `
-                        <div class="swiper-slide tilt-card">
+                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
                             <img src="${project.thumbnail}" alt="${project.title}" class="coverflow-img">
-                            <div class="coverflow-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                            <div class="coverflow-inline-video"></div>
                             ${getSlideControls(project.previewVideo)}
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
@@ -174,10 +189,10 @@ function loadPortfolioData() {
                 top4Projects.forEach((project, index) => {
                     const delay = index * 0.1; 
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
                             <div class="portfolio-thumb">
                                 <img src="${project.thumbnail}" alt="${project.title}">
-                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                                <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project.previewVideo)}
                             </div>
                             <div class="portfolio-info">
@@ -201,10 +216,10 @@ function loadPortfolioData() {
 
                 data.projects.forEach(project => {
                     const slideHTML = `
-                        <div class="swiper-slide tilt-card">
+                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
                             <div class="portfolio-thumb" style="margin:0; height:100%;">
                                 <img src="${project.thumbnail}" alt="${project.title}">
-                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
+                                <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project.previewVideo)}
                             </div>
                         </div>
@@ -225,7 +240,8 @@ function loadPortfolioData() {
 function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
-    initLazyVideos(); // Initializes intersection observer for videos
+    
+    initHoverToPlay(); // Initializes the ultra-fast hover logic
 
     if(document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {

@@ -121,18 +121,18 @@
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      INLINE PREVIEW VIDEOS (Responsive & Lazily Loaded)
+      HOVER TO PLAY PREVIEW VIDEOS (0 Lag Setup)
       ========================================================================== */
    .coverflow-inline-video, .portfolio-inline-video { 
        position: absolute; top:0; left:0; width: 100%; height: 100%; 
-       z-index: 1; overflow: hidden; pointer-events: none;
+       z-index: 1; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
    }
    /* Scale up by 150% and pull back -25% to hide YouTube titles and black bars completely */
    .coverflow-inline-video iframe, .portfolio-inline-video iframe { 
        width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; border: none;
    }
    .coverflow-inline-video video, .portfolio-inline-video video { 
-       width: 100%; height: 100%; object-fit: cover; border: none;
+       width: 100%; height: 100%; object-fit: cover; border: none; pointer-events: none;
    }
    
    /* ==========================================================================
@@ -169,7 +169,7 @@
       ========================================================================== */
    .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
    .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
-   .coverflow-swiper .swiper-slide { width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: brightness(0.5); }
+   .coverflow-swiper .swiper-slide { width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: brightness(0.5); cursor: pointer; }
    @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
    .coverflow-swiper .swiper-slide-active { filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
    .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
@@ -192,7 +192,7 @@
    .portfolio { padding: 4rem 0 10rem; }
    .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 5rem 3rem; }
    @media (min-width: 768px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
-   .portfolio-item { position: relative; border-radius: 8px; overflow: hidden; }
+   .portfolio-item { position: relative; border-radius: 8px; overflow: hidden; cursor: pointer; }
    .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 8px; }
    .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; z-index: 0; position: absolute;}
    .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; transition: color 0.3s;}
@@ -207,8 +207,8 @@
    .slider-header h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 300; border-left: 3px solid var(--acc); padding-left: 15px;}
    
    .horizontal-swiper, .vertical-swiper { padding-bottom: 3rem; overflow: visible !important; position: relative; }
-   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer;}
+   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer;}
    
    /* ==========================================================================
       Contact Form
