@@ -1,75 +1,72 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// BULLETPROOF PORTFOLIO DATA (Solves the Blank Page Git/Fetch Bug entirely)
+// EXTENDED DATA (To fill up the portfolio sliders)
 // ==========================================================================
 const portfolioData = {
   "projects": [
     {
-      "id": "proj-1",
-      "title": "Naavdurga",
-      "categoryLabel": "Commercial Ads",
-      "format": "16x9",
+      "id": "proj-1", "title": "Naavdurga", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=vT-GP604Wds",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
       "featured": true
     },
     {
-      "id": "proj-2",
-      "title": "Saarthi",
-      "categoryLabel": "Cinematic Projects",
-      "format": "16x9",
+      "id": "proj-2", "title": "Saarthi", "categoryLabel": "Cinematic Projects", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=S1CySzctSc8",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
       "featured": true
     },
     {
-      "id": "proj-3",
-      "title": "Shiv ki raat",
-      "categoryLabel": "YouTube Videos",
-      "format": "16x9",
+      "id": "proj-3", "title": "Shiv ki raat", "categoryLabel": "YouTube Videos", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=YmiamwKatpM",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
       "featured": true
     },
     {
-      "id": "proj-4",
-      "title": "Maa",
-      "categoryLabel": "Instagram Reels",
-      "format": "9x16",
+      "id": "proj-4", "title": "Maa", "categoryLabel": "Instagram Reels", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/F0qJtArAGUc",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
       "featured": true
     },
     {
-      "id": "proj-5",
-      "title": "Saarthi Short",
-      "categoryLabel": "TikTok Ads",
-      "format": "9x16",
+      "id": "proj-5", "title": "Saarthi Short", "categoryLabel": "TikTok Ads", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/_2LczNDo2sM",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "featured": false
     },
     {
-      "id": "proj-6",
-      "title": "Shubh Shuruvat",
-      "categoryLabel": "Commercial Ads",
-      "format": "16x9",
+      "id": "proj-6", "title": "Shubh Shuruvat", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=vixRM6LHjJQ",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      "featured": false
+    },
+    {
+      "id": "proj-7", "title": "Fashion Week", "categoryLabel": "Cinematic", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+      "featured": false
+    },
+    {
+      "id": "proj-8", "title": "Gym Motivation", "categoryLabel": "Instagram Reels", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+      "featured": false
+    },
+    {
+      "id": "proj-9", "title": "Tech Review", "categoryLabel": "YouTube", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "featured": false
+    },
+    {
+      "id": "proj-10", "title": "Brand Story", "categoryLabel": "Documentary", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
       "featured": false
     }
   ]
 };
-
-// Tool to extract YouTube IDs
-function getYouTubeId(url) {
-    if (!url) return null;
-    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
-    if (url.includes('youtube.com/shorts/')) return url.split('youtube.com/shorts/')[1].split('?')[0];
-    if (url.includes('youtube.com/watch')) return new URL(url).searchParams.get('v');
-    return null;
-}
 
 // ==========================================================================
 // Lenis Smooth Scroll Engine
@@ -100,48 +97,83 @@ function initGhostLogo() {
     });
 }
 
+// Function to build universal slide controls
+function getSlideControls(videoSrc) {
+    return `
+        <div class="slide-controls">
+            <div class="controls-row">
+                <button class="control-btn play-pause-btn">Play</button>
+                <button class="control-btn mute-btn">Unmute</button>
+            </div>
+            <button class="control-btn view-full-btn" data-video="${videoSrc}">View Full</button>
+        </div>
+    `;
+}
+
+// Function to bind Play/Pause/Mute logic to a video container
+function bindVideoControls(container) {
+    const video = container.querySelector('video');
+    const playBtn = container.querySelector('.play-pause-btn');
+    const muteBtn = container.querySelector('.mute-btn');
+    const viewBtn = container.querySelector('.view-full-btn');
+
+    if(video && playBtn && muteBtn) {
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(video.paused) { video.play(); playBtn.innerText = "Pause"; } 
+            else { video.pause(); playBtn.innerText = "Play"; }
+        });
+
+        muteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            video.muted = !video.muted;
+            muteBtn.innerText = video.muted ? "Unmute" : "Mute";
+        });
+    }
+
+    if(viewBtn) {
+        viewBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openVideoModal(viewBtn.getAttribute('data-video'));
+        });
+    }
+}
+
 // ==========================================================================
 // DOM Loading & Injection
 // ==========================================================================
 function loadPortfolioData() {
     try {
         const data = portfolioData; 
-        
         const isHomePage = document.querySelector('[data-barba-namespace="home"]') !== null;
         const isPortfolioPage = document.querySelector('[data-barba-namespace="portfolio"]') !== null;
 
         if (isHomePage) {
-            // A. INJECT 3D COVERFLOW FEATURED PROJECTS WITH INLINE VIDEO
             const featuredGrid = document.querySelector('#dynamic-featured');
             if(featuredGrid) {
                 featuredGrid.innerHTML = '';
                 let featuredProjects = data.projects.filter(p => p.featured);
                 
-                // Duplicate if less than 5 to prevent Swiper 3D glitch
                 if (featuredProjects.length > 0 && featuredProjects.length < 5) {
                     featuredProjects = [...featuredProjects, ...featuredProjects, ...featuredProjects];
                 }
 
                 featuredProjects.forEach((project) => {
                     const projHTML = `
-                        <div class="swiper-slide" data-video="${project.previewVideo}">
-                            <div class="coverflow-inline-video"></div>
+                        <div class="swiper-slide">
+                            <video src="${project.previewVideo}" class="coverflow-inline-video" loop playsinline muted preload="auto"></video>
                             <img src="${project.thumbnail}" alt="${project.title}" class="coverflow-img">
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
                                 <p>${project.categoryLabel}</p>
                             </div>
-                            <div class="slide-controls">
-                                <button class="control-btn play-pause-btn">Pause</button>
-                                <button class="control-btn view-full-btn" data-video="${project.previewVideo}">View Full</button>
-                            </div>
+                            ${getSlideControls(project.previewVideo)}
                         </div>
                     `;
                     featuredGrid.insertAdjacentHTML('beforeend', projHTML);
                 });
             }
 
-            // B. INJECT TRUNCATED PORTFOLIO (TOP 4)
             const portfolioGrid = document.querySelector('#dynamic-portfolio'); 
             if (portfolioGrid) {
                 portfolioGrid.innerHTML = ''; 
@@ -150,9 +182,11 @@ function loadPortfolioData() {
                 top4Projects.forEach((project, index) => {
                     const delay = index * 0.1; 
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" data-video="${project.previewVideo}" style="transition-delay: ${delay}s;">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;">
                             <div class="portfolio-thumb">
+                                <video src="${project.previewVideo}" class="portfolio-inline-video" loop playsinline muted preload="auto"></video>
                                 <img src="${project.thumbnail}" alt="${project.title}">
+                                ${getSlideControls(project.previewVideo)}
                             </div>
                             <div class="portfolio-info">
                                 <h3>${project.title}</h3>
@@ -166,7 +200,6 @@ function loadPortfolioData() {
         }
 
         if (isPortfolioPage) {
-            // C. INJECT DEDICATED PORTFOLIO SLIDERS
             const horizontalGrid = document.querySelector('#dynamic-16x9');
             const verticalGrid = document.querySelector('#dynamic-9x16');
 
@@ -176,18 +209,17 @@ function loadPortfolioData() {
 
                 data.projects.forEach(project => {
                     const slideHTML = `
-                        <div class="swiper-slide tilt-card" data-video="${project.previewVideo}">
+                        <div class="swiper-slide tilt-card">
                             <div class="portfolio-thumb" style="margin:0; height:100%;">
+                                <video src="${project.previewVideo}" class="portfolio-inline-video" loop playsinline muted preload="auto"></video>
                                 <img src="${project.thumbnail}" alt="${project.title}">
+                                ${getSlideControls(project.previewVideo)}
                             </div>
                         </div>
                     `;
 
-                    if(project.format === '16x9') {
-                        horizontalGrid.insertAdjacentHTML('beforeend', slideHTML);
-                    } else if (project.format === '9x16') {
-                        verticalGrid.insertAdjacentHTML('beforeend', slideHTML);
-                    }
+                    if(project.format === '16x9') horizontalGrid.insertAdjacentHTML('beforeend', slideHTML);
+                    else if (project.format === '9x16') verticalGrid.insertAdjacentHTML('beforeend', slideHTML);
                 });
             }
         }
@@ -203,95 +235,57 @@ function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
 
-    // 1. Init 3D Coverflow Swiper WITH INLINE PLAY LOGIC
+    // 1. Init 3D Coverflow Swiper 
     if(document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {
-            effect: 'coverflow',
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: 'auto',
-            loop: true,
-            loopedSlides: 5, 
-            coverflowEffect: {
-                rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false,
-            },
+            effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto',
+            loop: true, loopedSlides: 5, 
+            coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false },
             navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
             on: {
                 slideChangeTransitionEnd: function () {
-                    // Clear all iframes first to pause them
-                    document.querySelectorAll('.coverflow-inline-video').forEach(container => {
-                        container.innerHTML = '';
-                        container.style.opacity = '0';
-                    });
+                    document.querySelectorAll('.coverflow-swiper video').forEach(vid => { vid.pause(); });
                     
-                    // Play newly active slide inline!
                     const activeSlide = this.slides[this.activeIndex];
-                    const videoContainer = activeSlide.querySelector('.coverflow-inline-video');
-                    const videoSrc = activeSlide.getAttribute('data-video');
-                    
-                    if(videoSrc && videoContainer) {
-                        const ytId = getYouTubeId(videoSrc);
-                        if(ytId) {
-                            const iframeHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" style="width:100%; height:100%; pointer-events:none; border:none;"></iframe>`;
-                            videoContainer.innerHTML = iframeHTML;
-                            videoContainer.style.opacity = '1';
-                            
-                            const playPauseBtn = activeSlide.querySelector('.play-pause-btn');
-                            if(playPauseBtn) {
-                                playPauseBtn.innerText = "Pause";
-                                const newBtn = playPauseBtn.cloneNode(true);
-                                playPauseBtn.parentNode.replaceChild(newBtn, playPauseBtn);
-                                
-                                newBtn.addEventListener('click', (e) => {
-                                    e.stopPropagation(); 
-                                    if(videoContainer.innerHTML !== '') {
-                                        videoContainer.innerHTML = '';
-                                        videoContainer.style.opacity = '0';
-                                        newBtn.innerText = "Play";
-                                    } else {
-                                        videoContainer.innerHTML = iframeHTML;
-                                        videoContainer.style.opacity = '1';
-                                        newBtn.innerText = "Pause";
-                                    }
-                                });
-                            }
-                        }
+                    const activeVideo = activeSlide.querySelector('video');
+                    const playBtn = activeSlide.querySelector('.play-pause-btn');
+
+                    if(activeVideo) {
+                        activeVideo.play().catch(e => console.log(e));
+                        if(playBtn) playBtn.innerText = "Pause";
                     }
                 }
             }
-        });
-        
-        document.querySelectorAll('.view-full-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const videoSrc = btn.getAttribute('data-video');
-                if(videoSrc) openVideoModal(videoSrc);
-            });
         });
     }
 
     // 2. Init Dedicated Portfolio Swipers
     if(document.querySelector('.horizontal-swiper')) {
-        new Swiper('.horizontal-swiper', {
-            slidesPerView: 'auto', spaceBetween: 30, grabCursor: true,
-            navigation: { nextEl: '.next-16x9', prevEl: '.prev-16x9' },
-        });
+        new Swiper('.horizontal-swiper', { slidesPerView: 'auto', spaceBetween: 30, grabCursor: true, navigation: { nextEl: '.next-16x9', prevEl: '.prev-16x9' } });
     }
     if(document.querySelector('.vertical-swiper')) {
-        new Swiper('.vertical-swiper', {
-            slidesPerView: 'auto', spaceBetween: 30, grabCursor: true,
-            navigation: { nextEl: '.next-9x16', prevEl: '.prev-9x16' },
-        });
+        new Swiper('.vertical-swiper', { slidesPerView: 'auto', spaceBetween: 30, grabCursor: true, navigation: { nextEl: '.next-9x16', prevEl: '.prev-9x16' } });
     }
 
     setTimeout(() => { ScrollTrigger.refresh(); }, 500);
 
-    // Modal Triggers for Portfolio Items
-    document.querySelectorAll('.portfolio-item[data-video], .portfolio-page .swiper-slide[data-video]').forEach(item => {
-        item.addEventListener('click', () => {
-            const videoSrc = item.getAttribute('data-video');
-            if(videoSrc) openVideoModal(videoSrc);
-        });
+    // Bind Controls to all injected videos
+    document.querySelectorAll('.swiper-slide, .portfolio-item').forEach(container => {
+        bindVideoControls(container);
+        
+        // Auto-play logic on hover for non-coverflow items
+        if(!container.classList.contains('coverflow-swiper')) {
+            container.addEventListener('mouseenter', () => {
+                const vid = container.querySelector('video');
+                const btn = container.querySelector('.play-pause-btn');
+                if(vid) { vid.play().catch(e=>{}); if(btn) btn.innerText = "Pause"; }
+            });
+            container.addEventListener('mouseleave', () => {
+                const vid = container.querySelector('video');
+                const btn = container.querySelector('.play-pause-btn');
+                if(vid) { vid.pause(); if(btn) btn.innerText = "Play"; }
+            });
+        }
     });
 }
 
@@ -330,7 +324,7 @@ gsap.ticker.add(() => {
 });
 
 const attachHoverStates = () => {
-    const links = document.querySelectorAll('a, button, .magnetic-element');
+    const links = document.querySelectorAll('a, button, .magnetic-element, .arsenal-item');
     const portfolios = document.querySelectorAll('.portfolio-item, .swiper-slide');
 
     links.forEach(link => {
@@ -466,24 +460,21 @@ function initScrollAnimations() {
         gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" });
     });
 
-    const tlTimeline = gsap.timeline({ scrollTrigger: { trigger: ".process-timeline", start: "top 50%", end: "bottom 50%", scrub: 1 } });
-    tlTimeline.to(".timeline-progress", { height: "100%", ease: "none" });
+    gsap.to('.portrait-img', { scrollTrigger: { trigger: '.about', start: "top bottom", end: "bottom top", scrub: true }, yPercent: 10, scale: 1.05 });
 
-    const processSteps = document.querySelectorAll('.process-step');
-    processSteps.forEach(step => {
-        ScrollTrigger.create({ trigger: step, start: "top 60%", onEnter: () => step.classList.add('active'), onLeaveBack: () => step.classList.remove('active') });
-    });
-}
-
-function initLenisAnchors() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = this.getAttribute('href');
-            if(target !== '#') {
-                lenis.scrollTo(target, { duration: 1.8, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-            }
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        ScrollTrigger.create({
+            trigger: counter, start: "top 90%", once: true,
+            onEnter: () => { gsap.to(counter, { innerHTML: target, duration: 2.5, snap: { innerHTML: 1 }, ease: "power3.out" }); }
         });
+    });
+
+    const arsenalItems = document.querySelectorAll('.3d-float');
+    arsenalItems.forEach(item => {
+        const speed = item.getAttribute('data-speed');
+        gsap.fromTo(item, { y: 80 }, { y: -40 * speed, scrollTrigger: { trigger: ".arsenal", start: "top bottom", end: "bottom top", scrub: 1 } });
     });
 }
 
@@ -508,18 +499,16 @@ function initTilt() {
     }
 }
 
-// ==========================================================================
-// Dynamic Smart Player 
-// ==========================================================================
 function openVideoModal(videoSrc) {
     const modal = document.getElementById('videoModal');
     const container = document.getElementById('modalVideoContainer');
     
     container.innerHTML = '';
-    const ytId = getYouTubeId(videoSrc);
-    
-    if (ytId) {
-        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
+        let videoId = '';
+        if (videoSrc.includes('youtu.be/')) { videoId = videoSrc.split('youtu.be/')[1].split('?')[0]; } 
+        else if (videoSrc.includes('youtube.com/watch?v=')) { videoId = videoSrc.split('v=')[1].split('&')[0]; }
+        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
     }
@@ -544,7 +533,7 @@ function initModalPlayer() {
 }
 
 // ==========================================================================
-// Barba Page Transitions 
+// Barba Page Transitions (FIXED: Scrolls to top immediately on enter)
 // ==========================================================================
 barba.init({
     sync: true,
@@ -552,16 +541,19 @@ barba.init({
         name: 'opacity-transition',
         leave(data) { return gsap.to(data.current.container, { opacity: 0, duration: 0.6, ease: "power2.inOut" }); },
         enter(data) {
-            // Because we don't fetch, we can just call loadPortfolioData synchronously
+            // FIX THE BOTTOM LOAD BUG: Instantly jump to the top of the new page
+            window.scrollTo(0, 0);
+            lenis.scrollTo(0, { immediate: true });
+            
+            // Re-fetch and re-build DOM
             loadPortfolioData();
             attachHoverStates(); 
             initTilt(); 
-            initLenisAnchors();
             return gsap.from(data.next.container, { opacity: 0, duration: 0.6, ease: "power2.inOut" });
         }
     }]
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initLenisAnchors(); initGhostLogo(); 
+    initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); 
 });

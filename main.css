@@ -69,7 +69,6 @@
    .lightning-slash { position: absolute; top: 50%; left: -100%; width: 150%; height: 1px; background: var(--acc); transform: translateY(-50%) rotate(-5deg); opacity: 0; mix-blend-mode: screen; }
    .loader-percentage { margin-top: 2rem; font-family: var(--font-head); font-size: 0.8rem; color: var(--muted); letter-spacing: 4px; opacity: 0; }
    .screen-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 10; opacity: 0; pointer-events: none; mix-blend-mode: overlay; }
-   
    .loader-logo-container { position: relative; margin-bottom: 2rem; overflow: hidden; }
    .loader-logo-img { height: clamp(80px, 20vw, 150px); width: auto; opacity: 0; transform: scale(0.8); }
    
@@ -85,7 +84,7 @@
    .fixed-ghost-logo img { height: clamp(25px, 5vw, 35px); object-fit: contain; }
    
    /* ==========================================================================
-      Portfolio Navigation Menu
+      Portfolio Navigation Menu (Always at Top)
       ========================================================================== */
    .portfolio-nav {
        position: fixed; top: 0; left: 0; width: 100%;
@@ -112,43 +111,38 @@
    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; pointer-events: none; }
    
    /* ==========================================================================
-      Hero Section 
+      Hero Section
       ========================================================================== */
    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
    
-   .hero-bg-video {
-       position: absolute; top: 0; left: 0;
-       width: 100%; height: 100%; object-fit: cover;
-       z-index: 0; opacity: 0.5; pointer-events: none; 
-   }
-   .hero-video-overlay {
-       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-       background: radial-gradient(circle, rgba(11,11,15,0.3) 20%, var(--bg) 100%);
-       z-index: 0;
-   }
+   .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.5; pointer-events: none; }
+   .hero-video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(11,11,15,0.3) 20%, var(--bg) 100%); z-index: 0; }
    
    .hero-content { position: relative; z-index: 1; text-align: center; width: 100%; max-width: 1000px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
-   
    .hero-logo-link { display: inline-block; margin-bottom: 1.5rem; }
    .hero-logo { height: clamp(80px, 20vw, 150px); opacity: 0.9; transition: opacity 0.3s; }
    .hero-logo-link:hover .hero-logo { opacity: 1; }
-   
    .hero-subtext { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 4px; color: var(--text); font-size: clamp(0.7rem, 2vw, 0.9rem); margin-bottom: 2rem; font-weight: 400; }
    .hero-buttons { display: flex; flex-direction: row; gap: 1.5rem; width: auto; }
    
    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 2; opacity: 0.5; }
    .mouse { width: 25px; height: 40px; border: 2px solid var(--muted); border-radius: 20px; position: relative; }
    .mouse::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px; background: var(--acc); border-radius: 2px; animation: scrollDrop 1.5s infinite; }
-   
    @keyframes scrollDrop { 0% { transform: translate(-50%, 0); opacity: 1; } 100% { transform: translate(-50%, 15px); opacity: 0; } }
    
    .text-reveal { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
    .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
    .word-inner { display: inline-block; transform: translateY(110%); }
    
-   /* ==========================================================================
-      INFINITE CLIENTS MARQUEE
-      ========================================================================== */
+   .about { padding: 8rem 0 12rem; }
+   .portrait-wrapper { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 3/4; }
+   .portrait-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+   .portrait-wrapper:hover .portrait-img { transform: scale(1.05); }
+   
+   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem; }
+   .stat-number { font-size: clamp(3rem, 6vw, 4.5rem); color: var(--text); margin-bottom: 0.5rem; display: inline-block; font-weight: 300; line-height: 1; }
+   .stat-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+   
    .clients-marquee { padding: 2rem 0 6rem; overflow: hidden; position: relative; width: 100%; }
    .marquee-wrapper { width: 100vw; overflow: hidden; position: relative; }
    .marquee-track { display: inline-flex; white-space: nowrap; animation: scroll-marquee 25s linear infinite; gap: 6rem; padding-right: 6rem; }
@@ -157,77 +151,62 @@
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      3D COVERFLOW FEATURED PROJECTS SLIDER (Inline Video Play)
+      Universal Slide Controls (Play/Pause, Mute, View Full)
       ========================================================================== */
-   .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
-   .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
-   
-   .coverflow-swiper .swiper-slide {
-       width: 260px; 
-       aspect-ratio: 9/16; 
-       border-radius: 12px;
-       overflow: hidden;
-       position: relative;
-       transition: all 0.5s ease;
-       filter: grayscale(100%); 
-       opacity: 0.5;
-   }
-   
-   @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
-   
-   .coverflow-swiper .swiper-slide-active {
-       filter: grayscale(0%);
-       opacity: 1;
-       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-   }
-   
-   .coverflow-img { 
-       position: absolute; top:0; left:0; 
-       width: 100%; height: 100%; object-fit: cover; 
-   }
-   
-   /* The container that holds the injected YouTube Iframe */
-   .coverflow-inline-video {
-       position: absolute; top:0; left:0;
-       width: 100%; height: 100%;
-       opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
-       z-index: 1;
-   }
-   .coverflow-swiper .swiper-slide-active .coverflow-inline-video {
-       opacity: 1; 
-   }
-   
-   .coverflow-info {
-       position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem;
-       background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-       transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none;
-       z-index: 2;
-   }
-   .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; }
-   .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 600; }
-   .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
-   
-   /* The Pause and View Full buttons overlaid on active slide */
    .slide-controls {
        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
        opacity: 0; transition: opacity 0.3s; z-index: 10;
        background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
+       pointer-events: none; /* Allows hover to register */
    }
-   .coverflow-swiper .swiper-slide-active:hover .slide-controls { opacity: 1; }
+   
+   /* Show controls on hover for Desktop */
+   @media (min-width: 992px) {
+       .portfolio-item:hover .slide-controls,
+       .swiper-slide-active:hover .slide-controls,
+       .swiper-slide:hover .slide-controls {
+           opacity: 1; pointer-events: auto;
+       }
+   }
+   
+   /* Always show subtle controls on Mobile for active/visible items */
+   @media (max-width: 991px) {
+       .swiper-slide-active .slide-controls,
+       .portfolio-item .slide-controls {
+           opacity: 1; pointer-events: auto; background: rgba(0,0,0,0.2);
+       }
+   }
+   
+   .controls-row { display: flex; gap: 10px; }
    
    .control-btn {
        background: rgba(11,11,15,0.8); border: 1px solid var(--acc); color: var(--text);
-       padding: 0.8rem 2rem; border-radius: 30px; font-family: var(--font-head);
-       font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+       padding: 0.6rem 1.5rem; border-radius: 30px; font-family: var(--font-head);
+       font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
        cursor: pointer; transition: all 0.3s;
    }
    .control-btn:hover { background: var(--acc); color: var(--bg); }
    
-   .featured-prev, .featured-next {
-       color: var(--acc); background: rgba(11,11,15,0.8); border: 1px solid var(--acc);
-       width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(5px); display: none; 
-   }
+   /* ==========================================================================
+      3D COVERFLOW FEATURED PROJECTS
+      ========================================================================== */
+   .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
+   .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
+   .coverflow-swiper .swiper-slide { width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: grayscale(100%); opacity: 0.5; }
+   @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
+   
+   .coverflow-swiper .swiper-slide-active { filter: grayscale(0%); opacity: 1; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+   .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
+   .coverflow-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1; }
+   .coverflow-swiper .swiper-slide-active .coverflow-inline-video { opacity: 1; }
+   
+   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 2; }
+   .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; }
+   .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 600; }
+   .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+   
+   .featured-prev, .featured-next { color: var(--acc); background: rgba(11,11,15,0.8); border: 1px solid var(--acc); width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(5px); display: none; }
    .featured-prev::after, .featured-next::after { font-size: 1.2rem; }
    @media (min-width: 992px) { .featured-prev, .featured-next { display: flex; } .featured-prev { left: 5%; } .featured-next { right: 5%; } }
    
@@ -237,29 +216,16 @@
    .portfolio { padding: 4rem 0 10rem; }
    .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 5rem 3rem; }
    @media (min-width: 768px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
-   .portfolio-item { cursor: pointer; }
+   .portfolio-item { position: relative; border-radius: 4px; overflow: hidden; }
    .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 4px; }
-   .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+   .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
    .portfolio-item:hover .portfolio-thumb img { transform: scale(1.05); }
    .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; }
    .portfolio-info p { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+   .portfolio-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease; }
+   .portfolio-item:hover .portfolio-inline-video { opacity: 1; }
    
-   /* ==========================================================================
-      Process Line
-      ========================================================================== */
-   .process { padding: 10rem 0; }
-   .process-timeline { position: relative; max-width: 800px; margin: 6rem auto 0; }
-   .timeline-line { position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: rgba(255,255,255,0.1); }
-   .timeline-progress { width: 100%; height: 0%; background: var(--acc); }
-   .process-step { position: relative; padding-left: 4rem; margin-bottom: 4rem; }
-   .step-dot { position: absolute; top: 10px; left: -4px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 1px solid var(--muted); z-index: 2; transition: all 0.5s ease; }
-   .process-step.active .step-dot { background: var(--acc); border-color: var(--acc); box-shadow: 0 0 10px var(--acc-glow); }
-   .step-content h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; }
-   .step-content p { color: var(--muted); }
-   
-   /* ==========================================================================
-      Dedicated Portfolio Page Sliders
-      ========================================================================== */
+   /* Portfolio Page specific */
    .portfolio-page { background: var(--bg); }
    .portfolio-slider-section { position: relative; }
    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 0; }
@@ -268,13 +234,10 @@
    .slider-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text); cursor: pointer; transition: all 0.3s; }
    .slider-btn:hover { border-color: var(--acc); color: var(--acc); }
    .horizontal-swiper { padding-bottom: 3rem; overflow: visible !important;}
-   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; cursor: pointer; }
+   .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; }
    .vertical-swiper { padding-bottom: 3rem; overflow: visible !important;}
-   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; cursor: pointer; }
+   .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; }
    
-   /* ==========================================================================
-      Contact Form
-      ========================================================================== */
    .contact { padding: 10rem 0; }
    .contact-form { padding-top: 2rem; }
    .input-group { position: relative; margin-bottom: 3.5rem; }
@@ -293,7 +256,12 @@
       ========================================================================== */
    .footer { padding: 4rem 0 3rem; background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05); }
    
-   /* Video Overlays & Modals */
+   /* Proper Social Logo Colors on Hover */
+   .social-icon { color: var(--muted); transition: color 0.3s, transform 0.3s; display: flex; align-items: center; justify-content: center; }
+   .social-icon:hover { transform: scale(1.1); }
+   .insta-color:hover { color: #E1306C; }
+   .wa-color:hover { color: #25D366; }
+   
    .cinematic-vignette { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, transparent 40%, rgba(11, 11, 15, 0.9) 150%); pointer-events: none; z-index: 90; }
    
    .cinematic-video-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; }
@@ -304,7 +272,6 @@
    .modal-video-container { position: relative; z-index: 1; width: 90%; max-width: 1400px; aspect-ratio: 16/9; background: #000; border-radius: 4px; overflow: hidden; }
    .modal-video-container video, .modal-video-container iframe { width: 100%; height: 100%; object-fit: cover; border: none; outline: none; display: block; }
    
-   /* Custom Cursor */
    .cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%); }
    @media (hover: none) and (pointer: coarse), (max-width: 768px) {
        .cursor, .cursor-follower { display: none !important; }
