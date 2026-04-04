@@ -84,7 +84,7 @@
    .fixed-ghost-logo img { height: clamp(25px, 5vw, 35px); object-fit: contain; }
    
    /* ==========================================================================
-      Portfolio Navigation Menu (Always at Top)
+      Portfolio Navigation Menu
       ========================================================================== */
    .portfolio-nav {
        position: fixed; top: 0; left: 0; width: 100%;
@@ -111,7 +111,7 @@
    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.4; pointer-events: none; }
    
    /* ==========================================================================
-      Hero Section
+      Hero Section 
       ========================================================================== */
    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
    
@@ -128,21 +128,16 @@
    .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 2; opacity: 0.5; }
    .mouse { width: 25px; height: 40px; border: 2px solid var(--muted); border-radius: 20px; position: relative; }
    .mouse::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px; background: var(--acc); border-radius: 2px; animation: scrollDrop 1.5s infinite; }
+   
    @keyframes scrollDrop { 0% { transform: translate(-50%, 0); opacity: 1; } 100% { transform: translate(-50%, 15px); opacity: 0; } }
    
    .text-reveal { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
    .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
    .word-inner { display: inline-block; transform: translateY(110%); }
    
-   .about { padding: 8rem 0 12rem; }
-   .portrait-wrapper { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 3/4; }
-   .portrait-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-   .portrait-wrapper:hover .portrait-img { transform: scale(1.05); }
-   
-   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem; }
-   .stat-number { font-size: clamp(3rem, 6vw, 4.5rem); color: var(--text); margin-bottom: 0.5rem; display: inline-block; font-weight: 300; line-height: 1; }
-   .stat-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
-   
+   /* ==========================================================================
+      INFINITE CLIENTS MARQUEE
+      ========================================================================== */
    .clients-marquee { padding: 2rem 0 6rem; overflow: hidden; position: relative; width: 100%; }
    .marquee-wrapper { width: 100vw; overflow: hidden; position: relative; }
    .marquee-track { display: inline-flex; white-space: nowrap; animation: scroll-marquee 25s linear infinite; gap: 6rem; padding-right: 6rem; }
@@ -157,7 +152,7 @@
        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
        opacity: 0; transition: opacity 0.3s; z-index: 10;
-       background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
+       background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);
        pointer-events: none; /* Allows hover to register */
    }
    
@@ -170,11 +165,11 @@
        }
    }
    
-   /* Always show subtle controls on Mobile for active/visible items */
+   /* Always show controls on Mobile for active/visible items */
    @media (max-width: 991px) {
        .swiper-slide-active .slide-controls,
        .portfolio-item .slide-controls {
-           opacity: 1; pointer-events: auto; background: rgba(0,0,0,0.2);
+           opacity: 1; pointer-events: auto; background: rgba(0,0,0,0.3);
        }
    }
    
@@ -193,12 +188,25 @@
       ========================================================================== */
    .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
    .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
-   .coverflow-swiper .swiper-slide { width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: grayscale(100%); opacity: 0.5; }
+   
+   .coverflow-swiper .swiper-slide {
+       width: 260px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; transition: all 0.5s ease; filter: grayscale(100%); opacity: 0.5;
+   }
+   
    @media (min-width: 768px) { .coverflow-swiper .swiper-slide { width: 350px; } }
    
    .coverflow-swiper .swiper-slide-active { filter: grayscale(0%); opacity: 1; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+   
    .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
-   .coverflow-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1; }
+   
+   /* SMART YOUTUBE SCALING: Hide titles/black bars */
+   .coverflow-inline-video { 
+       position: absolute; top:0; left:0; width: 100%; height: 100%; 
+       opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1; overflow: hidden;
+   }
+   .coverflow-inline-video video { width: 100%; height: 100%; object-fit: cover; }
+   .coverflow-inline-video iframe { width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; }
+   
    .coverflow-swiper .swiper-slide-active .coverflow-inline-video { opacity: 1; }
    
    .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 2; }
@@ -206,9 +214,21 @@
    .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 600; }
    .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
    
-   .featured-prev, .featured-next { color: var(--acc); background: rgba(11,11,15,0.8); border: 1px solid var(--acc); width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(5px); display: none; }
-   .featured-prev::after, .featured-next::after { font-size: 1.2rem; }
-   @media (min-width: 992px) { .featured-prev, .featured-next { display: flex; } .featured-prev { left: 5%; } .featured-next { right: 5%; } }
+   /* Swiper Circular Arrows Fixed */
+   .featured-prev, .featured-next, .slider-btn { 
+       color: var(--acc); background: rgba(11,11,15,0.8); border: 1px solid var(--acc); 
+       width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(5px); 
+       display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;
+       position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; margin: 0;
+   }
+   .featured-prev::after, .featured-next::after, .slider-btn::after { font-size: 1.2rem; }
+   .featured-prev, .prev-16x9, .prev-9x16 { left: 5%; }
+   .featured-next, .next-16x9, .next-9x16 { right: 5%; }
+   
+   .featured-prev:hover, .featured-next:hover, .slider-btn:hover { background: var(--acc); color: var(--bg); }
+   
+   /* Hide arrows on mobile to force touch swipe */
+   @media (max-width: 991px) { .featured-prev, .featured-next, .slider-btn { display: none !important; } }
    
    /* ==========================================================================
       Portfolio Grid (Homepage - Truncated)
@@ -222,22 +242,31 @@
    .portfolio-item:hover .portfolio-thumb img { transform: scale(1.05); }
    .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; }
    .portfolio-info p { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-   .portfolio-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s ease; }
-   .portfolio-item:hover .portfolio-inline-video { opacity: 1; }
    
-   /* Portfolio Page specific */
+   /* Grid Video Previews */
+   .portfolio-inline-video { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; overflow: hidden;}
+   .portfolio-inline-video video { width: 100%; height: 100%; object-fit: cover; }
+   .portfolio-inline-video iframe { width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; }
+   .portfolio-item:hover .portfolio-inline-video, .portfolio-page .swiper-slide:hover .portfolio-inline-video { opacity: 1; }
+   
+   /* ==========================================================================
+      Dedicated Portfolio Page Sliders
+      ========================================================================== */
    .portfolio-page { background: var(--bg); }
    .portfolio-slider-section { position: relative; }
-   .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 0; }
+   .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 0 5%; }
    .slider-header h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 300; }
-   .slider-nav { display: flex; gap: 1rem; }
-   .slider-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text); cursor: pointer; transition: all 0.3s; }
-   .slider-btn:hover { border-color: var(--acc); color: var(--acc); }
+   .slider-nav { position: static; display: flex; gap: 1rem; }
+   .slider-nav .slider-btn { position: relative; transform: none; top: auto; left: auto; right: auto; } /* Reset positioning for header */
+   
    .horizontal-swiper { padding-bottom: 3rem; overflow: visible !important;}
    .horizontal-swiper .swiper-slide { width: 85%; max-width: 800px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; }
    .vertical-swiper { padding-bottom: 3rem; overflow: visible !important;}
    .vertical-swiper .swiper-slide { width: 70%; max-width: 400px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; position: relative; }
    
+   /* ==========================================================================
+      Contact Form
+      ========================================================================== */
    .contact { padding: 10rem 0; }
    .contact-form { padding-top: 2rem; }
    .input-group { position: relative; margin-bottom: 3.5rem; }
@@ -256,7 +285,6 @@
       ========================================================================== */
    .footer { padding: 4rem 0 3rem; background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05); }
    
-   /* Proper Social Logo Colors on Hover */
    .social-icon { color: var(--muted); transition: color 0.3s, transform 0.3s; display: flex; align-items: center; justify-content: center; }
    .social-icon:hover { transform: scale(1.1); }
    .insta-color:hover { color: #E1306C; }

@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// EXTENDED DATA (To fill up the portfolio sliders)
+// BULLETPROOF PORTFOLIO DATA (All Your Actual Links)
 // ==========================================================================
 const portfolioData = {
   "projects": [
@@ -26,7 +26,7 @@ const portfolioData = {
     {
       "id": "proj-4", "title": "Maa", "categoryLabel": "Instagram Reels", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/WkALdRotTwo",
+      "previewVideo": "https://www.youtube.com/shorts/F0qJtArAGUc",
       "featured": true
     },
     {
@@ -44,7 +44,7 @@ const portfolioData = {
     {
       "id": "proj-7", "title": "HalalVish paan", "categoryLabel": "Cinematic", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "youtube.com/watch?v=zyITGGf4Grw&pp=0gcJCdkKAYcqIYzv",
+      "previewVideo": "https://www.youtube.com/watch?v=zyITGGf4Grw",
       "featured": false
     },
     {
@@ -54,7 +54,7 @@ const portfolioData = {
       "featured": false
     },
     {
-      "id": "proj-9", "title": "Shyam jab koi Raha nhi dikhe to tu raha banjata hai", "categoryLabel": "YouTube", "format": "9x16",
+      "id": "proj-9", "title": "Shyam jab koi Raha nhi dikhe", "categoryLabel": "YouTube", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://www.youtube.com/shorts/6WKfTHZVpPU",
       "featured": false
@@ -69,10 +69,31 @@ const portfolioData = {
 };
 
 // ==========================================================================
+// Video URL Parser (MP4 vs YouTube)
+// ==========================================================================
+function getYouTubeId(url) {
+    if (!url) return null;
+    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
+    if (url.includes('youtube.com/shorts/')) return url.split('youtube.com/shorts/')[1].split('?')[0];
+    if (url.includes('youtube.com/watch')) return new URL(url).searchParams.get('v');
+    return null;
+}
+
+function buildInlineVideoHTML(src) {
+    const ytId = getYouTubeId(src);
+    if (ytId) {
+        // 150% hack to hide YouTube Title/Controls in the background
+        return `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" style="pointer-events:none;"></iframe>`;
+    } else {
+        return `<video src="${src}" loop playsinline muted preload="auto"></video>`;
+    }
+}
+
+// ==========================================================================
 // Lenis Smooth Scroll Engine
 // ==========================================================================
 const lenis = new Lenis({
-    duration: 1.8, 
+    duration: 1.5, 
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: 'vertical',
     gestureDirection: 'vertical',
@@ -97,7 +118,6 @@ function initGhostLogo() {
     });
 }
 
-// Function to build universal slide controls
 function getSlideControls(videoSrc) {
     return `
         <div class="slide-controls">
@@ -110,9 +130,9 @@ function getSlideControls(videoSrc) {
     `;
 }
 
-// Function to bind Play/Pause/Mute logic to a video container
+// Bind Mute/Unmute for both Video tags and YouTube Iframes (via API trick or just basic video)
 function bindVideoControls(container) {
-    const video = container.querySelector('video');
+    const video = container.querySelector('video'); // Only works on native video
     const playBtn = container.querySelector('.play-pause-btn');
     const muteBtn = container.querySelector('.mute-btn');
     const viewBtn = container.querySelector('.view-full-btn');
@@ -123,7 +143,6 @@ function bindVideoControls(container) {
             if(video.paused) { video.play(); playBtn.innerText = "Pause"; } 
             else { video.pause(); playBtn.innerText = "Play"; }
         });
-
         muteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             video.muted = !video.muted;
@@ -153,7 +172,6 @@ function loadPortfolioData() {
             if(featuredGrid) {
                 featuredGrid.innerHTML = '';
                 let featuredProjects = data.projects.filter(p => p.featured);
-                
                 if (featuredProjects.length > 0 && featuredProjects.length < 5) {
                     featuredProjects = [...featuredProjects, ...featuredProjects, ...featuredProjects];
                 }
@@ -161,7 +179,7 @@ function loadPortfolioData() {
                 featuredProjects.forEach((project) => {
                     const projHTML = `
                         <div class="swiper-slide">
-                            <video src="${project.previewVideo}" class="coverflow-inline-video" loop playsinline muted preload="auto"></video>
+                            <div class="coverflow-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
                             <img src="${project.thumbnail}" alt="${project.title}" class="coverflow-img">
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
@@ -184,7 +202,7 @@ function loadPortfolioData() {
                     const projectHTML = `
                         <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;">
                             <div class="portfolio-thumb">
-                                <video src="${project.previewVideo}" class="portfolio-inline-video" loop playsinline muted preload="auto"></video>
+                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
                                 <img src="${project.thumbnail}" alt="${project.title}">
                                 ${getSlideControls(project.previewVideo)}
                             </div>
@@ -211,13 +229,12 @@ function loadPortfolioData() {
                     const slideHTML = `
                         <div class="swiper-slide tilt-card">
                             <div class="portfolio-thumb" style="margin:0; height:100%;">
-                                <video src="${project.previewVideo}" class="portfolio-inline-video" loop playsinline muted preload="auto"></video>
+                                <div class="portfolio-inline-video">${buildInlineVideoHTML(project.previewVideo)}</div>
                                 <img src="${project.thumbnail}" alt="${project.title}">
                                 ${getSlideControls(project.previewVideo)}
                             </div>
                         </div>
                     `;
-
                     if(project.format === '16x9') horizontalGrid.insertAdjacentHTML('beforeend', slideHTML);
                     else if (project.format === '9x16') verticalGrid.insertAdjacentHTML('beforeend', slideHTML);
                 });
@@ -235,31 +252,15 @@ function initializePostLoadEffects() {
     if (typeof initTilt === "function") initTilt();
     if (typeof attachHoverStates === "function") attachHoverStates();
 
-    // 1. Init 3D Coverflow Swiper 
     if(document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {
             effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto',
             loop: true, loopedSlides: 5, 
             coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false },
-            navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
-            on: {
-                slideChangeTransitionEnd: function () {
-                    document.querySelectorAll('.coverflow-swiper video').forEach(vid => { vid.pause(); });
-                    
-                    const activeSlide = this.slides[this.activeIndex];
-                    const activeVideo = activeSlide.querySelector('video');
-                    const playBtn = activeSlide.querySelector('.play-pause-btn');
-
-                    if(activeVideo) {
-                        activeVideo.play().catch(e => console.log(e));
-                        if(playBtn) playBtn.innerText = "Pause";
-                    }
-                }
-            }
+            navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' }
         });
     }
 
-    // 2. Init Dedicated Portfolio Swipers
     if(document.querySelector('.horizontal-swiper')) {
         new Swiper('.horizontal-swiper', { slidesPerView: 'auto', spaceBetween: 30, grabCursor: true, navigation: { nextEl: '.next-16x9', prevEl: '.prev-16x9' } });
     }
@@ -269,29 +270,11 @@ function initializePostLoadEffects() {
 
     setTimeout(() => { ScrollTrigger.refresh(); }, 500);
 
-    // Bind Controls to all injected videos
     document.querySelectorAll('.swiper-slide, .portfolio-item').forEach(container => {
         bindVideoControls(container);
-        
-        // Auto-play logic on hover for non-coverflow items
-        if(!container.classList.contains('coverflow-swiper')) {
-            container.addEventListener('mouseenter', () => {
-                const vid = container.querySelector('video');
-                const btn = container.querySelector('.play-pause-btn');
-                if(vid) { vid.play().catch(e=>{}); if(btn) btn.innerText = "Pause"; }
-            });
-            container.addEventListener('mouseleave', () => {
-                const vid = container.querySelector('video');
-                const btn = container.querySelector('.play-pause-btn');
-                if(vid) { vid.pause(); if(btn) btn.innerText = "Play"; }
-            });
-        }
     });
 }
 
-// ==========================================================================
-// Utilities
-// ==========================================================================
 function splitTextReveal() {
     const reveals = document.querySelectorAll('.text-reveal');
     reveals.forEach(el => {
@@ -331,16 +314,12 @@ const attachHoverStates = () => {
         link.addEventListener('mouseenter', () => { cursor.classList.add('hover-btn'); cursorFollower.classList.add('hover-btn'); });
         link.addEventListener('mouseleave', () => { cursor.classList.remove('hover-btn'); cursorFollower.classList.remove('hover-btn'); });
     });
-
     portfolios.forEach(item => {
         item.addEventListener('mouseenter', () => { cursorFollower.classList.add('hover-portfolio'); });
         item.addEventListener('mouseleave', () => { cursorFollower.classList.remove('hover-portfolio'); });
     });
 };
 
-// ==========================================================================
-// Three.js Background 
-// ==========================================================================
 function initThreeJS() {
     const canvas = document.querySelector('#webgl-canvas');
     if (!canvas) return;
@@ -348,21 +327,16 @@ function initThreeJS() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-    
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 800; 
     const posArray = new Float32Array(particlesCount * 3);
-
     for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 15; 
-
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const material = new THREE.PointsMaterial({
-        size: 0.003, color: 0xD4AF37, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending
-    });
-
+    
+    const material = new THREE.PointsMaterial({ size: 0.003, color: 0xD4AF37, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
     const particlesMesh = new THREE.Points(particlesGeometry, material);
     scene.add(particlesMesh);
     camera.position.z = 3;
@@ -377,7 +351,6 @@ function initThreeJS() {
     window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
     const clock = new THREE.Clock();
-
     const tick = () => {
         const elapsedTime = clock.getElapsedTime();
         particlesMesh.rotation.y = elapsedTime * 0.03; 
@@ -385,7 +358,6 @@ function initThreeJS() {
         particlesMesh.rotation.y += 0.05 * (targetX - particlesMesh.rotation.y);
         particlesMesh.rotation.x += 0.05 * (targetY - particlesMesh.rotation.x);
         particlesMesh.position.y = -scrollY * 0.0008; 
-
         renderer.render(scene, camera);
         window.requestAnimationFrame(tick);
     };
@@ -398,12 +370,8 @@ function initThreeJS() {
     });
 }
 
-// ==========================================================================
-// Animations & Preloader
-// ==========================================================================
 function initAnimations() {
     splitTextReveal();
-    
     const brandText = document.getElementById('brand-text');
     if(!brandText) return;
     const textContent = brandText.innerText;
@@ -451,25 +419,10 @@ function initAnimations() {
 
 function initScrollAnimations() {
     const textReveals = document.querySelectorAll('section:not(.hero) .text-reveal');
-    textReveals.forEach(text => {
-        gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" });
-    });
+    textReveals.forEach(text => { gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" }); });
 
     const fadeUps = document.querySelectorAll('.fade-up');
-    fadeUps.forEach(el => {
-        gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" });
-    });
-
-    gsap.to('.portrait-img', { scrollTrigger: { trigger: '.about', start: "top bottom", end: "bottom top", scrub: true }, yPercent: 10, scale: 1.05 });
-
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        ScrollTrigger.create({
-            trigger: counter, start: "top 90%", once: true,
-            onEnter: () => { gsap.to(counter, { innerHTML: target, duration: 2.5, snap: { innerHTML: 1 }, ease: "power3.out" }); }
-        });
-    });
+    fadeUps.forEach(el => { gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }); });
 
     const arsenalItems = document.querySelectorAll('.3d-float');
     arsenalItems.forEach(item => {
@@ -504,11 +457,10 @@ function openVideoModal(videoSrc) {
     const container = document.getElementById('modalVideoContainer');
     
     container.innerHTML = '';
-    if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
-        let videoId = '';
-        if (videoSrc.includes('youtu.be/')) { videoId = videoSrc.split('youtu.be/')[1].split('?')[0]; } 
-        else if (videoSrc.includes('youtube.com/watch?v=')) { videoId = videoSrc.split('v=')[1].split('&')[0]; }
-        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    const ytId = getYouTubeId(videoSrc);
+    
+    if (ytId) {
+        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
     }
@@ -520,7 +472,7 @@ function initModalPlayer() {
     const modal = document.getElementById('videoModal');
     const container = document.getElementById('modalVideoContainer');
     const closeBtn = document.querySelector('.modal-close-btn');
-    
+
     const closeModal = () => {
         gsap.to(modal, { autoAlpha: 0, duration: 0.5, ease: "power2.in", onComplete: () => {
             container.innerHTML = ''; 
@@ -533,7 +485,7 @@ function initModalPlayer() {
 }
 
 // ==========================================================================
-// Barba Page Transitions (FIXED: Scrolls to top immediately on enter)
+// Barba Page Transitions (FIXED: Auto-scrolls to top on page load)
 // ==========================================================================
 barba.init({
     sync: true,
@@ -541,11 +493,10 @@ barba.init({
         name: 'opacity-transition',
         leave(data) { return gsap.to(data.current.container, { opacity: 0, duration: 0.6, ease: "power2.inOut" }); },
         enter(data) {
-            // FIX THE BOTTOM LOAD BUG: Instantly jump to the top of the new page
+            // FIX: Force window to absolute top before transition starts
             window.scrollTo(0, 0);
             lenis.scrollTo(0, { immediate: true });
             
-            // Re-fetch and re-build DOM
             loadPortfolioData();
             attachHoverStates(); 
             initTilt(); 
