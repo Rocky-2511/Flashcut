@@ -76,24 +76,56 @@ function getYouTubeId(url) {
     return null;
 }
 
-// Generates HTML exactly when needed
+// PREMIUM FIX: enablejsapi=1 is added so we can control Sound via custom buttons!
 function buildInlineVideoHTML(src) {
     if (!src) return '';
     const ytId = getYouTubeId(src);
     if (ytId) {
-        return `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
+        return `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
     } else {
         return `<video src="${src}" loop playsinline muted autoplay></video>`;
     }
 }
 
+// PREMIUM UI: Beautiful Glassmorphism bar with Sound & Play buttons
+const volumeOffIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
+const volumeOnIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+
 function getSlideControls(videoSrc) {
     return `
         <div class="slide-controls">
-            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); openVideoModal('${videoSrc}')">View Full Video</button>
+            <button class="sound-btn muted" onclick="toggleMute(this, event)">${volumeOffIcon}</button>
+            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); openVideoModal('${videoSrc}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                View Full
+            </button>
         </div>
     `;
 }
+
+// ==========================================================================
+// SOUND CONTROL LOGIC (Zero-Reload using YouTube API PostMessage)
+// ==========================================================================
+window.toggleMute = function(btn, event) {
+    event.stopPropagation(); // Prevents modal from opening when clicking sound
+    const card = btn.closest('.tilt-card, .swiper-slide');
+    const iframe = card.querySelector('iframe');
+    const video = card.querySelector('video');
+    const isMuted = btn.classList.contains('muted');
+    
+    if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({
+            "event": "command",
+            "func": isMuted ? "unMute" : "mute",
+            "args": []
+        }), "*");
+    } else if (video) {
+        video.muted = !isMuted;
+    }
+    
+    btn.classList.toggle('muted');
+    btn.innerHTML = isMuted ? volumeOnIcon : volumeOffIcon;
+};
 
 // ==========================================================================
 // FEATURED WORK: AUTO-PLAY CENTER LOGIC (Strictly When Stopped)
@@ -102,20 +134,23 @@ function stopAllCoverflowVideos(swiper) {
     swiper.slides.forEach(slide => {
         const videoContainer = slide.querySelector('.coverflow-inline-video');
         if (videoContainer && videoContainer.innerHTML !== '') {
-            gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => { videoContainer.innerHTML = ''; }});
+            gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => { 
+                videoContainer.innerHTML = ''; 
+                // Reset sound button to muted state
+                const soundBtn = slide.querySelector('.sound-btn');
+                if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
+            }});
         }
     });
 }
 
 function playCenterCoverflowVideo(swiper) {
-    stopAllCoverflowVideos(swiper); // Double check everything is clean
-    
-    // Play video ONLY on the center/active slide
+    // Only play video on the REAL active slide (fixes glitch)
     const activeSlide = swiper.slides[swiper.activeIndex];
     if (activeSlide) {
         const videoSrc = activeSlide.getAttribute('data-preview-src');
         const videoContainer = activeSlide.querySelector('.coverflow-inline-video');
-        if (videoContainer && videoSrc) {
+        if (videoContainer && videoSrc && videoContainer.innerHTML === '') {
             videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
             gsap.to(videoContainer, {opacity: 1, duration: 0.4});
         }
@@ -123,15 +158,15 @@ function playCenterCoverflowVideo(swiper) {
 }
 
 // ==========================================================================
-// PORTFOLIO GRID: HOVER TO PLAY (Excludes Coverflow)
+// PORTFOLIO GRID: PC HOVER & MOBILE SCROLL (Instagram style)
 // ==========================================================================
 let globalHoverTimer;
 let currentActiveVideoContainer = null;
 
 function initHoverToPlay() {
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        // PC HOVER LOGIC
         document.addEventListener('mouseover', (e) => {
-            // EXCLUDE featured slider from hover logic
             const card = e.target.closest('.portfolio-item, .portfolio-slider-section .swiper-slide');
             if (!card) return;
 
@@ -140,12 +175,10 @@ function initHoverToPlay() {
             
             if (videoContainer && videoSrc && currentActiveVideoContainer !== videoContainer) {
                 clearTimeout(globalHoverTimer);
-                
                 if (currentActiveVideoContainer) {
                     currentActiveVideoContainer.innerHTML = '';
                     gsap.to(currentActiveVideoContainer, {opacity: 0, duration: 0.1});
                 }
-
                 currentActiveVideoContainer = videoContainer;
 
                 globalHoverTimer = setTimeout(() => {
@@ -158,25 +191,54 @@ function initHoverToPlay() {
         document.addEventListener('mouseout', (e) => {
             const card = e.target.closest('.portfolio-item, .portfolio-slider-section .swiper-slide');
             if (!card) return;
-
-            const relatedTarget = e.relatedTarget;
-            if (card.contains(relatedTarget)) return;
+            if (card.contains(e.relatedTarget)) return;
 
             const videoContainer = card.querySelector('.portfolio-inline-video');
-            
             if (videoContainer) {
                 clearTimeout(globalHoverTimer);
                 gsap.to(videoContainer, {
-                    opacity: 0, 
-                    duration: 0.2, 
-                    onComplete: () => {
+                    opacity: 0, duration: 0.2, onComplete: () => {
                         videoContainer.innerHTML = ''; 
-                        if(currentActiveVideoContainer === videoContainer) {
-                            currentActiveVideoContainer = null;
-                        }
+                        if(currentActiveVideoContainer === videoContainer) currentActiveVideoContainer = null;
+                        const soundBtn = card.querySelector('.sound-btn');
+                        if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
                     }
                 });
             }
+        });
+    } else {
+        // MOBILE AUTO-PLAY ON SCROLL LOGIC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const card = entry.target;
+                const videoSrc = card.getAttribute('data-preview-src');
+                const videoContainer = card.querySelector('.portfolio-inline-video, .coverflow-inline-video'); // coverflow handles itself, but just in case
+                
+                if(card.closest('.coverflow-swiper')) return; // let swiper handle the featured section
+
+                if (entry.isIntersecting) {
+                    if (videoContainer && videoContainer.innerHTML === '') {
+                        videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
+                        gsap.to(videoContainer, {opacity: 1, duration: 0.4});
+                        card.querySelector('.slide-controls').style.opacity = 1;
+                        card.querySelector('.slide-controls').style.pointerEvents = 'auto';
+                    }
+                } else {
+                    if (videoContainer && videoContainer.innerHTML !== '') {
+                        gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => {
+                            videoContainer.innerHTML = '';
+                            const soundBtn = card.querySelector('.sound-btn');
+                            if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
+                        }});
+                        card.querySelector('.slide-controls').style.opacity = 0;
+                        card.querySelector('.slide-controls').style.pointerEvents = 'none';
+                    }
+                }
+            });
+        }, { threshold: 0.5 }); // Plays when 50% visible on phone screen
+
+        document.querySelectorAll('.portfolio-item, .horizontal-swiper .swiper-slide, .vertical-swiper .swiper-slide').forEach(card => {
+            observer.observe(card);
         });
     }
 }
@@ -301,15 +363,15 @@ function initializePostLoadEffects() {
             slideToClickedSlide: true,
             on: {
                 init: function () {
-                    // Play initial center video after a short delay to allow page load
-                    setTimeout(() => playCenterCoverflowVideo(this), 500);
+                    // Give extra time for page setup before injecting first video
+                    setTimeout(() => playCenterCoverflowVideo(this), 800);
                 },
                 slideChangeTransitionStart: function () {
-                    // Stop video strictly when user moves slider
+                    // Stop strictly during any movement
                     stopAllCoverflowVideos(this);
                 },
                 slideChangeTransitionEnd: function () {
-                    // Play video strictly when slider stops at the new center
+                    // Play strictly when perfectly stopped
                     playCenterCoverflowVideo(this);
                 }
             }

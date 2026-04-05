@@ -81,6 +81,7 @@
    .portfolio-nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(11, 11, 15, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
    .portfolio-nav .nav-logo { height: 25px; object-fit: contain; }
    
+   /* Back to Home Button */
    .back-home-btn { position: absolute; left: 5%; top: 15vh; padding: 0.8rem 1.5rem; font-size: 0.85rem; border-radius: 30px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); z-index: 10; }
    @media (max-width: 991px) { .back-home-btn { position: relative; top: 0; left: 0; margin-bottom: 2rem; } }
    
@@ -120,53 +121,76 @@
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      INLINE PREVIEW VIDEOS (0 Lag Setup & Strict Clipping Fix)
+      INLINE PREVIEW VIDEOS (Strict Clipping & Loader Fix)
       ========================================================================== */
    .coverflow-inline-video, .portfolio-inline-video { 
        position: absolute; top:0; left:0; width: 100%; height: 100%; 
-       z-index: 1; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
-       border-radius: 12px;
-       -webkit-mask-image: -webkit-radial-gradient(white, black); /* PREMIUM FIX: Stops the iframe from bleeding out */
-       -webkit-transform: translate3d(0, 0, 0); /* Force Hardware Clipping */
-       transform: translate3d(0, 0, 0);
+       z-index: 1; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 0.4s ease;
+       
+       /* THE ULTIMATE SAFARI BUG FIX: Forces GPU clipping */
+       clip-path: inset(0.1px round 12px); 
+       -webkit-clip-path: inset(0.1px round 12px);
+       transform: translate3d(0, 0, 0); 
+       background-color: #000;
    }
+   
+   /* Spinner for slow YouTube loads */
+   .coverflow-inline-video::before, .portfolio-inline-video::before {
+       content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+       width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.2);
+       border-top-color: var(--acc); border-radius: 50%; animation: spin 1s linear infinite;
+       z-index: -1;
+   }
+   @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
    /* Scale up by 150% and pull back -25% to hide YouTube titles and black bars completely */
    .coverflow-inline-video iframe, .portfolio-inline-video iframe { 
        width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; border: none;
+       background: transparent;
    }
    .coverflow-inline-video video, .portfolio-inline-video video { 
        width: 100%; height: 100%; object-fit: cover; border: none; pointer-events: none;
    }
    
    /* ==========================================================================
-      SLIDE CONTROLS OVERLAY (View Full Video)
+      PREMIUM SLIDE CONTROLS OVERLAY (Volume + View Full)
       ========================================================================== */
    .slide-controls {
-       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-       display: flex; flex-direction: column; align-items: center; justify-content: center;
-       opacity: 0; transition: opacity 0.4s; z-index: 10;
-       background: rgba(0,0,0,0.6); backdrop-filter: blur(2px);
-       pointer-events: none; 
+       position: absolute; bottom: 0; left: 0; width: 100%; height: auto;
+       padding: 20px 15px 15px; display: flex; justify-content: space-between; align-items: center;
+       opacity: 0; transition: opacity 0.4s ease; z-index: 15;
+       background: linear-gradient(to top, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0.5) 60%, transparent 100%);
+       pointer-events: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
    }
    
-   .control-btn {
-       background: rgba(11,11,15,0.9); border: 1px solid var(--acc); color: var(--text);
-       padding: 0.8rem 2rem; border-radius: 30px; font-family: var(--font-head);
-       font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
-       cursor: pointer; transition: all 0.3s; pointer-events: auto;
+   .sound-btn {
+       width: 40px; height: 40px; border-radius: 50%;
+       background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+       border: 1px solid rgba(255,255,255,0.2); color: #fff;
+       display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); pointer-events: auto;
    }
-   .control-btn:hover { background: var(--acc); color: var(--bg); transform: scale(1.05); }
+   .sound-btn:hover { background: var(--acc); border-color: var(--acc); color: var(--bg); transform: scale(1.1); }
+   
+   .control-btn {
+       background: var(--acc); color: var(--bg); border: none;
+       padding: 10px 20px; border-radius: 30px; font-family: var(--font-head);
+       font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+       cursor: pointer; transition: all 0.3s; pointer-events: auto; display: flex; align-items: center; gap: 8px;
+       box-shadow: 0 4px 15px rgba(226, 185, 56, 0.3);
+   }
+   .control-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,255,255,0.4); }
    
    @media (min-width: 992px) {
        .portfolio-item:hover .slide-controls,
        .portfolio-slider-section .swiper-slide:hover .slide-controls { opacity: 1; }
-       
-       /* Auto-show button on Center Coverflow card since hover is disabled */
-       .coverflow-swiper .swiper-slide-active:hover .slide-controls { opacity: 1; pointer-events: auto; }
+       /* Center card always shows controls since hover is disabled */
+       .coverflow-swiper .swiper-slide-active .slide-controls { opacity: 1; pointer-events: auto; }
    }
+   
+   /* Mobile Display Fix: Shows gracefully when scrolling (JS handles opacity) */
    @media (max-width: 991px) {
-       .slide-controls { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); align-items: flex-end; padding-bottom: 20px; }
-       .control-btn { padding: 0.5rem 1.2rem; font-size: 0.7rem; border: none; background: var(--acc); color: var(--bg); font-weight: 600;}
+       .control-btn { padding: 8px 16px; font-size: 0.65rem;}
+       .sound-btn { width: 35px; height: 35px; }
    }
    
    /* ==========================================================================
@@ -181,7 +205,8 @@
        filter: grayscale(100%) brightness(0.4); 
        
        /* STRICT CLIPPING FIXES */
-       -webkit-mask-image: -webkit-radial-gradient(white, black); 
+       clip-path: inset(0.1px round 12px); 
+       -webkit-clip-path: inset(0.1px round 12px);
        -webkit-transform: translate3d(0, 0, 0); 
        transform: translate3d(0, 0, 0);
        -webkit-backface-visibility: hidden;
@@ -197,7 +222,7 @@
 
    .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
    
-   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem 2rem 2rem; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 11; }
+   .coverflow-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem 2rem 5rem; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; pointer-events: none; z-index: 11; }
    .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; }
    .coverflow-info h3 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 500; }
    .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
@@ -218,8 +243,8 @@
    
    .portfolio-item, .horizontal-swiper .swiper-slide, .vertical-swiper .swiper-slide { 
        position: relative; border-radius: 8px; overflow: hidden; cursor: pointer; 
-       -webkit-mask-image: -webkit-radial-gradient(white, black);
-       transform: translateZ(0);
+       clip-path: inset(0.1px round 8px); -webkit-clip-path: inset(0.1px round 8px);
+       transform: translate3d(0,0,0);
    }
    
    .portfolio-thumb { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; margin-bottom: 1.5rem; border-radius: 8px; }
@@ -231,6 +256,11 @@
    .portfolio-item:hover .portfolio-thumb img, .portfolio-slider-section .swiper-slide:hover .portfolio-thumb img {
        filter: grayscale(0%);
        transform: scale(1.05);
+   }
+
+   /* On mobile, images are colorful when active */
+   @media (max-width: 991px) {
+       .portfolio-thumb img { filter: grayscale(0%); }
    }
 
    .portfolio-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; transition: color 0.3s;}
