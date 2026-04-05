@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashCut | Professional Video Editing</title>
+    <title>Portfolio | FlashCut Studio</title>
     <link rel="preconnect" href="https://www.youtube.com">
     <link rel="preconnect" href="https://i.ytimg.com">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="main.css">
 </head>
-<body class="loading">
+<body class="loading portfolio-page">
 
     <canvas id="webgl-canvas"></canvas>
     <div class="cinematic-vignette"></div>
@@ -29,121 +29,52 @@
                 <div class="loader-logo-container">
                     <img src="flashcut-logo.png" alt="FlashCut Logo" class="loader-logo-img">
                 </div>
-                <h1 class="fast-type-text" id="brand-text">FLASHCUT</h1>
-                <div class="lightning-slash"></div>
             </div>
             <div class="loader-percentage" id="load-percent">00</div>
         </div>
-        <div class="screen-flash"></div>
     </div>
 
-    <a href="#home" class="fixed-ghost-logo magnetic-element">
-        <img src="flashcut-logo.png" alt="FlashCut">
-    </a>
+    <nav class="portfolio-nav glass fade-up">
+        <div class="nav-brand">
+            <img src="flashcut-logo.png" alt="FlashCut" class="nav-logo">
+        </div>
+    </nav>
 
     <main data-barba="wrapper">
-        <div data-barba="container" data-barba-namespace="home">
+        <div data-barba="container" data-barba-namespace="portfolio">
             
-            <section class="hero" id="home">
-                <video autoplay loop muted playsinline preload="auto" class="hero-bg-video" id="hero-video-bg" src="https://drive.google.com/uc?export=download&id=13Ic2oKJZUNndNV2vLlFB1MaEQmirWd9E"></video>
-                <div class="hero-video-overlay"></div>
-
-                <div class="hero-content">
-                    <a href="#home" class="hero-logo-link magnetic-element fade-up">
-                        <img src="flashcut-logo.png" alt="FlashCut" class="hero-logo">
-                    </a>
-                    <p class="hero-subtext fade-up" style="transition-delay: 0.1s;">By Anurag Tiwari</p>
-                    <div class="hero-buttons fade-up" style="margin-top: 2rem; transition-delay: 0.2s;">
-                        <a href="#featured-projects" class="btn btn-primary magnetic-btn">View Work</a>
-                    </div>
-                </div>
+            <div class="container" style="padding-top: 15vh; text-align: center; margin-bottom: 5rem; position: relative;">
+                <a href="index.html" class="btn btn-outline magnetic-btn back-home-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Home
+                </a>
                 
-                <div class="scroll-indicator fade-up" style="transition-delay: 0.4s;">
-                    <div class="mouse"></div>
-                </div>
-            </section>
+                <h1 class="section-title text-reveal">The <span class="glow-text">Archives</span></h1>
+                <p class="section-desc fade-up" style="margin: 0 auto;">Select a category to explore.</p>
+            </div>
 
-            <section class="clients-marquee fade-up">
-                <div class="marquee-wrapper">
-                    <div class="marquee-track">
-                        <div class="marquee-item">Netflix Post</div>
-                        <div class="marquee-item">Sony Pictures</div>
-                        <div class="marquee-item">Westside</div>
-                        <div class="marquee-item">Impulse Digital</div>
-                        <div class="marquee-item">British Asian Trust</div>
-                        <div class="marquee-item">Trailer Park</div>
-                        <div class="marquee-item">Netflix Post</div>
-                        <div class="marquee-item">Sony Pictures</div>
-                        <div class="marquee-item">Westside</div>
-                        <div class="marquee-item">Impulse Digital</div>
-                        <div class="marquee-item">British Asian Trust</div>
-                        <div class="marquee-item">Trailer Park</div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="featured-projects" id="featured-projects">
+            <section class="portfolio-slider-section">
                 <div class="container-fluid" style="position: relative;">
-                    <h2 class="section-title text-reveal" style="text-align: center; margin-bottom: 3rem;">Featured Work</h2>
-                    <div class="swiper coverflow-swiper fade-up">
-                        <div class="swiper-wrapper" id="dynamic-featured">
-                            </div>
-                        <div class="swiper-button-prev featured-prev"></div>
-                        <div class="swiper-button-next featured-next"></div>
+                    <div class="slider-header fade-up">
+                        <h2>Cinematic / Long Format</h2>
+                    </div>
+                    <div class="swiper horizontal-swiper fade-up">
+                        <div class="swiper-wrapper" id="dynamic-16x9"></div>
+                        <div class="swiper-button-prev slider-btn prev-16x9"></div>
+                        <div class="swiper-button-next slider-btn next-16x9"></div>
                     </div>
                 </div>
             </section>
 
-            <section class="portfolio" id="portfolio">
-                <div class="container">
-                    <div class="section-header" style="justify-content: center; text-align: center;">
-                        <h2 class="section-title text-reveal" style="margin: 0;">Recent Projects</h2>
+            <section class="portfolio-slider-section" style="margin-top: 6rem; margin-bottom: 10rem;">
+                <div class="container-fluid" style="position: relative;">
+                    <div class="slider-header fade-up">
+                        <h2>Shorts / Reels</h2>
                     </div>
-                    
-                    <div class="portfolio-grid" id="dynamic-portfolio">
-                        </div>
-                    
-                    <div style="text-align: center; margin-top: 5rem;" class="fade-up">
-                        <a href="portfolio.html" class="btn btn-outline magnetic-btn">View Full Archives</a>
-                    </div>
-                </div>
-            </section>
-
-            <section class="contact" id="contact">
-                <div class="container split-layout">
-                    <div class="contact-left">
-                        <h2 class="section-title text-reveal">Let's craft <br>something <span class="glow-text">iconic.</span></h2>
-                        <p class="section-desc fade-up">Let's Build Something Together.</p>
-                    </div>
-                    <div class="contact-right fade-up">
-                        <form class="contact-form">
-                            <div class="input-group">
-                                <input type="text" id="name" required placeholder=" ">
-                                <label for="name">Your Name</label>
-                                <div class="input-line"></div>
-                            </div>
-                            <div class="input-group">
-                                <input type="email" id="email" required placeholder=" ">
-                                <label for="email">Email Address</label>
-                                <div class="input-line"></div>
-                            </div>
-                            <div class="input-group">
-                                <select id="type" required>
-                                    <option value="" disabled selected>Project Scope</option>
-                                    <option value="youtube">YouTube</option>
-                                    <option value="commercial">Commercial</option>
-                                    <option value="reels">Short Form</option>
-                                    <option value="other">Other</option>
-                                </select>
-                                <div class="input-line"></div>
-                            </div>
-                            <div class="input-group">
-                                <textarea id="message" rows="3" required placeholder=" "></textarea>
-                                <label for="message">Details</label>
-                                <div class="input-line"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary magnetic-btn submit-btn">Submit Inquiry</button>
-                        </form>
+                    <div class="swiper vertical-swiper fade-up">
+                        <div class="swiper-wrapper" id="dynamic-9x16"></div>
+                        <div class="swiper-button-prev slider-btn prev-9x16"></div>
+                        <div class="swiper-button-next slider-btn next-9x16"></div>
                     </div>
                 </div>
             </section>
@@ -154,7 +85,7 @@
     <footer class="footer">
         <div class="container footer-content" style="flex-direction: column; text-align: center; justify-content: center; gap: 1.5rem;">
             <div class="footer-brand">
-                <a href="#home" class="magnetic-element" style="display: inline-block;">
+                <a href="index.html" class="magnetic-element" style="display: inline-block;">
                     <img src="flashcut-logo.png" alt="FlashCut Logo" style="height: 40px; margin-bottom: 10px;">
                 </a>
             </div>
