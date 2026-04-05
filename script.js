@@ -76,7 +76,6 @@ function getYouTubeId(url) {
     return null;
 }
 
-// PREMIUM FIX: enablejsapi=1 is added so we can control Sound via custom buttons!
 function buildInlineVideoHTML(src) {
     if (!src) return '';
     const ytId = getYouTubeId(src);
@@ -87,7 +86,6 @@ function buildInlineVideoHTML(src) {
     }
 }
 
-// PREMIUM UI: Beautiful Glassmorphism bar with Sound & Play buttons
 const volumeOffIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
 const volumeOnIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
 
@@ -104,21 +102,17 @@ function getSlideControls(videoSrc) {
 }
 
 // ==========================================================================
-// SOUND CONTROL LOGIC (Zero-Reload using YouTube API PostMessage)
+// SOUND CONTROL LOGIC
 // ==========================================================================
 window.toggleMute = function(btn, event) {
-    event.stopPropagation(); // Prevents modal from opening when clicking sound
+    event.stopPropagation(); 
     const card = btn.closest('.tilt-card, .swiper-slide');
     const iframe = card.querySelector('iframe');
     const video = card.querySelector('video');
     const isMuted = btn.classList.contains('muted');
     
     if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({
-            "event": "command",
-            "func": isMuted ? "unMute" : "mute",
-            "args": []
-        }), "*");
+        iframe.contentWindow.postMessage(JSON.stringify({ "event": "command", "func": isMuted ? "unMute" : "mute", "args": [] }), "*");
     } else if (video) {
         video.muted = !isMuted;
     }
@@ -128,24 +122,23 @@ window.toggleMute = function(btn, event) {
 };
 
 // ==========================================================================
-// FEATURED WORK: AUTO-PLAY CENTER LOGIC (Strictly When Stopped)
+// FEATURED WORK: INSTANT KILL LOGIC (Destroys clipping glitch 100%)
 // ==========================================================================
-function stopAllCoverflowVideos(swiper) {
+function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
         const videoContainer = slide.querySelector('.coverflow-inline-video');
         if (videoContainer && videoContainer.innerHTML !== '') {
-            gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => { 
-                videoContainer.innerHTML = ''; 
-                // Reset sound button to muted state
-                const soundBtn = slide.querySelector('.sound-btn');
-                if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
-            }});
+            gsap.killTweensOf(videoContainer); // Force stop any fade animation
+            videoContainer.style.opacity = 0; // Hide instantly
+            videoContainer.innerHTML = ''; // Nuke the iframe so it can't clip outside
+            
+            const soundBtn = slide.querySelector('.sound-btn');
+            if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
         }
     });
 }
 
 function playCenterCoverflowVideo(swiper) {
-    // Only play video on the REAL active slide (fixes glitch)
     const activeSlide = swiper.slides[swiper.activeIndex];
     if (activeSlide) {
         const videoSrc = activeSlide.getAttribute('data-preview-src');
@@ -158,14 +151,13 @@ function playCenterCoverflowVideo(swiper) {
 }
 
 // ==========================================================================
-// PORTFOLIO GRID: PC HOVER & MOBILE SCROLL (Instagram style)
+// PORTFOLIO GRID: PC HOVER & MOBILE SCROLL
 // ==========================================================================
 let globalHoverTimer;
 let currentActiveVideoContainer = null;
 
 function initHoverToPlay() {
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        // PC HOVER LOGIC
         document.addEventListener('mouseover', (e) => {
             const card = e.target.closest('.portfolio-item, .portfolio-slider-section .swiper-slide');
             if (!card) return;
@@ -207,14 +199,13 @@ function initHoverToPlay() {
             }
         });
     } else {
-        // MOBILE AUTO-PLAY ON SCROLL LOGIC
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const card = entry.target;
                 const videoSrc = card.getAttribute('data-preview-src');
-                const videoContainer = card.querySelector('.portfolio-inline-video, .coverflow-inline-video'); // coverflow handles itself, but just in case
+                const videoContainer = card.querySelector('.portfolio-inline-video, .coverflow-inline-video'); 
                 
-                if(card.closest('.coverflow-swiper')) return; // let swiper handle the featured section
+                if(card.closest('.coverflow-swiper')) return; 
 
                 if (entry.isIntersecting) {
                     if (videoContainer && videoContainer.innerHTML === '') {
@@ -235,7 +226,7 @@ function initHoverToPlay() {
                     }
                 }
             });
-        }, { threshold: 0.5 }); // Plays when 50% visible on phone screen
+        }, { threshold: 0.5 }); 
 
         document.querySelectorAll('.portfolio-item, .horizontal-swiper .swiper-slide, .vertical-swiper .swiper-slide').forEach(card => {
             observer.observe(card);
@@ -363,15 +354,17 @@ function initializePostLoadEffects() {
             slideToClickedSlide: true,
             on: {
                 init: function () {
-                    // Give extra time for page setup before injecting first video
                     setTimeout(() => playCenterCoverflowVideo(this), 800);
                 },
+                sliderMove: function () {
+                    // Force instantly kill video when mouse dragging starts
+                    killAllCoverflowVideosImmediately(this);
+                },
                 slideChangeTransitionStart: function () {
-                    // Stop strictly during any movement
-                    stopAllCoverflowVideos(this);
+                    // Force instantly kill video when any movement starts
+                    killAllCoverflowVideosImmediately(this);
                 },
                 slideChangeTransitionEnd: function () {
-                    // Play strictly when perfectly stopped
                     playCenterCoverflowVideo(this);
                 }
             }
