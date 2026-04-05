@@ -115,24 +115,28 @@
                         <p class="section-desc fade-up">Let's Build Something Together.</p>
                     </div>
                     <div class="contact-right fade-up">
-                        <form class="contact-form">
+                        <form id="contactForm" class="contact-form">
+                            <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
                             <div class="input-group">
-                                <input type="text" id="name" required placeholder=" ">
+                                <input type="text" id="name" name="Name" required placeholder=" ">
                                 <label for="name">Your Name</label>
                                 <div class="input-line"></div>
                             </div>
                             <div class="input-group">
-                                <input type="email" id="email" required placeholder=" ">
+                                <input type="email" id="email" name="Email" required placeholder=" ">
                                 <label for="email">Email Address</label>
                                 <div class="input-line"></div>
                             </div>
-
+ 
                             <div class="input-group">
-                                <textarea id="message" rows="3" required placeholder=" "></textarea>
+                                <textarea id="message" name="Message" rows="3" required placeholder=" "></textarea>
                                 <label for="message">Details</label>
                                 <div class="input-line"></div>
                             </div>
                             <button type="submit" class="btn btn-primary magnetic-btn submit-btn">Submit Inquiry</button>
+                            
+                            <p id="form-result" style="display: none; margin-top: 1.5rem; color: var(--acc); font-size: 0.9rem; font-family: var(--font-head); letter-spacing: 1px;"></p>
                         </form>
                     </div>
                 </div>
