@@ -586,59 +586,62 @@ window.addEventListener('DOMContentLoaded', () => {
     initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); initContactForm(); // <-- YAHAN BHI ADD KIYA HAI
 });
 // ==========================================================================
-// CONTACT FORM AJAX SUBMISSION (NO REDIRECT)
+// PREMIUM CONTACT FORM AJAX SUBMISSION (No Redirect)
 // ==========================================================================
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    const formResult = document.getElementById('form-result');
+const contactForm = document.querySelector('.contact-form');
 
-    if (contactForm) {
-        // Purane event listeners hata do taaki double submit na ho
-        const newForm = contactForm.cloneNode(true);
-        contactForm.parentNode.replaceChild(newForm, contactForm);
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Default page redirect ko rokne ke liye
         
-        newForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Page refresh hone se rokta hai
-            
-            const resultEl = document.getElementById('form-result');
-            const submitBtn = newForm.querySelector('.submit-btn');
-            
-            resultEl.style.display = 'block';
-            resultEl.innerText = 'Sending...';
-            resultEl.style.color = 'var(--text)';
-            submitBtn.style.opacity = '0.5';
-            submitBtn.style.pointerEvents = 'none';
+        const submitBtn = this.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerText;
+        
+        // Button loading state
+        submitBtn.innerText = 'Sending...';
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.pointerEvents = 'none';
 
-            const formData = new FormData(newForm);
+        const formData = new FormData(this);
 
-            fetch('https://api.web3forms.com/submit', {
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 body: formData
-            })
-            .then(async (response) => {
-                let json = await response.json();
-                if (response.status == 200) {
-                    resultEl.innerText = "Message sent successfully!";
-                    resultEl.style.color = "#25D366"; // WhatsApp Green for success
-                    newForm.reset(); // Form clear kar dega
-                } else {
-                    console.log(response);
-                    resultEl.innerText = json.message;
-                    resultEl.style.color = "red";
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                resultEl.innerText = "Something went wrong!";
-                resultEl.style.color = "red";
-            })
-            .then(function() {
-                submitBtn.style.opacity = '1';
-                submitBtn.style.pointerEvents = 'auto';
-                setTimeout(() => {
-                    resultEl.style.display = 'none';
-                }, 5000); // 5 second baad message hide ho jayega
             });
-        });
-    }
+
+            if (response.ok) {
+                // Success State (Premium Green)
+                submitBtn.innerText = 'Message Sent Successfully! ✓';
+                submitBtn.style.background = '#25D366'; // Premium WhatsApp Green
+                submitBtn.style.color = '#fff';
+                submitBtn.style.borderColor = '#25D366';
+                submitBtn.style.opacity = '1';
+                
+                this.reset(); // Form ke fields clear kar dega
+                
+                // 5 seconds baad button wapas normal ho jayega
+                setTimeout(() => {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.style.background = '';
+                    submitBtn.style.color = '';
+                    submitBtn.style.borderColor = '';
+                    submitBtn.style.pointerEvents = 'auto';
+                }, 5000);
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            // Error State
+            submitBtn.innerText = 'Error! Please try again.';
+            submitBtn.style.background = '#E1306C'; // Red error color
+            submitBtn.style.opacity = '1';
+            
+            setTimeout(() => {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.style.background = '';
+                submitBtn.style.pointerEvents = 'auto';
+            }, 3000);
+        }
+    });
 }
