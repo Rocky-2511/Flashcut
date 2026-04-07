@@ -585,16 +585,17 @@ barba.init({
 window.addEventListener('DOMContentLoaded', () => {
     initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); initContactForm(); // <-- YAHAN BHI ADD KIYA HAI
 });
-// ==========================================================================
-// PREMIUM CONTACT FORM AJAX SUBMISSION (No Redirect)
-// ==========================================================================
-const contactForm = document.querySelector('.contact-form');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault(); // Default page redirect ko rokne ke liye
+// ==========================================================================
+// PREMIUM CONTACT FORM AJAX SUBMISSION (Bulletproof for Barba.js)
+// ==========================================================================
+document.addEventListener('submit', async function(e) {
+    // Check if the submitted form is our contact form
+    if (e.target && e.target.classList.contains('contact-form')) {
+        e.preventDefault(); // Redirect ko instantly rok dega
         
-        const submitBtn = this.querySelector('.submit-btn');
+        const form = e.target;
+        const submitBtn = form.querySelector('.submit-btn');
         const originalBtnText = submitBtn.innerText;
         
         // Button loading state
@@ -602,7 +603,7 @@ if (contactForm) {
         submitBtn.style.opacity = '0.7';
         submitBtn.style.pointerEvents = 'none';
 
-        const formData = new FormData(this);
+        const formData = new FormData(form);
 
         try {
             const response = await fetch('https://api.web3forms.com/submit', {
@@ -611,16 +612,16 @@ if (contactForm) {
             });
 
             if (response.ok) {
-                // Success State (Premium Green)
-                submitBtn.innerText = 'Message Sent Successfully! ✓';
-                submitBtn.style.background = '#25D366'; // Premium WhatsApp Green
+                // Premium Green Success State
+                submitBtn.innerText = 'Message Sent! ✓';
+                submitBtn.style.background = '#25D366'; // WhatsApp Green
                 submitBtn.style.color = '#fff';
                 submitBtn.style.borderColor = '#25D366';
                 submitBtn.style.opacity = '1';
                 
-                this.reset(); // Form ke fields clear kar dega
+                form.reset(); // Fields clear karne ke liye
                 
-                // 5 seconds baad button wapas normal ho jayega
+                // 5 seconds baad normal ho jayega
                 setTimeout(() => {
                     submitBtn.innerText = originalBtnText;
                     submitBtn.style.background = '';
@@ -629,12 +630,12 @@ if (contactForm) {
                     submitBtn.style.pointerEvents = 'auto';
                 }, 5000);
             } else {
-                throw new Error('Network response was not ok');
+                throw new Error('Server error');
             }
         } catch (error) {
             // Error State
-            submitBtn.innerText = 'Error! Please try again.';
-            submitBtn.style.background = '#E1306C'; // Red error color
+            submitBtn.innerText = 'Error! Try again.';
+            submitBtn.style.background = '#E1306C'; // Red Error Color
             submitBtn.style.opacity = '1';
             
             setTimeout(() => {
@@ -643,5 +644,6 @@ if (contactForm) {
                 submitBtn.style.pointerEvents = 'auto';
             }, 3000);
         }
-    });
-}
+    }
+});
+
