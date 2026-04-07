@@ -587,63 +587,58 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================================
-// PREMIUM CONTACT FORM AJAX SUBMISSION (Bulletproof for Barba.js)
+// BULLETPROOF CONTACT FORM AJAX SUBMISSION (No Redirect Guarantee)
 // ==========================================================================
-document.addEventListener('submit', async function(e) {
-    // Check if the submitted form is our contact form
-    if (e.target && e.target.classList.contains('contact-form')) {
-        e.preventDefault(); // Redirect ko instantly rok dega
-        
-        const form = e.target;
-        const submitBtn = form.querySelector('.submit-btn');
-        const originalBtnText = submitBtn.innerText;
-        
-        // Button loading state
-        submitBtn.innerText = 'Sending...';
-        submitBtn.style.opacity = '0.7';
-        submitBtn.style.pointerEvents = 'none';
+window.submitForm = async function(event) {
+    const form = event.target;
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalBtnText = submitBtn.innerText;
+    
+    // Button ko "Sending..." mode mein daalo
+    submitBtn.innerText = 'Sending...';
+    submitBtn.style.opacity = '0.7';
+    submitBtn.style.pointerEvents = 'none';
 
-        const formData = new FormData(form);
+    const formData = new FormData(form);
 
-        try {
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
-            });
+    try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+        });
 
-            if (response.ok) {
-                // Premium Green Success State
-                submitBtn.innerText = 'Message Sent! ✓';
-                submitBtn.style.background = '#25D366'; // WhatsApp Green
-                submitBtn.style.color = '#fff';
-                submitBtn.style.borderColor = '#25D366';
-                submitBtn.style.opacity = '1';
-                
-                form.reset(); // Fields clear karne ke liye
-                
-                // 5 seconds baad normal ho jayega
-                setTimeout(() => {
-                    submitBtn.innerText = originalBtnText;
-                    submitBtn.style.background = '';
-                    submitBtn.style.color = '';
-                    submitBtn.style.borderColor = '';
-                    submitBtn.style.pointerEvents = 'auto';
-                }, 5000);
-            } else {
-                throw new Error('Server error');
-            }
-        } catch (error) {
-            // Error State
-            submitBtn.innerText = 'Error! Try again.';
-            submitBtn.style.background = '#E1306C'; // Red Error Color
+        if (response.ok) {
+            // Premium Green Success State
+            submitBtn.innerText = 'Message Sent! ✓';
+            submitBtn.style.background = '#25D366'; // WhatsApp Green
+            submitBtn.style.color = '#fff';
+            submitBtn.style.borderColor = '#25D366';
             submitBtn.style.opacity = '1';
             
+            form.reset(); // Fields clear kar dega
+            
+            // 5 seconds baad wapas normal
             setTimeout(() => {
                 submitBtn.innerText = originalBtnText;
                 submitBtn.style.background = '';
+                submitBtn.style.color = '';
+                submitBtn.style.borderColor = '';
                 submitBtn.style.pointerEvents = 'auto';
-            }, 3000);
+            }, 5000);
+        } else {
+            throw new Error('Server error');
         }
+    } catch (error) {
+        // Red Error State
+        submitBtn.innerText = 'Error! Try again.';
+        submitBtn.style.background = '#E1306C'; 
+        submitBtn.style.opacity = '1';
+        
+        setTimeout(() => {
+            submitBtn.innerText = originalBtnText;
+            submitBtn.style.background = '';
+            submitBtn.style.pointerEvents = 'auto';
+        }, 3000);
     }
-});
+};
 

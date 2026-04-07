@@ -115,9 +115,10 @@
                         <p class="section-desc fade-up">Let's Build Something Together.</p>
                     </div>
                     <div class="contact-right fade-up">
-                        <form action="https://api.web3forms.com/submit" method="POST">
+                        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" onsubmit="event.preventDefault(); submitForm(event);">
+    
                             <input type="hidden" name="access_key" value="d431e3bd-36ef-47e8-98c7-2efd697fff20">
-
+                            
                             <div class="input-group">
                                 <input type="text" id="name" name="Name" required placeholder=" ">
                                 <label for="name">Your Name</label>
@@ -128,15 +129,13 @@
                                 <label for="email">Email Address</label>
                                 <div class="input-line"></div>
                             </div>
- 
+
                             <div class="input-group">
                                 <textarea id="message" name="Message" rows="3" required placeholder=" "></textarea>
                                 <label for="message">Details</label>
                                 <div class="input-line"></div>
                             </div>
                             <button type="submit" class="btn btn-primary magnetic-btn submit-btn">Submit Inquiry</button>
-                            
-                            <p id="form-result" style="display: none; margin-top: 1.5rem; color: var(--acc); font-size: 0.9rem; font-family: var(--font-head); letter-spacing: 1px;"></p>
                         </form>
                     </div>
                 </div>
