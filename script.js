@@ -128,9 +128,9 @@ function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
         const videoContainer = slide.querySelector('.coverflow-inline-video');
         if (videoContainer && videoContainer.innerHTML !== '') {
-            gsap.killTweensOf(videoContainer); // Force stop any fade animation
-            videoContainer.style.opacity = 0; // Hide instantly
-            videoContainer.innerHTML = ''; // Nuke the iframe so it can't clip outside
+            gsap.killTweensOf(videoContainer); 
+            videoContainer.style.opacity = 0; 
+            videoContainer.innerHTML = ''; 
             
             const soundBtn = slide.querySelector('.sound-btn');
             if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
@@ -357,11 +357,9 @@ function initializePostLoadEffects() {
                     setTimeout(() => playCenterCoverflowVideo(this), 800);
                 },
                 sliderMove: function () {
-                    // Force instantly kill video when mouse dragging starts
                     killAllCoverflowVideosImmediately(this);
                 },
                 slideChangeTransitionStart: function () {
-                    // Force instantly kill video when any movement starts
                     killAllCoverflowVideosImmediately(this);
                 },
                 slideChangeTransitionEnd: function () {
@@ -576,14 +574,13 @@ barba.init({
         enter(data) {
             window.scrollTo(0, 0); lenis.scrollTo(0, { immediate: true });
             loadPortfolioData(); attachHoverStates(); initTilt(); 
-            initContactForm(); // <-- YAHAN ADD KIYA HAI
             return gsap.from(data.next.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" });
         }
     }]
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); initContactForm(); // <-- YAHAN BHI ADD KIYA HAI
+    initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); 
 });
 
 // ==========================================================================
@@ -641,4 +638,3 @@ window.submitForm = async function(event) {
         }, 3000);
     }
 };
-
