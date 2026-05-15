@@ -122,7 +122,7 @@ window.toggleMute = function(btn, event) {
 };
 
 // ==========================================================================
-// FEATURED WORK: INSTANT KILL LOGIC (Destroys clipping glitch 100%)
+// FEATURED WORK: INSTANT KILL LOGIC 
 // ==========================================================================
 function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
@@ -471,43 +471,59 @@ function initThreeJS() {
     });
 }
 
+// ==========================================================================
+// SPEED & SCROLL UNLOCK OPTIMIZATION
+// ==========================================================================
 function initAnimations() {
     splitTextReveal();
     const brandText = document.getElementById('brand-text');
-    if(!brandText) return;
-    const textContent = brandText.innerText;
-    brandText.innerHTML = '';
-    
-    textContent.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.classList.add('type-char'); span.innerText = char;
-        brandText.appendChild(span);
-    });
+    const tlLoader = gsap.timeline();
 
-    const tlLoader = gsap.timeline({
-        onComplete: () => {
-            document.body.classList.remove('loading');
-            lenis.start(); initScrollAnimations(); 
-        }
-    });
-
-    tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" })
+    // 1. Initial Logo & Loader setup
+    tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" })
             .to('.loader-percentage', { opacity: 1, duration: 0.2 }, "-=0.2")
-            .to({ val: 0 }, { val: 100, duration: 1.2, ease: "power3.inOut", onUpdate: function() { document.getElementById('load-percent').innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); } }, "-=0.5");
+            .to({ val: 0 }, { val: 100, duration: 0.8, ease: "power3.inOut", onUpdate: function() { 
+                const pct = document.getElementById('load-percent');
+                if(pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
+            } }, "-=0.5");
 
-    tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.1, stagger: 0.05, ease: "power2.out" }, "-=1.0");
-    tlLoader.to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 3 }, "-=0.5");
-    tlLoader.to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.2")
-            .to('.lightning-slash', { left: '150%', duration: 0.4, ease: "power4.in" }, "-=0.1")
-            .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1");
-    tlLoader.to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
-            .to('.screen-flash', { opacity: 0, duration: 0.8, ease: "power2.out" }, "+=0.1");
-    tlLoader.to('.top-shutter', { yPercent: -100, duration: 1.2, ease: "power3.inOut" }, "-=0.8")
-            .to('.bottom-shutter', { yPercent: 100, duration: 1.2, ease: "power3.inOut" }, "-=1.2")
-            .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2") 
-            .to('.hero-logo', { opacity: 0.9, duration: 1, ease: "power3.out" }, "-=0.6")
-            .to('.hero-subtext .word-inner', { y: 0, duration: 1.2, ease: "power3.out" }, "-=0.8")
-            .to('.hero-buttons.fade-up, .scroll-indicator', { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power3.out" }, "-=0.6");
+    // 2. Homepage Specific text typing (Only runs if brandText exists)
+    if(brandText) {
+        const textContent = brandText.innerText;
+        brandText.innerHTML = '';
+        
+        textContent.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.classList.add('type-char'); span.innerText = char;
+            brandText.appendChild(span);
+        });
+
+        tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
+                .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
+                .to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.1")
+                .to('.lightning-slash', { left: '150%', duration: 0.3, ease: "power4.in" }, "-=0.1")
+                .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1")
+                .to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
+                .to('.screen-flash', { opacity: 0, duration: 0.5, ease: "power2.out" }, "+=0.1");
+    }
+
+    // 3. OPENS SHUTTER AND UNLOCKS SCROLL IMMEDIATELY (Fixes the 8 second wait!)
+    tlLoader.to('.top-shutter', { yPercent: -100, duration: 0.8, ease: "power3.inOut" }, "+=0.1")
+            .to('.bottom-shutter', { yPercent: 100, duration: 0.8, ease: "power3.inOut" }, "-=0.8")
+            .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2")
+            .call(() => {
+                // Yahan lock hat gaya!
+                document.body.classList.remove('loading');
+                lenis.start(); 
+                initScrollAnimations(); 
+            });
+
+    // 4. Reveal Hero UI Elements 
+    if(document.querySelector('.hero-logo')) {
+        tlLoader.to('.hero-logo', { opacity: 0.9, duration: 0.8, ease: "power3.out" }, "-=0.4")
+                .to('.hero-subtext .word-inner', { y: 0, duration: 0.8, ease: "power3.out" }, "-=0.6")
+                .to('.hero-buttons.fade-up, .scroll-indicator', { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.6");
+    }
 }
 
 function initScrollAnimations() {
@@ -584,14 +600,13 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================================
-// BULLETPROOF CONTACT FORM AJAX SUBMISSION (No Redirect Guarantee)
+// BULLETPROOF CONTACT FORM AJAX SUBMISSION
 // ==========================================================================
 window.submitForm = async function(event) {
     const form = event.target;
     const submitBtn = form.querySelector('.submit-btn');
     const originalBtnText = submitBtn.innerText;
     
-    // Button ko "Sending..." mode mein daalo
     submitBtn.innerText = 'Sending...';
     submitBtn.style.opacity = '0.7';
     submitBtn.style.pointerEvents = 'none';
@@ -605,16 +620,14 @@ window.submitForm = async function(event) {
         });
 
         if (response.ok) {
-            // Premium Green Success State
             submitBtn.innerText = 'Message Sent! ✓';
-            submitBtn.style.background = '#25D366'; // WhatsApp Green
+            submitBtn.style.background = '#25D366'; 
             submitBtn.style.color = '#fff';
             submitBtn.style.borderColor = '#25D366';
             submitBtn.style.opacity = '1';
             
-            form.reset(); // Fields clear kar dega
+            form.reset(); 
             
-            // 5 seconds baad wapas normal
             setTimeout(() => {
                 submitBtn.innerText = originalBtnText;
                 submitBtn.style.background = '';
@@ -626,7 +639,6 @@ window.submitForm = async function(event) {
             throw new Error('Server error');
         }
     } catch (error) {
-        // Red Error State
         submitBtn.innerText = 'Error! Try again.';
         submitBtn.style.background = '#E1306C'; 
         submitBtn.style.opacity = '1';
