@@ -36,9 +36,9 @@ const portfolioData = {
       "featured": true
     },
     {
-      "id": "proj-6", "title": "Shubh Shuruvat", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "proj-6", "title": "JERSEY REVEAL - 60- SECOND VERSION", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=vixRM6LHjJQ",
+      "previewVideo": "https://vimeo.com/694458717",
       "featured": false
     },
     {
@@ -76,12 +76,24 @@ function getYouTubeId(url) {
     return null;
 }
 
+// Added Vimeo ID Extractor
+function getVimeoId(url) {
+    if (!url) return null;
+    const match = url.match(/vimeo\.com\/(?:video\/)?([0-9]+)/);
+    return match ? match[1] : null;
+}
+
 function buildInlineVideoHTML(src) {
     if (!src) return '';
     const ytId = getYouTubeId(src);
+    const vimeoId = getVimeoId(src);
+
     if (ytId) {
         // HACK: Using youtube-nocookie.com to bypass strict embed restrictions
         return `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
+    } else if (vimeoId) {
+        // VIMEO: Background mode for seamless inline preview
+        return `<iframe src="https://player.vimeo.com/video/${vimeoId}?background=1&autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen" title="Vimeo video player"></iframe>`;
     } else {
         return `<video src="${src}" loop playsinline muted autoplay></video>`;
     }
@@ -103,7 +115,7 @@ function getSlideControls(videoSrc) {
 }
 
 // ==========================================================================
-// SOUND CONTROL LOGIC
+// SOUND CONTROL LOGIC (Upgraded for Vimeo)
 // ==========================================================================
 window.toggleMute = function(btn, event) {
     event.stopPropagation(); 
@@ -113,7 +125,12 @@ window.toggleMute = function(btn, event) {
     const isMuted = btn.classList.contains('muted');
     
     if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ "event": "command", "func": isMuted ? "unMute" : "mute", "args": [] }), "*");
+        const iframeSrc = iframe.getAttribute('src');
+        if (iframeSrc && iframeSrc.includes('youtube')) {
+            iframe.contentWindow.postMessage(JSON.stringify({ "event": "command", "func": isMuted ? "unMute" : "mute", "args": [] }), "*");
+        } else if (iframeSrc && iframeSrc.includes('vimeo')) {
+            iframe.contentWindow.postMessage(JSON.stringify({ "method": "setVolume", "value": isMuted ? 1 : 0 }), "*");
+        }
     } else if (video) {
         video.muted = !isMuted;
     }
@@ -264,7 +281,7 @@ function loadPortfolioData() {
             if(featuredGrid) {
                 featuredGrid.innerHTML = '';
                 let featuredProjects = data.projects.filter(p => p.featured);
-                if (featuredProjects.length > 0 && featuredProjects.length < 5) {
+                if (featuredProjects.length > 0 && featuredProjects.length < 10) {
                     featuredProjects = [...featuredProjects, ...featuredProjects, ...featuredProjects];
                 }
 
@@ -558,9 +575,14 @@ function openVideoModal(videoSrc) {
     const container = document.getElementById('modalVideoContainer');
     container.innerHTML = '';
     const ytId = getYouTubeId(videoSrc);
+    const vimeoId = getVimeoId(videoSrc);
+
     if (ytId) {
         // HACK: Using youtube-nocookie.com for the full screen modal too
         container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else if (vimeoId) {
+        // VIMEO: Fullscreen player with standard UI
+        container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=E2B938&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
     }
