@@ -18,22 +18,22 @@ const portfolioData = {
       "featured": true
     },
     {
-      "id": "proj-3", "title": "Shiv ki raat", "categoryLabel": "YouTube Videos", "format": "16x9",
+      "id": "proj-3", "title": "Ola Priximity Unlock Master", "categoryLabel": "YouTube Videos", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=YmiamwKatpM",
+      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=fnRtUpvCDVajKL9F",
       "featured": true
     },
     {
-      "id": "proj-4", "title": "Maa", "categoryLabel": "Instagram Reels", "format": "9x16",
+      "id": "proj-4", "title": "Google Googlies IPL 2025", "categoryLabel": "Instagram Reels", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/F0qJtArAGUc",
+      "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=ANCDNBtTyNWvbm2U",
       "featured": true
     },
     {
-      "id": "proj-5", "title": "Saarthi Short", "categoryLabel": "TikTok Ads", "format": "9x16",
+      "id": "proj-5", "title": "Birla Opus Paints", "categoryLabel": " Ads", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/_2LczNDo2sM",
-      "featured": false
+      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h",
+      "featured": true
     },
     {
       "id": "proj-6", "title": "Shubh Shuruvat", "categoryLabel": "Commercial Ads", "format": "16x9",
