@@ -6,15 +6,15 @@ gsap.registerPlugin(ScrollTrigger);
 const portfolioData = {
   "projects": [
     {
-      "id": "proj-1", "title": "Naavdurga", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "proj-1", "title": "Tanishq 1", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=vT-GP604Wds",
+      "previewVideo": "https://youtu.be/Fp5Fjn7EsWI?si=CTv8ZhRot_WtF9sL",
       "featured": true
     },
     {
-      "id": "proj-2", "title": "Saarthi", "categoryLabel": "Cinematic Projects", "format": "16x9",
+      "id": "proj-2", "title": "Tanshiq 2", "categoryLabel": "Cinematic Projects", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=S1CySzctSc8",
+      "previewVideo": "https://youtu.be/eiMKLZCQj5M?si=_jefQt6GjtfbmLx9",
       "featured": true
     },
     {
@@ -80,7 +80,8 @@ function buildInlineVideoHTML(src) {
     if (!src) return '';
     const ytId = getYouTubeId(src);
     if (ytId) {
-        return `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
+        // HACK: Using youtube-nocookie.com to bypass strict embed restrictions
+        return `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
     } else {
         return `<video src="${src}" loop playsinline muted autoplay></video>`;
     }
@@ -558,7 +559,8 @@ function openVideoModal(videoSrc) {
     container.innerHTML = '';
     const ytId = getYouTubeId(videoSrc);
     if (ytId) {
-        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        // HACK: Using youtube-nocookie.com for the full screen modal too
+        container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
     }
