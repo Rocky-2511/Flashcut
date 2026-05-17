@@ -324,3 +324,4 @@
    .cursor-follower.hover-btn { width: 60px; height: 60px; background: rgba(226, 185, 56, 0.1); border-color: var(--acc); }
    .cursor-follower.hover-portfolio { width: 80px; height: 80px; border-color: transparent; background: rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
    @media (hover: none) and (pointer: coarse), (max-width: 768px) { .cursor, .cursor-follower { display: none !important; } }
+   

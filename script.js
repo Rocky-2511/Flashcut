@@ -1,72 +1,326 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// BULLETPROOF PORTFOLIO DATA
+// 1. FEATURED WORK DATA (Shows in 3D Coverflow on Homepage)
 // ==========================================================================
-const portfolioData = {
-  "projects": [
+const homeFeaturedData = [
     {
-      "id": "proj-1", "title": "Tanishq 1", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "feat-1", "title": "OLA Proximity Unlock", "categoryLabel": "Ad", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/Fp5Fjn7EsWI?si=CTv8ZhRot_WtF9sL",
-      "featured": true
+      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
     },
     {
-      "id": "proj-2", "title": "Tanshiq 2", "categoryLabel": "Cinematic Projects", "format": "16x9",
+      "id": "feat-2", "title": "Panasonic", "categoryLabel": "Ad", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/eiMKLZCQj5M?si=_jefQt6GjtfbmLx9",
-      "featured": true
+      "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
     },
     {
-      "id": "proj-3", "title": "Ola Priximity Unlock Master", "categoryLabel": "YouTube Videos", "format": "16x9",
+      "id": "feat-3", "title": "Grown Brilliance", "categoryLabel": "Ad", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=fnRtUpvCDVajKL9F",
-      "featured": true
+      "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
     },
     {
-      "id": "proj-4", "title": "Google Googlies IPL 2025", "categoryLabel": "Instagram Reels", "format": "9x16",
+      "id": "feat-4", "title": "Tinder", "categoryLabel": "Ad", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=ANCDNBtTyNWvbm2U",
-      "featured": true
+      "previewVideo": "https://vimeo.com/687579902"
     },
     {
-      "id": "proj-5", "title": "Birla Opus Paints", "categoryLabel": " Ads", "format": "9x16",
+      "id": "feat-5", "title": "Birla Opus Paints", "categoryLabel": "Ads", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h",
-      "featured": true
+      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
     },
     {
-      "id": "proj-6", "title": "JERSEY REVEAL - 60- SECOND VERSION", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "feat-6", "title": "Tanishq Celebrates Kakatiya", "categoryLabel": "Commercial Ads", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://vimeo.com/694458717",
-      "featured": false
+      "previewVideo": "https://youtu.be/RXxu3g-gg3o?si=ORUhhdHMabaMay_d"
     },
     {
-      "id": "proj-7", "title": "HalalVish paan", "categoryLabel": "Cinematic", "format": "16x9",
+      "id": "feat-7", "title": "Zee SAFARI PROMO", "categoryLabel": "Cinematic", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/watch?v=zyITGGf4Grw",
-      "featured": false
+      "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
     },
     {
-      "id": "proj-8", "title": "Krishna's Flute", "categoryLabel": "Instagram Reels", "format": "9x16",
+      "id": "feat-8", "title": "Ceat Enduro Tracks", "categoryLabel": "Ad", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/hvkY3cVQ5zU",
-      "featured": false
-    },
-    {
-      "id": "proj-9", "title": "Shyam jab koi Raha nhi dikhe", "categoryLabel": "YouTube", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/6WKfTHZVpPU",
-      "featured": false
-    },
-    {
-      "id": "proj-10", "title": "Sukoon", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://www.youtube.com/shorts/3sR_0v7wIsc",
-      "featured": false
+      "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
     }
-  ]
-};
+];
+
+// ==========================================================================
+// 2. RECENT PROJECTS DATA (Shows in Top 4 Grid on Homepage)
+// ==========================================================================
+const homeRecentGridData = [
+    {
+      "id": "recent-1", "title": "Rainbow Rishta", "categoryLabel": "Prime Video", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/5WdFB6qDVuw?si=C_XRK8lSYbkw3CPN",
+      "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r" // Trailer plays inline, click redirects
+    },
+    {
+      "id": "recent-2", "title": "Panasonic", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
+    },
+    {
+      "id": "recent-3", "title": "Red Bull Cricket Challenge", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/tVny6H-ivfs?si=MPnzK6ZtXXMOGSix"
+    },
+    {
+      "id": "recent-4", "title": "Red Bull Jersey Reveal", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/694458717"
+    }
+];
+
+// ==========================================================================
+// 3. FULL PORTFOLIO PAGE DATA (Shows ONLY on portfolio.html Page)
+// ==========================================================================
+const fullPortfolioPageData = [
+    // --- PREVIOUS ENTRIES (Playlists replace the clutter) ---
+    {
+      "id": "port-1", "title": "OLA Proximity Unlock", "categoryLabel": "Ad", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
+    },
+    {
+      "id": "port-2", "title": "Panasonic", "categoryLabel": "Ad", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
+    },
+    {
+      "id": "port-3", "title": "Grown Brilliance", "categoryLabel": "Ad", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
+    },
+    {
+      "id": "port-4", "title": "Tinder", "categoryLabel": "Ad", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/687579902"
+    },
+    {
+      "id": "port-5", "title": "Birla Opus Paints", "categoryLabel": "Ads", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
+    },
+    {
+      "id": "port-6", "title": "Tanishq Celebrates Kakatiya", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/RXxu3g-gg3o?si=ORUhhdHMabaMay_d"
+    },
+    {
+      "id": "port-7", "title": "Zee SAFARI PROMO", "categoryLabel": "Cinematic", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
+    },
+    {
+      "id": "port-8", "title": "Ceat Enduro Tracks", "categoryLabel": "Ad", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
+    },
+    {
+      "id": "port-9", "title": "Google Googlies", "categoryLabel": "YouTube", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=lvCVo62qOKSbMAJN"
+    },
+
+    // --- NEW SMART PLAYLISTS ---
+    {
+      "id": "port-pl-1", "title": "Axis Mutual Fund Series", "categoryLabel": "YouTube Playlist", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/hjgRhYZRP0k?si=aXoyWJI4HbEbUKSR",
+      "redirectUrl": "https://youtube.com/playlist?list=PLEhtzo1XHPL2vp0oRPd4YEbEIuJ29V_lA&si=XjudmhMHgzCUHlRW"
+    },
+    {
+      "id": "port-pl-2", "title": "SBI Mind Over Money", "categoryLabel": "YouTube Playlist", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/NCr4OutUsnA?si=Crbp8VOqZdXrKP9n",
+      "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QRta1WqSftPg-Qt1iIjBvdS&si=3agAkzEfr0og8b-c"
+    },
+    {
+      "id": "port-pl-3", "title": "BGMI - Do You Even BGMI BRO!", "categoryLabel": "YouTube Playlist", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/TLIowgBEHdA?si=vSam57NnFI_WQEdB",
+      "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QTMF4GZW3fP31u3HyALTDYi&si=2q-3B199VaFxNTrq"
+    },
+    {
+      "id": "port-pl-4", "title": "Government Campaigns", "categoryLabel": "YouTube Playlist", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/HEZ9Yf88oRY?si=t8bGb6XcYdL6rTFy",
+      "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QQxI5Auv3ryV18Nz38xvmX9&si=iSevvTntUBsHQ0fk"
+    },
+
+    // --- CONTINUING EXISTING ---
+    {
+      "id": "port-10", "title": "Red Bull HIGHER GROUND PARAGLIDING", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/OqVN2O09_A4?si=9KCHjRYOWmeSQmKS"
+    },
+    {
+      "id": "port-11", "title": "DIGIYATRA", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/fEUQd7vS_GE?si=WNtxyOH-IB5-S3PK"
+    },
+    {
+      "id": "port-12", "title": "Netflix Jamtara Season 2 | Announcement", "categoryLabel": "Netflix", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/SbM3GbcCASg?si=9Oyz2zxk0Er4cJVW"
+    },
+    {
+      "id": "port-13", "title": "Zee FIT FAB", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/Js8KsU81GuE?si=IbrCG4THgnUytjCT"
+    },
+    {
+      "id": "port-14", "title": "Zee GOAN GULLY ", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/ScfX7LeRsac?si=b5Mp5ccm53zmxfPe"
+    },
+    {
+      "id": "port-15", "title": "Tanishq 1", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/Fp5Fjn7EsWI?si=1QBpB5b6X28_Zc-e"
+    },
+    {
+      "id": "port-16", "title": "Tanishq 2", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/eiMKLZCQj5M?si=nlkrlis0TJbF43_-"
+    },
+    {
+      "id": "port-17", "title": "Tanishq 3", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/qFy1nDFw98E?si=uKEL5Z1eyKR4aWJp"
+    },
+    {
+      "id": "port-18", "title": "Tanishq 4", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/WVfk9XejmhY?si=U3H3oOvFmENeF8S6"
+    },
+    {
+      "id": "port-19", "title": "OLA Parental Control Master", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/RHswfmS7dgg?si=CjnhDtRdoROFkllT"
+    },
+    {
+      "id": "port-20", "title": "OLA Mood & Widget Master", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/8yY_cLQ6q3I?si=r_t6U_s-v6qcNBS1"
+    },
+    {
+      "id": "port-21", "title": "Slikk Reel 02", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/boOMmFtjxjc?si=OyCHCPA-DvcSh4sA"
+    },
+    {
+      "id": "port-22", "title": "Slikk Reel 03", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/xBZ5qNY90W4?si=jKbETpsJnZ1pXpui"
+    },
+    {
+      "id": "port-23", "title": "Slikk Reel 05", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/-UfAIGXAY5A?si=MNPGppQGC-l4--g2"
+    },
+    {
+      "id": "port-24", "title": "VON Diamonds", "categoryLabel": "Documentary", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/AmjO6_xia7Y?si=Biz9YYTnlUCe5-kR"
+    },
+
+    // --- ALL NEW VIDEOS REQUESTED ---
+    {
+      "id": "new-25", "title": "Rainbow Rishta", "categoryLabel": "Prime Video", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/5WdFB6qDVuw?si=C_XRK8lSYbkw3CPN",
+      "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r"
+    },
+    {
+      "id": "new-26", "title": "Red Bull JERSEY REVEAL", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/694458717"
+    },
+    {
+      "id": "new-27", "title": "Red Bull RIDE ACROSS INDIA", "categoryLabel": "Documentary", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/720592076"
+    },
+    {
+      "id": "new-28", "title": "Ayushmann Khurrana Plays Truth or Lie | Anek | Netflix", "categoryLabel": "Netflix", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/724803783"
+    },
+    {
+      "id": "new-29", "title": "Ek Chhoti Si Umeed", "categoryLabel": "Red Bull Documentary", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "", // Empty skips inline player, redirects smoothly
+      "redirectUrl": "https://www.redbull.com/in-en/videos/red-bull-spotlight-2019-winners-documentary-ek-chhoti-si-umeed"
+    },
+    {
+      "id": "new-30", "title": "Greatness Starts Here: Devdutt Padikkal", "categoryLabel": "Red Bull GSH", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/t9-41wG13bY?si=Zs1-Wm2D2TbWICfk"
+    },
+    {
+      "id": "new-37", "title": "Greatness Starts Here: Riyan Parag", "categoryLabel": "Red Bull GSH", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/iK76CIq-uO4?si=wcpdCN6Imc8bgImh"
+    },
+    {
+      "id": "new-38", "title": "Greatness Starts Here: Prasidh Krishna", "categoryLabel": "Red Bull GSH", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/CoGtzQdBDb8?si=H9qcPOTpOsSwGTK1"
+    },
+    {
+      "id": "new-39", "title": "Biba Girl", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690255560"
+    },
+    {
+      "id": "new-40", "title": "BIBA SKIRTS", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690257685"
+    },
+    {
+      "id": "new-41", "title": "BIBA BY ROHIT BAL 1", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690219011"
+    },
+    {
+      "id": "new-42", "title": "BIBA BY ROHIT BAL 2", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690219151"
+    },
+    {
+      "id": "new-43", "title": "Tinder SINGLES POND", "categoryLabel": "Ad", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/687579902"
+    },
+    {
+      "id": "new-44", "title": "Tinder 2", "categoryLabel": "Ad", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/687579814"
+    },
+    {
+      "id": "new-45", "title": "Red Bull Social: KIEREN D'SOUZA", "categoryLabel": "Social", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690201427"
+    },
+    {
+      "id": "new-46", "title": "Red Bull Social: FKT", "categoryLabel": "Social", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://vimeo.com/690279606"
+    },
+        {
+      "id": "new-47", "title": "Baatein, Battle Aur Booyah | 7th Anniversary | Free Fire MAX", "categoryLabel": "Social", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/kexver_cAVc?si=kjDAmgiNxUiko_KP"
+    },
+            {
+      "id": "new-48", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "categoryLabel": "Social", "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/tVny6H-ivfs?si=Xke-r3t4Fx1_8UaY"
+    },
+];
 
 function getYouTubeId(url) {
     if (!url) return null;
@@ -76,7 +330,6 @@ function getYouTubeId(url) {
     return null;
 }
 
-// Added Vimeo ID Extractor
 function getVimeoId(url) {
     if (!url) return null;
     const match = url.match(/vimeo\.com\/(?:video\/)?([0-9]+)/);
@@ -89,10 +342,8 @@ function buildInlineVideoHTML(src) {
     const vimeoId = getVimeoId(src);
 
     if (ytId) {
-        // HACK: Using youtube-nocookie.com to bypass strict embed restrictions
         return `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
     } else if (vimeoId) {
-        // VIMEO: Background mode for seamless inline preview
         return `<iframe src="https://player.vimeo.com/video/${vimeoId}?background=1&autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen" title="Vimeo video player"></iframe>`;
     } else {
         return `<video src="${src}" loop playsinline muted autoplay></video>`;
@@ -102,20 +353,32 @@ function buildInlineVideoHTML(src) {
 const volumeOffIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
 const volumeOnIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
 
-function getSlideControls(videoSrc) {
+// SMART REDIRECT LOGIC FOR BUTTONS
+function getSlideControls(project) {
+    let action = `openVideoModal('${project.previewVideo}')`;
+    let icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+    let text = 'View Full';
+
+    // Agar redirect link available hai toh usko external window me kholo
+    if (project.redirectUrl) {
+        action = `window.open('${project.redirectUrl}', '_blank')`;
+        icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+        text = 'Watch Now';
+    }
+
     return `
         <div class="slide-controls">
             <button class="sound-btn muted" onclick="toggleMute(this, event)">${volumeOffIcon}</button>
-            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); openVideoModal('${videoSrc}')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                View Full
+            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); ${action}">
+                ${icon}
+                ${text}
             </button>
         </div>
     `;
 }
 
 // ==========================================================================
-// SOUND CONTROL LOGIC (Upgraded for Vimeo)
+// SOUND CONTROL LOGIC 
 // ==========================================================================
 window.toggleMute = function(btn, event) {
     event.stopPropagation(); 
@@ -272,25 +535,27 @@ function initGhostLogo() {
 
 function loadPortfolioData() {
     try {
-        const data = portfolioData; 
         const isHomePage = document.querySelector('[data-barba-namespace="home"]') !== null;
         const isPortfolioPage = document.querySelector('[data-barba-namespace="portfolio"]') !== null;
 
         if (isHomePage) {
+            // 1. FEATURED COVERFLOW
             const featuredGrid = document.querySelector('#dynamic-featured');
             if(featuredGrid) {
                 featuredGrid.innerHTML = '';
-                let featuredProjects = data.projects.filter(p => p.featured);
+                let featuredProjects = [...homeFeaturedData];
+                
                 if (featuredProjects.length > 0 && featuredProjects.length < 10) {
                     featuredProjects = [...featuredProjects, ...featuredProjects, ...featuredProjects];
                 }
 
                 featuredProjects.forEach((project) => {
+                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     const projHTML = `
-                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
+                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
                             <img src="${project.thumbnail}" alt="${project.title}" class="coverflow-img">
                             <div class="coverflow-inline-video"></div>
-                            ${getSlideControls(project.previewVideo)}
+                            ${getSlideControls(project)}
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
                                 <p>${project.categoryLabel}</p>
@@ -301,19 +566,21 @@ function loadPortfolioData() {
                 });
             }
 
+            // 2. RECENT PROJECTS GRID (Homepage)
             const portfolioGrid = document.querySelector('#dynamic-portfolio'); 
             if (portfolioGrid) {
                 portfolioGrid.innerHTML = ''; 
-                const top4Projects = data.projects.slice(0, 4);
+                const recentProjects = homeRecentGridData.slice(0, 4);
                 
-                top4Projects.forEach((project, index) => {
+                recentProjects.forEach((project, index) => {
                     const delay = index * 0.1; 
+                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
                             <div class="portfolio-thumb">
                                 <img src="${project.thumbnail}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
-                                ${getSlideControls(project.previewVideo)}
+                                ${getSlideControls(project)}
                             </div>
                             <div class="portfolio-info">
                                 <h3>${project.title}</h3>
@@ -327,25 +594,28 @@ function loadPortfolioData() {
         }
 
         if (isPortfolioPage) {
-            const horizontalGrid = document.querySelector('#dynamic-16x9');
-            const verticalGrid = document.querySelector('#dynamic-9x16');
+            // 3. UNIFIED 2x2 PORTFOLIO GRID (Portfolio Page)
+            const fullGrid = document.querySelector('#full-portfolio-grid');
+            if (fullGrid) {
+                fullGrid.innerHTML = '';
 
-            if (horizontalGrid && verticalGrid) {
-                horizontalGrid.innerHTML = '';
-                verticalGrid.innerHTML = '';
-
-                data.projects.forEach(project => {
+                fullPortfolioPageData.forEach((project, index) => {
+                    const delay = (index % 4) * 0.1; 
+                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     const slideHTML = `
-                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="openVideoModal('${project.previewVideo}')">
-                            <div class="portfolio-thumb" style="margin:0; height:100%;">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                            <div class="portfolio-thumb">
                                 <img src="${project.thumbnail}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
-                                ${getSlideControls(project.previewVideo)}
+                                ${getSlideControls(project)}
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>${project.title}</h3>
+                                <p>${project.categoryLabel}</p>
                             </div>
                         </div>
                     `;
-                    if(project.format === '16x9') horizontalGrid.insertAdjacentHTML('beforeend', slideHTML);
-                    else if (project.format === '9x16') verticalGrid.insertAdjacentHTML('beforeend', slideHTML);
+                    fullGrid.insertAdjacentHTML('beforeend', slideHTML);
                 });
             }
         }
@@ -385,13 +655,6 @@ function initializePostLoadEffects() {
                 }
             }
         });
-    }
-
-    if(document.querySelector('.horizontal-swiper')) {
-        new Swiper('.horizontal-swiper', { slidesPerView: 'auto', spaceBetween: 30, grabCursor: true, navigation: { nextEl: '.next-16x9', prevEl: '.prev-16x9' } });
-    }
-    if(document.querySelector('.vertical-swiper')) {
-        new Swiper('.vertical-swiper', { slidesPerView: 'auto', spaceBetween: 30, grabCursor: true, navigation: { nextEl: '.next-9x16', prevEl: '.prev-9x16' } });
     }
 
     setTimeout(() => { ScrollTrigger.refresh(); }, 500);
@@ -497,7 +760,6 @@ function initAnimations() {
     const brandText = document.getElementById('brand-text');
     const tlLoader = gsap.timeline();
 
-    // 1. Initial Logo & Loader setup
     tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" })
             .to('.loader-percentage', { opacity: 1, duration: 0.2 }, "-=0.2")
             .to({ val: 0 }, { val: 100, duration: 0.8, ease: "power3.inOut", onUpdate: function() { 
@@ -505,7 +767,6 @@ function initAnimations() {
                 if(pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
             } }, "-=0.5");
 
-    // 2. Homepage Specific text typing (Only runs if brandText exists)
     if(brandText) {
         const textContent = brandText.innerText;
         brandText.innerHTML = '';
@@ -525,18 +786,15 @@ function initAnimations() {
                 .to('.screen-flash', { opacity: 0, duration: 0.5, ease: "power2.out" }, "+=0.1");
     }
 
-    // 3. OPENS SHUTTER AND UNLOCKS SCROLL IMMEDIATELY (Fixes the 8 second wait!)
     tlLoader.to('.top-shutter', { yPercent: -100, duration: 0.8, ease: "power3.inOut" }, "+=0.1")
             .to('.bottom-shutter', { yPercent: 100, duration: 0.8, ease: "power3.inOut" }, "-=0.8")
             .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2")
             .call(() => {
-                // Yahan lock hat gaya!
                 document.body.classList.remove('loading');
                 lenis.start(); 
                 initScrollAnimations(); 
             });
 
-    // 4. Reveal Hero UI Elements 
     if(document.querySelector('.hero-logo')) {
         tlLoader.to('.hero-logo', { opacity: 0.9, duration: 0.8, ease: "power3.out" }, "-=0.4")
                 .to('.hero-subtext .word-inner', { y: 0, duration: 0.8, ease: "power3.out" }, "-=0.6")
@@ -578,10 +836,8 @@ function openVideoModal(videoSrc) {
     const vimeoId = getVimeoId(videoSrc);
 
     if (ytId) {
-        // HACK: Using youtube-nocookie.com for the full screen modal too
         container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     } else if (vimeoId) {
-        // VIMEO: Fullscreen player with standard UI
         container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=E2B938&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     } else {
         container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
