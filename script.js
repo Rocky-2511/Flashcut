@@ -5,49 +5,44 @@ gsap.registerPlugin(ScrollTrigger);
 // ==========================================================================
 const homeFeaturedData = [
     {
-      "id": "feat-1", "title": "OLA Proximity Unlock", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
+      "id": "feat-1", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ",  "format": "9x16",
+      "previewVideo": "https://youtu.be/78iexqrUfqg?si=8pkY9EKAc0t4yPt0"
     },
     {
-      "id": "feat-2", "title": "Panasonic", "categoryLabel": "Ad", "format": "16x9",
+      "id": "feat-2", "title": "Panasonic",  "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
     },
     {
-      "id": "feat-3", "title": "Grown Brilliance", "categoryLabel": "Ad", "format": "16x9",
+      "id": "feat-3", "title": "Grown Brilliance",  "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
     },
     {
-      "id": "feat-4", "title": "Tinder", "categoryLabel": "Ad", "format": "9x16",
+      "id": "feat-4", "title": "Tinder", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://vimeo.com/687579902"
     },
     {
-      "id": "feat-5", "title": "Birla Opus Paints", "categoryLabel": "Ads", "format": "9x16",
+      "id": "feat-5", "title": "Birla Opus Paints", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
     },
     {
-      "id": "feat-6", "title": "Tanishq Celebrates Kakatiya", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "feat-6", "title": "Tanishq Celebrates Kakatiya",  "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/RXxu3g-gg3o?si=ORUhhdHMabaMay_d"
     },
     {
-      "id": "feat-7", "title": "Zee SAFARI PROMO", "categoryLabel": "Cinematic", "format": "16x9",
+      "id": "feat-7", "title": "Zee SAFARI PROMO",  "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
     },
     {
-      "id": "feat-8", "title": "Ceat Enduro Tracks", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
-    },
-        {
-      "id": "feat-9", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ", "categoryLabel": "Cinematic", "format": "16x9",
-      "previewVideo": "https://youtu.be/78iexqrUfqg?si=8pkY9EKAc0t4yPt0"
-    },
+      "id": "feat-8", "title": "OLA Proximity Unlock",  "format": "9x16",
+      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
+      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
+    }
 ];
 
 // ==========================================================================
@@ -57,18 +52,18 @@ const homeRecentGridData = [
     {
       "id": "recent-1", "title": "Rainbow Rishta", "categoryLabel": "Prime Video", "format": "16x9",
       "previewVideo": "https://youtu.be/5WdFB6qDVuw?si=C_XRK8lSYbkw3CPN",
-      "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r" // Trailer plays inline, click redirects
+      "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r"
     },
     {
-      "id": "recent-2", "title": "Nothing Phone (2a) ft. Ranveer Singh", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "recent-2", "title": "Nothing Phone (2a) ft. Ranveer Singh",  "format": "16x9",
       "previewVideo": "https://youtu.be/YzrCypaVZVI?si=_LfonYGD9l6YL9Ij"
     },
     {
-      "id": "recent-3", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "previewVideo": "https://youtu.be/tVny6H-ivfs?si=MPnzK6ZtXXMOGSix"
+      "id": "recent-3", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0",  "format": "16x9",
+      "previewVideo": "https://youtu.be/1Ahc0wgeKlc?si=s9-nmE-1GCHssHVq"
     },
     {
-      "id": "recent-4", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "categoryLabel": "Commercial Ads", "format": "16x9",
+      "id": "recent-4", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "format": "16x9",
       "previewVideo": "https://youtu.be/ZZVgDa00jGM?si=-u1gio-7YVH5oufy"
     }
 ];
@@ -79,316 +74,263 @@ const homeRecentGridData = [
 const fullPortfolioPageData = [
     // --- TOP TIER: CELEBS, MOVIES & OTT ---
     {
-      "id": "new-49", "title": "Nothing Phone (2a) ft. Ranveer Singh", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-49", "title": "Nothing Phone (2a) ft. Ranveer Singh", "format": "16x9",
       "previewVideo": "https://youtu.be/YzrCypaVZVI?si=6eN_xUzHc66uWSdw"
     },
     {
-      "id": "new-58", "title": "Aarize, Crafted Realty - Tiger Shroff", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-60", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ", "format": "16x9",
+      "previewVideo": "https://youtu.be/1Ahc0wgeKlc?si=s9-nmE-1GCHssHVq"
+    },
+    {
+      "id": "new-58", "title": "Aarize, Crafted Realty - Tiger Shroff", "format": "16x9",
       "previewVideo": "https://youtu.be/TJF7vyB4Rck?si=I1vk30Cuf0_Dyzcb"
     },
     {
-      "id": "new-59", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-59", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "format": "16x9",
       "previewVideo": "https://youtu.be/ZZVgDa00jGM?si=rFrN7EtwZA2K4U3_"
     },
     {
-      "id": "new-50", "title": "KING - Rang Barse | Karan Kanchan | House of McDowell's", "categoryLabel": "Music Video", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-50", "title": "KING - Rang Barse | Karan Kanchan | House of McDowell's", "format": "16x9",
       "previewVideo": "https://youtu.be/l_OD__gwhLQ?si=O6b4zim-dzXPEcK-"
     },
     {
-      "id": "new-28", "title": "Ayushmann Khurrana Plays Truth or Lie | Anek", "categoryLabel": "Netflix", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-28", "title": "Ayushmann Khurrana Plays Truth or Lie | Anek", "format": "16x9",
       "previewVideo": "https://vimeo.com/724803783"
     },
     {
-      "id": "port-12", "title": "Netflix Jamtara Season 2 | Announcement", "categoryLabel": "Netflix", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-12", "title": "Netflix Jamtara Season 2 | Announcement", "format": "16x9",
       "previewVideo": "https://youtu.be/SbM3GbcCASg?si=9Oyz2zxk0Er4cJVW"
     },
     {
-      "id": "new-25", "title": "Rainbow Rishta", "categoryLabel": "Prime Video", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-25", "title": "Rainbow Rishta", "format": "16x9",
       "previewVideo": "https://youtu.be/5WdFB6qDVuw?si=C_XRK8lSYbkw3CPN",
       "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r"
     },
 
     // --- RED BULL GLOBAL/INDIA ---
     {
-      "id": "new-26", "title": "Red Bull JERSEY REVEAL", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "id": "new-26", "title": "Red Bull JERSEY REVEAL", "format": "16x9",
       "previewVideo": "https://vimeo.com/694458717"
     },
     {
-      "id": "new-27", "title": "Red Bull RIDE ACROSS INDIA", "categoryLabel": "Documentary", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-27", "title": "Red Bull RIDE ACROSS INDIA", "format": "16x9",
       "previewVideo": "https://vimeo.com/720592076"
     },
     {
-      "id": "new-29", "title": "Ek Chhoti Si Umeed", "categoryLabel": "Red Bull Documentary", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "", // Empty uses default thumbnail, redirects smoothly
+      "id": "new-29", "title": "Ek Chhoti Si Umeed", "format": "16x9",
+      "previewVideo": "", 
       "redirectUrl": "https://www.redbull.com/in-en/videos/red-bull-spotlight-2019-winners-documentary-ek-chhoti-si-umeed"
     },
     {
-      "id": "new-30", "title": "Greatness Starts Here: Devdutt Padikkal", "categoryLabel": "Red Bull GSH", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-30", "title": "Greatness Starts Here: Devdutt Padikkal", "format": "16x9",
       "previewVideo": "https://youtu.be/t9-41wG13bY?si=Zs1-Wm2D2TbWICfk"
     },
     {
-      "id": "new-37", "title": "Greatness Starts Here: Riyan Parag", "categoryLabel": "Red Bull GSH", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-37", "title": "Greatness Starts Here: Riyan Parag", "format": "16x9",
       "previewVideo": "https://youtu.be/iK76CIq-uO4?si=wcpdCN6Imc8bgImh"
     },
     {
-      "id": "new-38", "title": "Greatness Starts Here: Prasidh Krishna", "categoryLabel": "Red Bull GSH", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-38", "title": "Greatness Starts Here: Prasidh Krishna", "format": "16x9",
       "previewVideo": "https://youtu.be/CoGtzQdBDb8?si=H9qcPOTpOsSwGTK1"
     },
     {
-      "id": "new-48", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "categoryLabel": "Social", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-48", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "format": "9x16",
       "previewVideo": "https://youtu.be/tVny6H-ivfs?si=Xke-r3t4Fx1_8UaY"
     },
     {
-      "id": "new-45", "title": "Red Bull Social: KIEREN D'SOUZA", "categoryLabel": "Social", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-45", "title": "Red Bull Social: KIEREN D'SOUZA", "format": "9x16",
       "previewVideo": "https://vimeo.com/690201427"
     },
     {
-      "id": "new-46", "title": "Red Bull Social: FKT", "categoryLabel": "Social", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-46", "title": "Red Bull Social: FKT", "format": "9x16",
       "previewVideo": "https://vimeo.com/690279606"
     },
     {
-      "id": "port-10", "title": "Red Bull HIGHER GROUND PARAGLIDING", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-10", "title": "Red Bull HIGHER GROUND PARAGLIDING", "format": "9x16",
       "previewVideo": "https://youtu.be/OqVN2O09_A4?si=9KCHjRYOWmeSQmKS"
     },
 
     // --- TINDER ---
     {
-      "id": "port-4", "title": "Tinder", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "id": "port-4", "title": "Tinder", "format": "9x16",
       "previewVideo": "https://vimeo.com/687579902"
     },
     {
-      "id": "new-43", "title": "Tinder SINGLES POND", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "id": "new-43", "title": "Tinder SINGLES POND", "format": "9x16",
       "previewVideo": "https://vimeo.com/687579902"
     },
     {
-      "id": "new-44", "title": "Tinder 2", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
+      "id": "new-44", "title": "Tinder 2", "format": "9x16",
       "previewVideo": "https://vimeo.com/687579814"
     },
 
     // --- MAJOR BRANDS (Panasonic, OLA, Indian Oil, Ceat, Skechers, Birla, Google) ---
     {
-      "id": "port-2", "title": "Panasonic", "categoryLabel": "Ad", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
+      "id": "port-2", "title": "Panasonic", "format": "16x9",
       "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
     },
     {
-      "id": "new-55", "title": "INDIAN OIL CRYOGENIC", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-55", "title": "INDIAN OIL CRYOGENIC", "format": "16x9",
       "previewVideo": "https://youtu.be/4eGA0_B6BaQ?si=nao4EtopyN3BJA0c"
     },
     {
-      "id": "port-1", "title": "OLA Proximity Unlock", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
+      "id": "port-1", "title": "OLA Proximity Unlock", "format": "9x16",
       "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
     },
     {
-      "id": "port-19", "title": "OLA Parental Control Master", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-19", "title": "OLA Parental Control Master", "format": "9x16",
       "previewVideo": "https://youtu.be/RHswfmS7dgg?si=CjnhDtRdoROFkllT"
     },
     {
-      "id": "port-20", "title": "OLA Mood & Widget Master", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-20", "title": "OLA Mood & Widget Master", "format": "9x16",
       "previewVideo": "https://youtu.be/8yY_cLQ6q3I?si=r_t6U_s-v6qcNBS1"
     },
     {
-      "id": "port-5", "title": "Birla Opus Paints", "categoryLabel": "Ads", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
+      "id": "port-5", "title": "Birla Opus Paints", "format": "9x16",
       "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
     },
     {
-      "id": "port-8", "title": "Ceat Enduro Tracks", "categoryLabel": "Ad", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
+      "id": "port-8", "title": "Ceat Enduro Tracks", "format": "9x16",
       "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
     },
     {
-      "id": "new-52", "title": "Skechers Presents Hoop Nation | Flight of Dreams", "categoryLabel": "Social", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-52", "title": "Skechers Presents Hoop Nation | Flight of Dreams", "format": "16x9",
       "previewVideo": "https://youtu.be/fQItBiol1ac?si=d42QbramkwrlI9fT"
     },
     {
-      "id": "new-53", "title": "Skechers Presents Hoop Nation | Remember Who We Are", "categoryLabel": "Social", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-53", "title": "Skechers Presents Hoop Nation | Remember Who We Are", "format": "16x9",
       "previewVideo": "https://youtu.be/lb9i1dUU-ys?si=-t8bxORuF67QzIY-"
     },
     {
-      "id": "new-54", "title": "Skechers Presents Hoop Nation | Legendary Hood", "categoryLabel": "Social", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-54", "title": "Skechers Presents Hoop Nation | Legendary Hood", "format": "16x9",
       "previewVideo": "https://youtu.be/BeX15qcSg1s?si=IBHzCXpKuxdMkRrq"
     },
     {
-      "id": "port-9", "title": "Google Googlies", "categoryLabel": "YouTube", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=800",
+      "id": "port-9", "title": "Google Googlies", "format": "9x16",
       "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=lvCVo62qOKSbMAJN"
     },
 
     // --- FASHION & JEWELRY (Biba, Tanishq, Grown Brilliance, VON) ---
     {
-      "id": "new-39", "title": "Biba Girl", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-39", "title": "Biba Girl", "format": "16x9",
       "previewVideo": "https://vimeo.com/690255560"
     },
     {
-      "id": "new-40", "title": "BIBA SKIRTS", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-40", "title": "BIBA SKIRTS", "format": "16x9",
       "previewVideo": "https://vimeo.com/690257685"
     },
     {
-      "id": "new-41", "title": "BIBA BY ROHIT BAL 1", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-41", "title": "BIBA BY ROHIT BAL 1", "format": "16x9",
       "previewVideo": "https://vimeo.com/690219011"
     },
     {
-      "id": "new-42", "title": "BIBA BY ROHIT BAL 2", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-42", "title": "BIBA BY ROHIT BAL 2", "format": "16x9",
       "previewVideo": "https://vimeo.com/690219151"
     },
     {
-      "id": "port-6", "title": "Tanishq Celebrates Kakatiya", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800",
+      "id": "port-6", "title": "Tanishq Celebrates Kakatiya", "format": "16x9",
       "previewVideo": "https://youtu.be/RXxu3g-gg3o?si=ORUhhdHMabaMay_d"
     },
     {
-      "id": "port-15", "title": "Tanishq 1", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-15", "title": "Tanishq 1", "format": "9x16",
       "previewVideo": "https://youtu.be/Fp5Fjn7EsWI?si=1QBpB5b6X28_Zc-e"
     },
     {
-      "id": "port-16", "title": "Tanishq 2", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-16", "title": "Tanishq 2", "format": "9x16",
       "previewVideo": "https://youtu.be/eiMKLZCQj5M?si=nlkrlis0TJbF43_-"
     },
     {
-      "id": "port-17", "title": "Tanishq 3", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-17", "title": "Tanishq 3", "format": "9x16",
       "previewVideo": "https://youtu.be/qFy1nDFw98E?si=uKEL5Z1eyKR4aWJp"
     },
     {
-      "id": "port-18", "title": "Tanishq 4", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-18", "title": "Tanishq 4", "format": "9x16",
       "previewVideo": "https://youtu.be/WVfk9XejmhY?si=U3H3oOvFmENeF8S6"
     },
     {
-      "id": "port-3", "title": "Grown Brilliance", "categoryLabel": "Ad", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
+      "id": "port-3", "title": "Grown Brilliance", "format": "16x9",
       "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
     },
     {
-      "id": "port-24", "title": "VON Diamonds", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-24", "title": "VON Diamonds", "format": "9x16",
       "previewVideo": "https://youtu.be/AmjO6_xia7Y?si=Biz9YYTnlUCe5-kR"
     },
 
     // --- FMCG / APPLIANCES (Haldiram, Morphy Richards) ---
     {
-      "id": "new-51", "title": "Khulke Khilao Holi with Haldiram’s", "categoryLabel": "Social", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-51", "title": "Khulke Khilao Holi with Haldiram’s", "format": "16x9",
       "previewVideo": "https://youtu.be/nuRUTuuks_s?si=ZgUPm5hZah1MY7a4"
     },
     {
-      "id": "new-56", "title": "Morphy Richards PERSONAL GROOMING", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-56", "title": "Morphy Richards PERSONAL GROOMING", "format": "16x9",
       "previewVideo": "https://youtu.be/lfRGhGgPVvg?si=5v6BS7kOXPb5MT31"
     },
     {
-      "id": "new-57", "title": "Morphy Richards AIR FRYER", "categoryLabel": "Commercial Ads", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-57", "title": "Morphy Richards AIR FRYER", "format": "16x9",
       "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
     },
 
     // --- PLAYLISTS (Govt / Banking) ---
     {
-      "id": "port-pl-1", "title": "Axis Mutual Fund Series", "categoryLabel": "YouTube Playlist", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-pl-1", "title": "Axis Mutual Fund Series", "format": "9x16",
       "previewVideo": "https://youtu.be/hjgRhYZRP0k?si=aXoyWJI4HbEbUKSR",
       "redirectUrl": "https://youtube.com/playlist?list=PLEhtzo1XHPL2vp0oRPd4YEbEIuJ29V_lA&si=XjudmhMHgzCUHlRW"
     },
     {
-      "id": "port-pl-2", "title": "SBI Mind Over Money", "categoryLabel": "YouTube Playlist", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-pl-2", "title": "SBI Mind Over Money", "format": "9x16",
       "previewVideo": "https://youtu.be/NCr4OutUsnA?si=Crbp8VOqZdXrKP9n",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QRta1WqSftPg-Qt1iIjBvdS&si=3agAkzEfr0og8b-c"
     },
     {
-      "id": "port-pl-4", "title": "Government Campaigns", "categoryLabel": "YouTube Playlist", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-pl-4", "title": "Government Campaigns", "format": "9x16",
       "previewVideo": "https://youtu.be/HEZ9Yf88oRY?si=t8bGb6XcYdL6rTFy",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QQxI5Auv3ryV18Nz38xvmX9&si=iSevvTntUBsHQ0fk"
     },
     {
-      "id": "port-11", "title": "DIGIYATRA", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-11", "title": "DIGIYATRA", "format": "9x16",
       "previewVideo": "https://youtu.be/fEUQd7vS_GE?si=WNtxyOH-IB5-S3PK"
     },
 
     // --- GAMING (BGMI, Free Fire) ---
     {
-      "id": "port-pl-3", "title": "BGMI - Do You Even BGMI BRO!", "categoryLabel": "YouTube Playlist", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-pl-3", "title": "BGMI - Do You Even BGMI BRO!", "format": "9x16",
       "previewVideo": "https://youtu.be/TLIowgBEHdA?si=vSam57NnFI_WQEdB",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QTMF4GZW3fP31u3HyALTDYi&si=2q-3B199VaFxNTrq"
     },
     {
-      "id": "new-47", "title": "Baatein, Battle Aur Booyah | Free Fire MAX", "categoryLabel": "Social", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "new-47", "title": "Baatein, Battle Aur Booyah | Free Fire MAX", "format": "9x16",
       "previewVideo": "https://youtu.be/kexver_cAVc?si=kjDAmgiNxUiko_KP"
     },
 
     // --- TV & PROMO (Zee, Slikk) ---
     {
-      "id": "port-7", "title": "Zee SAFARI PROMO", "categoryLabel": "Cinematic", "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
+      "id": "port-7", "title": "Zee SAFARI PROMO", "format": "16x9",
       "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
     },
     {
-      "id": "port-13", "title": "Zee FIT FAB", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-13", "title": "Zee FIT FAB", "format": "9x16",
       "previewVideo": "https://youtu.be/Js8KsU81GuE?si=IbrCG4THgnUytjCT"
     },
     {
-      "id": "port-14", "title": "Zee GOAN GULLY ", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-14", "title": "Zee GOAN GULLY ", "format": "9x16",
       "previewVideo": "https://youtu.be/ScfX7LeRsac?si=b5Mp5ccm53zmxfPe"
     },
     {
-      "id": "port-21", "title": "Slikk Reel 02", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-21", "title": "Slikk Reel 02", "format": "9x16",
       "previewVideo": "https://youtu.be/boOMmFtjxjc?si=OyCHCPA-DvcSh4sA"
     },
     {
-      "id": "port-22", "title": "Slikk Reel 03", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-22", "title": "Slikk Reel 03", "format": "9x16",
       "previewVideo": "https://youtu.be/xBZ5qNY90W4?si=jKbETpsJnZ1pXpui"
     },
     {
-      "id": "port-23", "title": "Slikk Reel 05", "categoryLabel": "Documentary", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800",
+      "id": "port-23", "title": "Slikk Reel 05", "format": "9x16",
       "previewVideo": "https://youtu.be/-UfAIGXAY5A?si=MNPGppQGC-l4--g2"
     }
 ];
 
 // ==========================================================================
-// THUMBNAIL AUTO-DETECTION SYSTEM (New Feature)
+// THUMBNAIL AUTO-DETECTION SYSTEM (Unchanged & Smart)
 // ==========================================================================
 function getYouTubeId(url) {
     if (!url) return null;
@@ -406,17 +348,15 @@ function getVimeoId(url) {
 
 function getVideoThumbnail(project) {
     let url = project.previewVideo || project.redirectUrl;
-    if (!url) return project.thumbnail;
+    if (!url) return project.thumbnail || 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800';
     
-    // Check if it's YouTube
     const ytId = getYouTubeId(url);
     if (ytId) return `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
     
-    // Check if it's Vimeo
     const vimeoId = getVimeoId(url);
     if (vimeoId) return `https://vumbnail.com/${vimeoId}.jpg`;
     
-    return project.thumbnail;
+    return project.thumbnail || 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&q=80&w=800';
 }
 
 function buildInlineVideoHTML(src) {
@@ -442,7 +382,6 @@ function getSlideControls(project) {
     let icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
     let text = 'View Full';
 
-    // Agar redirect link available hai toh usko external window me kholo
     if (project.redirectUrl) {
         action = `window.open('${project.redirectUrl}', '_blank')`;
         icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
@@ -461,7 +400,7 @@ function getSlideControls(project) {
 }
 
 // ==========================================================================
-// SOUND CONTROL LOGIC 
+// SOUND CONTROL LOGIC  
 // ==========================================================================
 window.toggleMute = function(btn, event) {
     event.stopPropagation(); 
@@ -486,7 +425,7 @@ window.toggleMute = function(btn, event) {
 };
 
 // ==========================================================================
-// FEATURED WORK: INSTANT KILL LOGIC 
+// FEATURED WORK: INSTANT KILL LOGIC  
 // ==========================================================================
 function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
@@ -616,6 +555,81 @@ function initGhostLogo() {
     });
 }
 
+// Global variable for SFX
+let katanaSfx = null;
+
+// Browser Audio Policy Bypass Hack
+function unlockAudioContext() {
+    const sfx = document.getElementById('katana-sfx');
+    if (sfx) {
+        // Ek baar silent/invisible play karke browser ka block hatao
+        sfx.play().then(() => {
+            sfx.pause();
+            sfx.currentTime = 0;
+        }).catch(() => {});
+    }
+}
+
+// User screen pe kahin bhi touch ya click karega toh context unlock ho jayega
+window.addEventListener('click', unlockAudioContext, { once: true });
+window.addEventListener('touchstart', unlockAudioContext, { once: true });
+// ==========================================================================
+// PRELOADER KATANA AUDIO SYSTEM 
+// ==========================================================================
+function initAnimations() {
+    splitTextReveal();
+    const brandText = document.getElementById('brand-text');
+    const tlLoader = gsap.timeline();
+    
+    // Select the audio element
+    katanaSfx = document.getElementById('katana-sfx');
+
+    tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1, ease: "power3.out" })
+            .to('.loader-percentage', { opacity: 1, duration: 1 }, "-=1")
+            .to({ val: 0 }, { val: 100, duration: 0.28, ease: "power3.inOut", onUpdate: function() { 
+                const pct = document.getElementById('load-percent');
+                if(pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
+            } }, "-=0.5");
+
+    if(brandText) {
+        const textContent = brandText.innerText;
+        brandText.innerHTML = '';
+        
+        textContent.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.classList.add('type-char'); span.innerText = char;
+            brandText.appendChild(span);
+        });
+
+        tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
+                .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
+                
+                // --- PERFECT TIMED SFX TRIGGER ---
+                .call(() => {
+                    if(katanaSfx) {
+                        katanaSfx.currentTime = 0;
+                        katanaSfx.volume = 1.0;
+                        katanaSfx.play().catch((e) => console.log("Audio waiting for user gesture..."));
+                    }
+                }, null, "-=0.2") 
+
+                .to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.1")
+                .to('.lightning-slash', { left: '150%', duration: 0.3, ease: "power4.in" }, "-=0.1")
+                .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1")
+                .to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
+                .to('.screen-flash', { opacity: 0, duration: 0.5, ease: "power2.out" }, "+=0.1");
+    }
+
+    tlLoader.to('.top-shutter', { yPercent: -100, duration: 0.8, ease: "power3.inOut" }, "+=0.1")
+            .to('.bottom-shutter', { yPercent: 100, duration: 0.8, ease: "power3.inOut" }, "-=0.8")
+            .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2")
+            .call(() => {
+                document.body.classList.remove('loading');
+                lenis.start(); 
+                initScrollAnimations(); 
+            });
+}
+
 function loadPortfolioData() {
     try {
         const isHomePage = document.querySelector('[data-barba-namespace="home"]') !== null;
@@ -641,7 +655,7 @@ function loadPortfolioData() {
                             ${getSlideControls(project)}
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
-                                <p>${project.categoryLabel}</p>
+                                ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
                         </div>
                     `;
@@ -667,7 +681,7 @@ function loadPortfolioData() {
                             </div>
                             <div class="portfolio-info">
                                 <h3>${project.title}</h3>
-                                <p>${project.categoryLabel}</p>
+                                ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
                         </div>
                     `;
@@ -677,7 +691,7 @@ function loadPortfolioData() {
         }
 
         if (isPortfolioPage) {
-            // 3. UNIFIED 2x2 PORTFOLIO GRID (Portfolio Page)
+            // 3. UNIFIED 2x2 PORTFOLIO GRID (Portfolio Page - FIXED "UNDEFINED")
             const fullGrid = document.querySelector('#full-portfolio-grid');
             if (fullGrid) {
                 fullGrid.innerHTML = '';
@@ -694,19 +708,45 @@ function loadPortfolioData() {
                             </div>
                             <div class="portfolio-info">
                                 <h3>${project.title}</h3>
-                                <p>${project.categoryLabel}</p>
+                                ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
                         </div>
                     `;
                     fullGrid.insertAdjacentHTML('beforeend', slideHTML);
                 });
-            }
+            } 
         }
 
         initializePostLoadEffects();
 
     } catch (error) {
         console.error("Error loading portfolio:", error);
+    }
+}
+
+function initScrollAnimations() {
+    const textReveals = document.querySelectorAll('section:not(.hero) .text-reveal');
+    textReveals.forEach(text => { gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" }); });
+    const fadeUps = document.querySelectorAll('.fade-up');
+    fadeUps.forEach(el => { gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }); });
+}
+
+function initTilt() {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const centerX = rect.width / 2; const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.transition = 'transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)';
+            });
+            card.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
+        });
     }
 }
 
@@ -836,135 +876,7 @@ function initThreeJS() {
 }
 
 // ==========================================================================
-// SPEED & SCROLL UNLOCK OPTIMIZATION
-// ==========================================================================
-// ==========================================================================
-// SPEED & SCROLL UNLOCK OPTIMIZATION (With Katana SFX SYNC)
-// ==========================================================================
-// Sound variable ko global rakho
-let katanaSfx = null;
-
-function initAnimations() {
-    splitTextReveal();
-    const brandText = document.getElementById('brand-text');
-    const tlLoader = gsap.timeline();
-    
-    // Load SFX early
-    katanaSfx = document.getElementById('katana-sfx');
-
-    tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1, ease: "power3.out" })
-            .to('.loader-percentage', { opacity: 1, duration: 1 }, "-=1")
-            .to({ val: 0 }, { val: 100, duration: 0.28, ease: "power3.inOut", onUpdate: function() { 
-                const pct = document.getElementById('load-percent');
-                if(pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
-            } }, "-=0.5");
-
-    if(brandText) {
-        const textContent = brandText.innerText;
-        brandText.innerHTML = '';
-        
-        textContent.split('').forEach(char => {
-            const span = document.createElement('span');
-            span.classList.add('type-char'); span.innerText = char;
-            brandText.appendChild(span);
-        });
-
-        tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
-                .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
-                
-                // --- SFX TRIGGER (Sync fixed) ---
-                .call(() => {
-                    if(katanaSfx) {
-                        katanaSfx.currentTime = 0;
-                        katanaSfx.volume = 1.0;
-                        katanaSfx.play().catch(() => console.log("User interaction required for sound"));
-                    }
-                }, null, "-=0.2") 
-
-                .to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.1")
-                .to('.lightning-slash', { left: '150%', duration: 0.3, ease: "power4.in" }, "-=0.1")
-                .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1")
-                .to('.screen-flash', { opacity: 1, duration: 0.1, ease: "power2.in" })
-                .to('.screen-flash', { opacity: 0, duration: 0.5, ease: "power2.out" }, "+=0.1");
-    }
-
-    tlLoader.to('.top-shutter', { yPercent: -100, duration: 0.8, ease: "power3.inOut" }, "+=0.1")
-            .to('.bottom-shutter', { yPercent: 100, duration: 0.8, ease: "power3.inOut" }, "-=0.8")
-            .to('.loader', { autoAlpha: 0, display: "none", duration: 0.1 }, "-=0.2")
-            .call(() => {
-                document.body.classList.remove('loading');
-                lenis.start(); 
-                initScrollAnimations(); 
-            });
-    // ... baki ka code same rahega
-}
-
-// Global click interaction to unlock audio
-window.addEventListener('click', () => {
-    if (katanaSfx && katanaSfx.paused) {
-        katanaSfx.load(); // Reload to unlock
-    }
-}, { once: true });
-
-function initScrollAnimations() {
-    const textReveals = document.querySelectorAll('section:not(.hero) .text-reveal');
-    textReveals.forEach(text => { gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" }); });
-    const fadeUps = document.querySelectorAll('.fade-up');
-    fadeUps.forEach(el => { gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }); });
-}
-
-function initTilt() {
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                const centerX = rect.width / 2; const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                card.style.transition = 'transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)';
-            });
-            card.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
-        });
-    }
-}
-
-function openVideoModal(videoSrc) {
-    const modal = document.getElementById('videoModal');
-    const container = document.getElementById('modalVideoContainer');
-    container.innerHTML = '';
-    const ytId = getYouTubeId(videoSrc);
-    const vimeoId = getVimeoId(videoSrc);
-
-    if (ytId) {
-        container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&hd=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-    } else if (vimeoId) {
-        container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=E2B938&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-    } else {
-        container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay></video>`;
-    }
-    gsap.to(modal, { autoAlpha: 1, duration: 0.4, ease: "power3.out" });
-    lenis.stop(); 
-}
-
-function initModalPlayer() {
-    const modal = document.getElementById('videoModal');
-    const container = document.getElementById('modalVideoContainer');
-    const closeBtn = document.querySelector('.modal-close-btn');
-
-    const closeModal = () => {
-        gsap.to(modal, { autoAlpha: 0, duration: 0.4, ease: "power2.in", onComplete: () => { container.innerHTML = ''; }});
-        lenis.start(); 
-    };
-    closeBtn.addEventListener('click', closeModal);
-    document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
-}
-
-// ==========================================================================
-// Barba Page Transitions
+// Barba Page TransitionsBoilerplate
 // ==========================================================================
 barba.init({
     sync: true,
