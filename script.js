@@ -43,7 +43,11 @@ const homeFeaturedData = [
       "id": "feat-8", "title": "Ceat Enduro Tracks", "categoryLabel": "Ad", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
-    }
+    },
+        {
+      "id": "feat-9", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ", "categoryLabel": "Cinematic", "format": "16x9",
+      "previewVideo": "https://youtu.be/78iexqrUfqg?si=8pkY9EKAc0t4yPt0"
+    },
 ];
 
 // ==========================================================================
