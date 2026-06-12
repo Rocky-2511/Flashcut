@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// 1. FEATURED WORK DATA (Exactly your provided data, Birla Fixed to 16x9)
+// 1. FEATURED WORK DATA (Exactly your provided data)
 // ==========================================================================
 const homeFeaturedData = [
     {
@@ -22,7 +22,7 @@ const homeFeaturedData = [
       "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
     },
     {
-      "id": "feat-5", "title": "Birla Opus Paints", "format": "16x9",
+      "id": "feat-5", "title": "Birla Opus Paints", "format": "9x16",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
     },
@@ -66,7 +66,7 @@ const homeRecentGridData = [
 ];
 
 // ==========================================================================
-// 3. FULL PORTFOLIO PAGE DATA (Array Untouched, Order Exactly as Provided)
+// 3. FULL PORTFOLIO PAGE DATA (Exactly your provided data, VON Fixed to 16x9)
 // ==========================================================================
 const fullPortfolioPageData = [
     {
@@ -650,14 +650,19 @@ function loadPortfolioData() {
                     const delay = index * 0.1; 
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     
+                    const isVert = project.format === '9x16';
+                    const cardStyle = isVert ? 'max-width: 280px; margin: 0 auto; width: 100%;' : 'width: 100%;';
+                    const thumbStyle = isVert ? 'aspect-ratio: 9/16; border-radius: 12px;' : 'aspect-ratio: 16/9;';
+                    const textStyle = isVert ? 'text-align: center;' : '';
+
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
-                            <div class="portfolio-thumb" style="aspect-ratio: 16/9;">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                            <div class="portfolio-thumb" style="${thumbStyle}">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project)}
                             </div>
-                            <div class="portfolio-info">
+                            <div class="portfolio-info" style="${textStyle}">
                                 <h3>${project.title}</h3>
                                 ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
