@@ -1,12 +1,12 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// 1. FEATURED WORK DATA (Shows in 3D Coverflow on Homepage - UNCHANGED)
+// 1. FEATURED WORK DATA (Exactly your provided data)
 // ==========================================================================
 const homeFeaturedData = [
     {
-      "id": "feat-1", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ",  "format": "9x16",
-      "previewVideo": "https://youtu.be/78iexqrUfqg?si=8pkY9EKAc0t4yPt0"
+      "id": "feat-1", "title": "KING - Rang Barse | Karan Kanchan | House of McDowell's", "format": "16x9",
+      "previewVideo": "https://youtu.be/l_OD__gwhLQ?si=O6b4zim-dzXPEcK-"
     },
     {
       "id": "feat-2", "title": "Panasonic",  "format": "16x9",
@@ -14,14 +14,12 @@ const homeFeaturedData = [
       "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
     },
     {
-      "id": "feat-3", "title": "Grown Brilliance",  "format": "16x9",
-      "thumbnail": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
+      "id": "feat-3", "title": "Khulke Khilao Holi with Haldiram’s", "format": "16x9",
+      "previewVideo": "https://youtu.be/nuRUTuuks_s?si=ZgUPm5hZah1MY7a4"
     },
     {
-      "id": "feat-4", "title": "Tinder", "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1516280440502-628d05260655?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://vimeo.com/687579902"
+      "id": "feat-4", "title": "Morphy Richards AIR FRYER", "format": "16x9",
+      "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
     },
     {
       "id": "feat-5", "title": "Birla Opus Paints", "format": "9x16",
@@ -39,14 +37,13 @@ const homeFeaturedData = [
       "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
     },
     {
-      "id": "feat-8", "title": "OLA Proximity Unlock",  "format": "9x16",
-      "thumbnail": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
-      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
+      "id": "feat-8", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "format": "16x9",
+      "previewVideo": "https://youtu.be/ZZVgDa00jGM?si=rFrN7EtwZA2K4U3_"
     }
 ];
 
 // ==========================================================================
-// 2. RECENT PROJECTS DATA (Shows in Top 4 Grid on Homepage - UNCHANGED)
+// 2. RECENT PROJECTS DATA (Exactly your provided data)
 // ==========================================================================
 const homeRecentGridData = [
     {
@@ -69,13 +66,16 @@ const homeRecentGridData = [
 ];
 
 // ==========================================================================
-// 3. FULL PORTFOLIO PAGE DATA (Sorted: Premium Brands & Celebs First)
+// 3. FULL PORTFOLIO PAGE DATA (Array Untouched, Order Exactly as Provided)
 // ==========================================================================
 const fullPortfolioPageData = [
-    // --- TOP TIER: CELEBS, MOVIES & OTT ---
     {
       "id": "new-49", "title": "Nothing Phone (2a) ft. Ranveer Singh", "format": "16x9",
       "previewVideo": "https://youtu.be/YzrCypaVZVI?si=6eN_xUzHc66uWSdw"
+    },
+    {
+      "id": "port-2", "title": "Panasonic", "format": "16x9",
+      "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
     },
     {
       "id": "new-60", "title": "Titan Smart x Satwik Rankireddy & Chirag Shetty | Celestor 2.0 ", "format": "16x9",
@@ -88,6 +88,54 @@ const fullPortfolioPageData = [
     {
       "id": "new-59", "title": "Time To Aarize | Brand Film | Aarize Group x Tiger Shroff", "format": "16x9",
       "previewVideo": "https://youtu.be/ZZVgDa00jGM?si=rFrN7EtwZA2K4U3_"
+    },
+    {
+      "id": "new-51", "title": "Khulke Khilao Holi with Haldiram’s", "format": "16x9",
+      "previewVideo": "https://youtu.be/nuRUTuuks_s?si=ZgUPm5hZah1MY7a4"
+    },
+    {
+      "id": "new-56", "title": "Morphy Richards PERSONAL GROOMING", "format": "16x9",
+      "previewVideo": "https://youtu.be/lfRGhGgPVvg?si=5v6BS7kOXPb5MT31"
+    },
+    {
+      "id": "new-57", "title": "Morphy Richards AIR FRYER", "format": "16x9",
+      "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
+    },
+    {
+      "id": "port-24", "title": "VON Diamonds", "format": "16x9",
+      "previewVideo": "https://youtu.be/AmjO6_xia7Y?si=Biz9YYTnlUCe5-kR"
+    },
+    {
+      "id": "port-1", "title": "OLA Proximity Unlock", "format": "9x16",
+      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
+    },
+    {
+      "id": "port-19", "title": "OLA Parental Control Master", "format": "9x16",
+      "previewVideo": "https://youtu.be/RHswfmS7dgg?si=CjnhDtRdoROFkllT"
+    },
+    {
+      "id": "port-20", "title": "OLA Mood & Widget Master", "format": "9x16",
+      "previewVideo": "https://youtu.be/8yY_cLQ6q3I?si=r_t6U_s-v6qcNBS1"
+    },
+    {
+      "id": "port-5", "title": "Birla Opus Paints", "format": "16x9",
+      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
+    },
+    {
+      "id": "new-52", "title": "Skechers Presents Hoop Nation | Flight of Dreams", "format": "16x9",
+      "previewVideo": "https://youtu.be/fQItBiol1ac?si=d42QbramkwrlI9fT"
+    },
+    {
+      "id": "new-53", "title": "Skechers Presents Hoop Nation | Remember Who We Are", "format": "16x9",
+      "previewVideo": "https://youtu.be/lb9i1dUU-ys?si=-t8bxORuF67QzIY-"
+    },
+    {
+      "id": "new-54", "title": "Skechers Presents Hoop Nation | Legendary Hood", "format": "16x9",
+      "previewVideo": "https://youtu.be/BeX15qcSg1s?si=IBHzCXpKuxdMkRrq"
+    },
+    {
+      "id": "port-9", "title": "Google Googlies", "format": "16x9",
+      "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=lvCVo62qOKSbMAJN"
     },
     {
       "id": "new-50", "title": "KING - Rang Barse | Karan Kanchan | House of McDowell's", "format": "16x9",
@@ -106,8 +154,6 @@ const fullPortfolioPageData = [
       "previewVideo": "https://youtu.be/5WdFB6qDVuw?si=C_XRK8lSYbkw3CPN",
       "redirectUrl": "https://www.primevideo.com/region/eu/detail/0NXO53FPW0FN0Y3ETDSFLPDJE5/ref=atv_dp_share_cu_r"
     },
-
-    // --- RED BULL GLOBAL/INDIA ---
     {
       "id": "new-26", "title": "Red Bull JERSEY REVEAL", "format": "16x9",
       "previewVideo": "https://vimeo.com/694458717"
@@ -134,23 +180,21 @@ const fullPortfolioPageData = [
       "previewVideo": "https://youtu.be/CoGtzQdBDb8?si=H9qcPOTpOsSwGTK1"
     },
     {
-      "id": "new-48", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "format": "9x16",
+      "id": "new-48", "title": "Red Bull Cricket Challenge with Smriti Mandhana", "format": "16x9",
       "previewVideo": "https://youtu.be/tVny6H-ivfs?si=Xke-r3t4Fx1_8UaY"
     },
     {
-      "id": "new-45", "title": "Red Bull Social: KIEREN D'SOUZA", "format": "9x16",
+      "id": "new-45", "title": "Red Bull Social: KIEREN D'SOUZA", "format": "16x9",
       "previewVideo": "https://vimeo.com/690201427"
     },
     {
-      "id": "new-46", "title": "Red Bull Social: FKT", "format": "9x16",
+      "id": "new-46", "title": "Red Bull Social: FKT", "format": "16x9",
       "previewVideo": "https://vimeo.com/690279606"
     },
     {
-      "id": "port-10", "title": "Red Bull HIGHER GROUND PARAGLIDING", "format": "9x16",
+      "id": "port-10", "title": "Red Bull HIGHER GROUND PARAGLIDING", "format": "16x9",
       "previewVideo": "https://youtu.be/OqVN2O09_A4?si=9KCHjRYOWmeSQmKS"
     },
-
-    // --- TINDER ---
     {
       "id": "port-4", "title": "Tinder", "format": "9x16",
       "previewVideo": "https://vimeo.com/687579902"
@@ -163,54 +207,14 @@ const fullPortfolioPageData = [
       "id": "new-44", "title": "Tinder 2", "format": "9x16",
       "previewVideo": "https://vimeo.com/687579814"
     },
-
-    // --- MAJOR BRANDS (Panasonic, OLA, Indian Oil, Ceat, Skechers, Birla, Google) ---
-    {
-      "id": "port-2", "title": "Panasonic", "format": "16x9",
-      "previewVideo": "https://www.youtube.com/watch?v=8HXEpq7w-ek"
-    },
     {
       "id": "new-55", "title": "INDIAN OIL CRYOGENIC", "format": "16x9",
       "previewVideo": "https://youtu.be/4eGA0_B6BaQ?si=nao4EtopyN3BJA0c"
     },
     {
-      "id": "port-1", "title": "OLA Proximity Unlock", "format": "9x16",
-      "previewVideo": "https://youtu.be/CTr_yWg4sgI?si=uUgIzGRVEqefhhLL"
-    },
-    {
-      "id": "port-19", "title": "OLA Parental Control Master", "format": "9x16",
-      "previewVideo": "https://youtu.be/RHswfmS7dgg?si=CjnhDtRdoROFkllT"
-    },
-    {
-      "id": "port-20", "title": "OLA Mood & Widget Master", "format": "9x16",
-      "previewVideo": "https://youtu.be/8yY_cLQ6q3I?si=r_t6U_s-v6qcNBS1"
-    },
-    {
-      "id": "port-5", "title": "Birla Opus Paints", "format": "9x16",
-      "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
-    },
-    {
-      "id": "port-8", "title": "Ceat Enduro Tracks", "format": "9x16",
+      "id": "port-8", "title": "Ceat Enduro Tracks", "format": "16x9",
       "previewVideo": "https://youtu.be/5vGhZuxpASE?si=A_4aGj5Z4spO4XSC"
     },
-    {
-      "id": "new-52", "title": "Skechers Presents Hoop Nation | Flight of Dreams", "format": "16x9",
-      "previewVideo": "https://youtu.be/fQItBiol1ac?si=d42QbramkwrlI9fT"
-    },
-    {
-      "id": "new-53", "title": "Skechers Presents Hoop Nation | Remember Who We Are", "format": "16x9",
-      "previewVideo": "https://youtu.be/lb9i1dUU-ys?si=-t8bxORuF67QzIY-"
-    },
-    {
-      "id": "new-54", "title": "Skechers Presents Hoop Nation | Legendary Hood", "format": "16x9",
-      "previewVideo": "https://youtu.be/BeX15qcSg1s?si=IBHzCXpKuxdMkRrq"
-    },
-    {
-      "id": "port-9", "title": "Google Googlies", "format": "9x16",
-      "previewVideo": "https://youtu.be/MsdvgQOmBPc?si=lvCVo62qOKSbMAJN"
-    },
-
-    // --- FASHION & JEWELRY (Biba, Tanishq, Grown Brilliance, VON) ---
     {
       "id": "new-39", "title": "Biba Girl", "format": "16x9",
       "previewVideo": "https://vimeo.com/690255560"
@@ -252,67 +256,43 @@ const fullPortfolioPageData = [
       "previewVideo": "https://youtu.be/7zSHGWCw4gY?si=_tCfGwc3IHSpkiB2"
     },
     {
-      "id": "port-24", "title": "VON Diamonds", "format": "9x16",
-      "previewVideo": "https://youtu.be/AmjO6_xia7Y?si=Biz9YYTnlUCe5-kR"
-    },
-
-    // --- FMCG / APPLIANCES (Haldiram, Morphy Richards) ---
-    {
-      "id": "new-51", "title": "Khulke Khilao Holi with Haldiram’s", "format": "16x9",
-      "previewVideo": "https://youtu.be/nuRUTuuks_s?si=ZgUPm5hZah1MY7a4"
-    },
-    {
-      "id": "new-56", "title": "Morphy Richards PERSONAL GROOMING", "format": "16x9",
-      "previewVideo": "https://youtu.be/lfRGhGgPVvg?si=5v6BS7kOXPb5MT31"
-    },
-    {
-      "id": "new-57", "title": "Morphy Richards AIR FRYER", "format": "16x9",
-      "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
-    },
-
-    // --- PLAYLISTS (Govt / Banking) ---
-    {
-      "id": "port-pl-1", "title": "Axis Mutual Fund Series", "format": "9x16",
+      "id": "port-pl-1", "title": "Axis Mutual Fund Series", "format": "16x9",
       "previewVideo": "https://youtu.be/hjgRhYZRP0k?si=aXoyWJI4HbEbUKSR",
       "redirectUrl": "https://youtube.com/playlist?list=PLEhtzo1XHPL2vp0oRPd4YEbEIuJ29V_lA&si=XjudmhMHgzCUHlRW"
     },
     {
-      "id": "port-pl-2", "title": "SBI Mind Over Money", "format": "9x16",
+      "id": "port-pl-2", "title": "SBI Mind Over Money", "format": "16x9",
       "previewVideo": "https://youtu.be/NCr4OutUsnA?si=Crbp8VOqZdXrKP9n",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QRta1WqSftPg-Qt1iIjBvdS&si=3agAkzEfr0og8b-c"
     },
     {
-      "id": "port-pl-4", "title": "Government Campaigns", "format": "9x16",
+      "id": "port-pl-4", "title": "Government Campaigns", "format": "16x9",
       "previewVideo": "https://youtu.be/HEZ9Yf88oRY?si=t8bGb6XcYdL6rTFy",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QQxI5Auv3ryV18Nz38xvmX9&si=iSevvTntUBsHQ0fk"
     },
     {
-      "id": "port-11", "title": "DIGIYATRA", "format": "9x16",
+      "id": "port-11", "title": "DIGIYATRA", "format": "16x9",
       "previewVideo": "https://youtu.be/fEUQd7vS_GE?si=WNtxyOH-IB5-S3PK"
     },
-
-    // --- GAMING (BGMI, Free Fire) ---
     {
-      "id": "port-pl-3", "title": "BGMI - Do You Even BGMI BRO!", "format": "9x16",
+      "id": "port-pl-3", "title": "BGMI - Do You Even BGMI BRO!", "format": "16x9",
       "previewVideo": "https://youtu.be/TLIowgBEHdA?si=vSam57NnFI_WQEdB",
       "redirectUrl": "https://youtube.com/playlist?list=PLP91F8e-K8QTMF4GZW3fP31u3HyALTDYi&si=2q-3B199VaFxNTrq"
     },
     {
-      "id": "new-47", "title": "Baatein, Battle Aur Booyah | Free Fire MAX", "format": "9x16",
+      "id": "new-47", "title": "Baatein, Battle Aur Booyah | Free Fire MAX", "format": "16x9",
       "previewVideo": "https://youtu.be/kexver_cAVc?si=kjDAmgiNxUiko_KP"
     },
-
-    // --- TV & PROMO (Zee, Slikk) ---
     {
       "id": "port-7", "title": "Zee SAFARI PROMO", "format": "16x9",
       "previewVideo": "https://youtu.be/zCWH1MyQZgQ?si=TeAq1JIS9mXiI7bA"
     },
     {
-      "id": "port-13", "title": "Zee FIT FAB", "format": "9x16",
+      "id": "port-13", "title": "Zee FIT FAB", "format": "16x9",
       "previewVideo": "https://youtu.be/Js8KsU81GuE?si=IbrCG4THgnUytjCT"
     },
     {
-      "id": "port-14", "title": "Zee GOAN GULLY ", "format": "9x16",
+      "id": "port-14", "title": "Zee GOAN GULLY ", "format": "16x9",
       "previewVideo": "https://youtu.be/ScfX7LeRsac?si=b5Mp5ccm53zmxfPe"
     },
     {
@@ -330,7 +310,7 @@ const fullPortfolioPageData = [
 ];
 
 // ==========================================================================
-// THUMBNAIL AUTO-DETECTION SYSTEM (Unchanged & Smart)
+// THUMBNAIL AUTO-DETECTION SYSTEM 
 // ==========================================================================
 function getYouTubeId(url) {
     if (!url) return null;
@@ -425,7 +405,7 @@ window.toggleMute = function(btn, event) {
 };
 
 // ==========================================================================
-// FEATURED WORK: INSTANT KILL LOGIC  
+// FEATURE WORK: INSTANT KILL LOGIC  
 // ==========================================================================
 function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
@@ -558,11 +538,9 @@ function initGhostLogo() {
 // Global variable for SFX
 let katanaSfx = null;
 
-// Browser Audio Policy Bypass Hack
 function unlockAudioContext() {
     const sfx = document.getElementById('katana-sfx');
     if (sfx) {
-        // Ek baar silent/invisible play karke browser ka block hatao
         sfx.play().then(() => {
             sfx.pause();
             sfx.currentTime = 0;
@@ -570,9 +548,9 @@ function unlockAudioContext() {
     }
 }
 
-// User screen pe kahin bhi touch ya click karega toh context unlock ho jayega
 window.addEventListener('click', unlockAudioContext, { once: true });
 window.addEventListener('touchstart', unlockAudioContext, { once: true });
+
 // ==========================================================================
 // PRELOADER KATANA AUDIO SYSTEM 
 // ==========================================================================
@@ -581,7 +559,6 @@ function initAnimations() {
     const brandText = document.getElementById('brand-text');
     const tlLoader = gsap.timeline();
     
-    // Select the audio element
     katanaSfx = document.getElementById('katana-sfx');
 
     tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1, ease: "power3.out" })
@@ -604,7 +581,6 @@ function initAnimations() {
         tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
                 .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
                 
-                // --- PERFECT TIMED SFX TRIGGER ---
                 .call(() => {
                     if(katanaSfx) {
                         katanaSfx.currentTime = 0;
@@ -648,8 +624,11 @@ function loadPortfolioData() {
 
                 featuredProjects.forEach((project) => {
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
+                    
+                    const aspectStyle = project.format === '9x16' ? 'aspect-ratio: 9/16;' : 'aspect-ratio: 16/9;';
+
                     const projHTML = `
-                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                        <div class="swiper-slide tilt-card" style="${aspectStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
                             <img src="${getVideoThumbnail(project)}" alt="${project.title}" class="coverflow-img">
                             <div class="coverflow-inline-video"></div>
                             ${getSlideControls(project)}
@@ -672,14 +651,20 @@ function loadPortfolioData() {
                 recentProjects.forEach((project, index) => {
                     const delay = index * 0.1; 
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
+                    
+                    const isVert = project.format === '9x16';
+                    const cardStyle = isVert ? 'max-width: 280px; margin: 0 auto; width: 100%;' : 'width: 100%;';
+                    const thumbStyle = isVert ? 'aspect-ratio: 9/16; border-radius: 12px;' : 'aspect-ratio: 16/9;';
+                    const textStyle = isVert ? 'text-align: center;' : '';
+
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
-                            <div class="portfolio-thumb">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                            <div class="portfolio-thumb" style="${thumbStyle}">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project)}
                             </div>
-                            <div class="portfolio-info">
+                            <div class="portfolio-info" style="${textStyle}">
                                 <h3>${project.title}</h3>
                                 ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
@@ -691,22 +676,64 @@ function loadPortfolioData() {
         }
 
         if (isPortfolioPage) {
-            // 3. UNIFIED 2x2 PORTFOLIO GRID (Portfolio Page - FIXED "UNDEFINED")
+            // 3. UNIFIED 3-COLUMN PORTFOLIO GRID [16x9] [16x9] [9x16]
             const fullGrid = document.querySelector('#full-portfolio-grid');
             if (fullGrid) {
                 fullGrid.innerHTML = '';
 
-                fullPortfolioPageData.forEach((project, index) => {
-                    const delay = (index % 4) * 0.1; 
+                // Injecting CSS specifically for the 3-column pattern dynamically 
+                let styleId = 'pattern-grid-style';
+                if(!document.getElementById(styleId)) {
+                    let style = document.createElement('style');
+                    style.id = styleId;
+                    style.innerHTML = `
+                        @media (min-width: 1024px) {
+                            #full-portfolio-grid {
+                                display: grid !important;
+                                grid-template-columns: repeat(10, 1fr) !important;
+                                gap: 4rem 2rem !important;
+                                align-items: start;
+                            }
+                            .grid-wide { grid-column: span 4; }
+                            .grid-vert { grid-column: span 2; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                // Filtering by maintaining strict original order of the array
+                let wides = fullPortfolioPageData.filter(p => p.format === '16x9');
+                let verts = fullPortfolioPageData.filter(p => p.format === '9x16');
+                
+                let patternedData = [];
+                let wIdx = 0, vIdx = 0;
+                
+                // Grouping them into the [Wide, Wide, Vert] pattern automatically
+                while(wIdx < wides.length || vIdx < verts.length) {
+                    if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
+                    if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
+                    if (vIdx < verts.length) patternedData.push(verts[vIdx++]);
+                }
+
+                patternedData.forEach((project, index) => {
+                    const delay = (index % 3) * 0.1; 
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
+                    
+                    const isVert = project.format === '9x16';
+                    
+                    const gridClass = isVert ? 'grid-vert' : 'grid-wide';
+                    const cardStyle = isVert ? 'margin: 0 auto; width: 100%; max-width: 320px;' : 'width: 100%;';
+                    const thumbStyle = isVert ? 'aspect-ratio: 9/16; border-radius: 12px;' : 'aspect-ratio: 16/9; border-radius: 8px;';
+                    const textStyle = isVert ? 'text-align: center;' : '';
+
                     const slideHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
-                            <div class="portfolio-thumb">
+                        <div class="portfolio-item tilt-card fade-up ${gridClass}" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                            <div class="portfolio-thumb" style="${thumbStyle}">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project)}
                             </div>
-                            <div class="portfolio-info">
+                            <div class="portfolio-info" style="${textStyle}">
                                 <h3>${project.title}</h3>
                                 ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
@@ -760,7 +787,10 @@ function initializePostLoadEffects() {
         new Swiper('.coverflow-swiper', {
             effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto',
             loop: true, loopedSlides: 5, 
-            coverflowEffect: { rotate: 0, stretch: 0, depth: 200, modifier: 1.5, slideShadows: false },
+            speed: 800,
+            coverflowEffect: { 
+                rotate: 0, stretch: -50, depth: 150, modifier: 1, slideShadows: false 
+            },
             navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
             slideToClickedSlide: true,
             on: {
@@ -876,7 +906,7 @@ function initThreeJS() {
 }
 
 // ==========================================================================
-// Barba Page TransitionsBoilerplate
+// Barba Page Transitions
 // ==========================================================================
 barba.init({
     sync: true,
