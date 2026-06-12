@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// 1. FEATURED WORK DATA (Exactly your provided data)
+// 1. FEATURED WORK DATA 
 // ==========================================================================
 const homeFeaturedData = [
     {
@@ -43,7 +43,7 @@ const homeFeaturedData = [
 ];
 
 // ==========================================================================
-// 2. RECENT PROJECTS DATA (Exactly your provided data)
+// 2. RECENT PROJECTS DATA
 // ==========================================================================
 const homeRecentGridData = [
     {
@@ -66,7 +66,7 @@ const homeRecentGridData = [
 ];
 
 // ==========================================================================
-// 3. FULL PORTFOLIO PAGE DATA (Exactly your provided data, VON Fixed to 16x9)
+// 3. FULL PORTFOLIO PAGE DATA (Order safe, VON safe at 16x9)
 // ==========================================================================
 const fullPortfolioPageData = [
     {
@@ -535,31 +535,21 @@ function initGhostLogo() {
     });
 }
 
-// Global variable for SFX
-let katanaSfx = null;
-
-function unlockAudioContext() {
-    const sfx = document.getElementById('katana-sfx');
-    if (sfx) {
-        sfx.play().then(() => {
-            sfx.pause();
-            sfx.currentTime = 0;
-        }).catch(() => {});
-    }
-}
-
-window.addEventListener('click', unlockAudioContext, { once: true });
-window.addEventListener('touchstart', unlockAudioContext, { once: true });
-
 // ==========================================================================
-// PRELOADER KATANA AUDIO SYSTEM 
+// PRELOADER KATANA AUDIO SYSTEM (RANDOM SOUND FIX)
 // ==========================================================================
+// Removed the hacky unlockAudioContext function entirely. 
+// We now just register if user has interacted during the page load to play it perfectly in sync.
+let userHasInteracted = false;
+window.addEventListener('click', () => { userHasInteracted = true; }, { once: true });
+window.addEventListener('touchstart', () => { userHasInteracted = true; }, { once: true });
+
 function initAnimations() {
     splitTextReveal();
     const brandText = document.getElementById('brand-text');
     const tlLoader = gsap.timeline();
     
-    katanaSfx = document.getElementById('katana-sfx');
+    let katanaSfx = document.getElementById('katana-sfx');
 
     tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1, ease: "power3.out" })
             .to('.loader-percentage', { opacity: 1, duration: 1 }, "-=1")
@@ -581,13 +571,19 @@ function initAnimations() {
         tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
                 .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
                 
+                // Plays ONLY exactly on the slash. If it gets blocked, it dies quietly and won't haunt you later.
                 .call(() => {
-                    if(katanaSfx) {
+                    if(katanaSfx && userHasInteracted) {
                         katanaSfx.currentTime = 0;
                         katanaSfx.volume = 1.0;
-                        katanaSfx.play().catch((e) => console.log("Audio waiting for user gesture..."));
+                        let playPromise = katanaSfx.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch((e) => {
+                                console.log("Autoplay blocked because no interaction occurred before animation sync.");
+                            });
+                        }
                     }
-                }, null, "-=0.2") 
+                }, null, "-=0.35") 
 
                 .to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.1")
                 .to('.lightning-slash', { left: '150%', duration: 0.3, ease: "power4.in" }, "-=0.1")
@@ -606,6 +602,9 @@ function initAnimations() {
             });
 }
 
+// ==========================================================================
+// PORTFOLIO RENDER LOGIC
+// ==========================================================================
 function loadPortfolioData() {
     try {
         const isHomePage = document.querySelector('[data-barba-namespace="home"]') !== null;
@@ -625,11 +624,14 @@ function loadPortfolioData() {
                 featuredProjects.forEach((project) => {
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     
+                    // Creates the Netflix style layout natively 
                     const projHTML = `
                         <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
-                            <img src="${getVideoThumbnail(project)}" alt="${project.title}" class="coverflow-img">
-                            <div class="coverflow-inline-video"></div>
-                            ${getSlideControls(project)}
+                            <div class="featured-video-wrapper">
+                                <img src="${getVideoThumbnail(project)}" alt="${project.title}" class="coverflow-img">
+                                <div class="coverflow-inline-video"></div>
+                                ${getSlideControls(project)}
+                            </div>
                             <div class="coverflow-info">
                                 <h3>${project.title}</h3>
                                 ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
@@ -784,7 +786,7 @@ function initializePostLoadEffects() {
             loop: true, loopedSlides: 5, 
             speed: 800,
             coverflowEffect: { 
-                rotate: 0, stretch: -50, depth: 150, modifier: 1, slideShadows: false 
+                rotate: 0, stretch: 0, depth: 100, modifier: 2, slideShadows: false 
             },
             navigation: { nextEl: '.featured-next', prevEl: '.featured-prev' },
             slideToClickedSlide: true,
