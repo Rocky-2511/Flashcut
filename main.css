@@ -121,12 +121,11 @@
    @keyframes scroll-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
    
    /* ==========================================================================
-      INLINE PREVIEW VIDEOS (Fixed Zoom for 16x9 Perfect Framing)
+      INLINE PREVIEW VIDEOS
       ========================================================================== */
    .coverflow-inline-video, .portfolio-inline-video { 
        position: absolute; top:0; left:0; width: 100%; height: 100%; 
        z-index: 1; overflow: hidden; pointer-events: none; opacity: 0;
-       
        clip-path: inset(0.1px round 12px); 
        -webkit-clip-path: inset(0.1px round 12px);
        transform: translate3d(0, 0, 0); 
@@ -141,7 +140,6 @@
    }
    @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-   /* Standard 150% Zoom to cover YouTube UI (Applied to both sliders now since both are 16x9) */
    .coverflow-inline-video iframe, .portfolio-inline-video iframe { 
        width: 150%; height: 150%; position: absolute; top: -25%; left: -25%; pointer-events: none; border: none; background: transparent;
    }
@@ -156,7 +154,7 @@
    .slide-controls {
        position: absolute; bottom: 0; left: 0; width: 100%; height: auto;
        padding: 20px 15px 15px; display: flex; justify-content: space-between; align-items: center;
-       opacity: 0; transition: opacity 0.4s ease; z-index: 15;
+       opacity: 0; transition: opacity 0.4s ease; z-index: 20;
        background: linear-gradient(to top, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0.5) 60%, transparent 100%);
        pointer-events: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
    }
@@ -178,30 +176,31 @@
    }
    .control-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,255,255,0.4); }
    
+   /* Show controls on hover for grid items */
    @media (min-width: 992px) {
-       .portfolio-item:hover .slide-controls,
-       .portfolio-slider-section .swiper-slide:hover .slide-controls { opacity: 1; }
-       .coverflow-swiper .swiper-slide-active .slide-controls { opacity: 1; pointer-events: auto; }
+       .portfolio-item:hover .slide-controls { opacity: 1; }
    }
    
-   @media (max-width: 991px) {
-       .control-btn { padding: 8px 16px; font-size: 0.65rem;}
-       .sound-btn { width: 35px; height: 35px; }
+   /* FIXED: Always show controls on the center active slide in Coverflow (Mobile & PC) */
+   .coverflow-swiper .swiper-slide-active .slide-controls { 
+       opacity: 1 !important; 
+       pointer-events: auto !important; 
+       z-index: 25; 
    }
    
    /* ==========================================================================
-      TOP 1% CINEMATIC FEATURED SLIDER (Netflix/Apple Style 16x9)
+      TOP 1% CINEMATIC FEATURED SLIDER
       ========================================================================== */
    .featured-projects { padding: 5rem 0 10rem; overflow: hidden; position: relative;}
    .coverflow-swiper { padding: 50px 0; overflow: visible; position: relative; }
    
    .coverflow-swiper .swiper-slide { 
-       width: 75vw; max-width: 1000px; /* Massive Cinematic Width */
-       aspect-ratio: 16/9; /* Forced 16:9 for perfect video framing */
+       width: 75vw; max-width: 1000px; 
+       aspect-ratio: 16/9; 
        border-radius: 16px; 
        overflow: hidden; position: relative; 
        transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1); cursor: pointer;
-       filter: grayscale(80%) brightness(0.3) blur(4px); /* Deep blur & dim for inactive */
+       filter: grayscale(80%) brightness(0.3) blur(4px); 
        opacity: 0.5;
        
        -webkit-mask-image: -webkit-radial-gradient(white, black); 
@@ -214,30 +213,30 @@
    }
    @media (max-width: 768px) { .coverflow-swiper .swiper-slide { width: 90vw; border-radius: 12px; } }
    
-   /* Center Active Slide */
    .coverflow-swiper .swiper-slide-active { 
        filter: grayscale(0%) brightness(1) blur(0px); 
        opacity: 1;
-       box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(226, 185, 56, 0.15); /* Premium Glow */
+       box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(226, 185, 56, 0.15); 
        border: 1px solid rgba(255,255,255,0.08);
    }
 
    .coverflow-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
    
+   /* FIXED TEXT POSITIONING: Pushed up to make space for buttons */
    .coverflow-info { 
        position: absolute; bottom: 0; left: 0; width: 100%; 
-       padding: 5rem 3rem 2.5rem; 
-       background: linear-gradient(to top, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0.7) 40%, transparent 100%); 
+       padding: 5rem 2rem 4rem; /* 4rem bottom padding keeps text above buttons */
+       background: linear-gradient(to top, rgba(5,5,8,0.95) 0%, rgba(5,5,8,0.5) 70%, transparent 100%); 
        transform: translateY(30px); opacity: 0; 
        transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); 
        pointer-events: none; z-index: 11; 
    }
    .coverflow-swiper .swiper-slide-active .coverflow-info { transform: translateY(0); opacity: 1; transition-delay: 0.2s; }
    
-   /* TEXT FIX: Elegant and clamped to 2 lines max */
+   /* FIXED TEXT SIZE: Smaller and cleaner */
    .coverflow-info h3, .portfolio-info h3 { 
-       font-size: clamp(1.2rem, 3.5vw, 2rem); 
-       margin-bottom: 8px; 
+       font-size: clamp(1rem, 3.5vw, 1.4rem); /* Reduced max size */
+       margin-bottom: 4px; 
        font-weight: 500; 
        text-shadow: 0 4px 15px rgba(0,0,0,0.8);
        display: -webkit-box;
@@ -248,7 +247,7 @@
        line-height: 1.2;
    }
    
-   .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 600;}
+   .coverflow-info p { color: var(--acc); font-family: var(--font-head); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;}
    
    .featured-prev, .featured-next, .slider-btn { color: var(--text); background: rgba(11,11,15,0.5); border: 1px solid rgba(255,255,255,0.1); width: 50px; height: 50px; border-radius: 50%; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; margin: 0; }
    .featured-prev::after, .featured-next::after, .slider-btn::after { font-size: 1.2rem; }
@@ -256,6 +255,14 @@
    .featured-next, .next-16x9, .next-9x16 { right: 2%; }
    .featured-prev:hover, .featured-next:hover, .slider-btn:hover { background: var(--acc); color: var(--bg); border-color: var(--acc); transform: translateY(-50%) scale(1.1); }
    @media (max-width: 991px) { .featured-prev, .featured-next, .slider-btn { display: none !important; } }
+   
+   /* Mobile Adjustments */
+   @media (max-width: 991px) {
+       .control-btn { padding: 8px 16px; font-size: 0.65rem;}
+       .sound-btn { width: 35px; height: 35px; }
+       /* Custom mobile padding to push text up slightly more */
+       .coverflow-info { padding: 4rem 1.5rem 3.5rem; } 
+   }
    
    /* ==========================================================================
       Portfolio Grid

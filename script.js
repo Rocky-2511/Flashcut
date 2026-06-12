@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================================================
-// 1. FEATURED WORK DATA (Exactly your provided data)
+// 1. FEATURED WORK DATA (Exactly your provided data, Birla Fixed to 16x9)
 // ==========================================================================
 const homeFeaturedData = [
     {
@@ -22,7 +22,7 @@ const homeFeaturedData = [
       "previewVideo": "https://youtu.be/H929k19oIdc?si=l9QHYbhU7IdSiof1"
     },
     {
-      "id": "feat-5", "title": "Birla Opus Paints", "format": "9x16",
+      "id": "feat-5", "title": "Birla Opus Paints", "format": "16x9",
       "thumbnail": "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800",
       "previewVideo": "https://youtu.be/YR9P27gEjJs?si=6e56duYwWT71L19h"
     },
@@ -625,10 +625,8 @@ function loadPortfolioData() {
                 featuredProjects.forEach((project) => {
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     
-                    const aspectStyle = project.format === '9x16' ? 'aspect-ratio: 9/16;' : 'aspect-ratio: 16/9;';
-
                     const projHTML = `
-                        <div class="swiper-slide tilt-card" style="${aspectStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
                             <img src="${getVideoThumbnail(project)}" alt="${project.title}" class="coverflow-img">
                             <div class="coverflow-inline-video"></div>
                             ${getSlideControls(project)}
@@ -652,19 +650,14 @@ function loadPortfolioData() {
                     const delay = index * 0.1; 
                     const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
                     
-                    const isVert = project.format === '9x16';
-                    const cardStyle = isVert ? 'max-width: 280px; margin: 0 auto; width: 100%;' : 'width: 100%;';
-                    const thumbStyle = isVert ? 'aspect-ratio: 9/16; border-radius: 12px;' : 'aspect-ratio: 16/9;';
-                    const textStyle = isVert ? 'text-align: center;' : '';
-
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
-                            <div class="portfolio-thumb" style="${thumbStyle}">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s;" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                            <div class="portfolio-thumb" style="aspect-ratio: 16/9;">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
                                 ${getSlideControls(project)}
                             </div>
-                            <div class="portfolio-info" style="${textStyle}">
+                            <div class="portfolio-info">
                                 <h3>${project.title}</h3>
                                 ${project.categoryLabel ? `<p>${project.categoryLabel}</p>` : ''}
                             </div>
@@ -681,7 +674,6 @@ function loadPortfolioData() {
             if (fullGrid) {
                 fullGrid.innerHTML = '';
 
-                // Injecting CSS specifically for the 3-column pattern dynamically 
                 let styleId = 'pattern-grid-style';
                 if(!document.getElementById(styleId)) {
                     let style = document.createElement('style');
@@ -701,14 +693,12 @@ function loadPortfolioData() {
                     document.head.appendChild(style);
                 }
 
-                // Filtering by maintaining strict original order of the array
                 let wides = fullPortfolioPageData.filter(p => p.format === '16x9');
                 let verts = fullPortfolioPageData.filter(p => p.format === '9x16');
                 
                 let patternedData = [];
                 let wIdx = 0, vIdx = 0;
                 
-                // Grouping them into the [Wide, Wide, Vert] pattern automatically
                 while(wIdx < wides.length || vIdx < verts.length) {
                     if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
                     if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
