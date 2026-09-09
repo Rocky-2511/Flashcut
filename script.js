@@ -310,14 +310,17 @@ const fullPortfolioPageData = [
 ];
 
 // ==========================================================================
-// THUMBNAIL AUTO-DETECTION SYSTEM 
+// BULLETPROOF YOUTUBE / VIMEO URL PARSER (Regex - Never Crashes)
 // ==========================================================================
 function getYouTubeId(url) {
     if (!url) return null;
-    if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
-    if (url.includes('youtube.com/shorts/')) return url.split('youtube.com/shorts/')[1].split('?')[0];
-    if (url.includes('youtube.com/watch')) return new URL(url).searchParams.get('v');
-    return null;
+    let clean = url.trim();
+    if (!clean.startsWith('http://') && !clean.startsWith('https://')) {
+        clean = 'https://' + clean;
+    }
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+    const match = clean.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
 }
 
 function getVimeoId(url) {
@@ -345,33 +348,33 @@ function buildInlineVideoHTML(src) {
     const vimeoId = getVimeoId(src);
 
     if (ytId) {
-        return `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" title="YouTube video player"></iframe>`;
+        return `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&modestbranding=1&playsinline=1&enablejsapi=1" allow="autoplay; fullscreen" style="width:150%; height:150%; position:absolute; top:-25%; left:-25%; pointer-events:none; border:none;" title="YouTube video player"></iframe>`;
     } else if (vimeoId) {
-        return `<iframe src="https://player.vimeo.com/video/${vimeoId}?background=1&autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen" title="Vimeo video player"></iframe>`;
+        return `<iframe src="https://player.vimeo.com/video/${vimeoId}?background=1&autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen" style="width:100%; height:100%; object-fit:cover; border:none;" title="Vimeo video player"></iframe>`;
     } else {
-        return `<video src="${src}" loop playsinline muted autoplay></video>`;
+        return `<video src="${src}" loop playsinline muted autoplay style="width:100%; height:100%; object-fit:cover;"></video>`;
     }
 }
 
 const volumeOffIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
 const volumeOnIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
 
-// SMART REDIRECT LOGIC FOR BUTTONS
+// ==========================================================================
+// SMART REDIRECT & MODAL TRIGGER BUTTONS
+// ==========================================================================
 function getSlideControls(project) {
-    let action = `openVideoModal('${project.previewVideo}')`;
-    let icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
-    let text = 'View Full';
-
-    if (project.redirectUrl) {
-        action = `window.open('${project.redirectUrl}', '_blank')`;
-        icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
-        text = 'Watch Now';
-    }
+    const isRedirect = !!project.redirectUrl;
+    const targetAction = isRedirect ? project.redirectUrl : (project.previewVideo || '');
+    const icon = isRedirect 
+        ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`
+        : `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+    const text = isRedirect ? 'Watch Now' : 'View Full';
+    const actionType = isRedirect ? 'redirect' : 'modal';
 
     return `
         <div class="slide-controls">
-            <button class="sound-btn muted" onclick="toggleMute(this, event)">${volumeOffIcon}</button>
-            <button class="control-btn view-full-btn" onclick="event.stopPropagation(); ${action}">
+            <button class="sound-btn muted" data-action="mute">${volumeOffIcon}</button>
+            <button class="control-btn view-full-btn" data-action="${actionType}" data-target="${targetAction}">
                 ${icon}
                 ${text}
             </button>
@@ -380,11 +383,43 @@ function getSlideControls(project) {
 }
 
 // ==========================================================================
+// GLOBAL EVENT DELEGATION (Fixes all buttons including clones)
+// ==========================================================================
+document.addEventListener('click', (e) => {
+    // 1. Mute Button Click
+    const soundBtn = e.target.closest('[data-action="mute"]');
+    if (soundBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.toggleMute(soundBtn, e);
+        return;
+    }
+
+    // 2. View Full or Watch Now Click
+    const actionBtn = e.target.closest('.view-full-btn');
+    if (actionBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const actionType = actionBtn.getAttribute('data-action');
+        const target = actionBtn.getAttribute('data-target');
+        
+        if (actionType === 'redirect' && target) {
+            window.open(target, '_blank');
+        } else if (target) {
+            window.openVideoModal(target);
+        }
+        return;
+    }
+});
+
+// ==========================================================================
 // SOUND CONTROL LOGIC  
 // ==========================================================================
 window.toggleMute = function(btn, event) {
-    event.stopPropagation(); 
+    if (event) event.stopPropagation(); 
     const card = btn.closest('.tilt-card, .swiper-slide');
+    if (!card) return;
+    
     const iframe = card.querySelector('iframe');
     const video = card.querySelector('video');
     const isMuted = btn.classList.contains('muted');
@@ -405,7 +440,53 @@ window.toggleMute = function(btn, event) {
 };
 
 // ==========================================================================
-// FEATURE WORK: INSTANT KILL LOGIC  
+// MODAL VIDEO PLAYER (Pop-Up System)
+// ==========================================================================
+window.openVideoModal = function(videoSrc) {
+    if (!videoSrc) return;
+    const modal = document.getElementById('videoModal');
+    const container = document.getElementById('modalVideoContainer');
+    if (!modal || !container) return;
+    
+    container.innerHTML = '';
+    const ytId = getYouTubeId(videoSrc);
+    const vimeoId = getVimeoId(videoSrc);
+    
+    if (ytId) {
+        container.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>`;
+    } else if (vimeoId) {
+        container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>`;
+    } else {
+        container.innerHTML = `<video src="${videoSrc}" controls playsinline autoplay style="width:100%; height:100%; object-fit:cover;"></video>`;
+    }
+    
+    gsap.to(modal, { autoAlpha: 1, duration: 0.4, ease: "power2.out" });
+    if (typeof lenis !== 'undefined' && lenis.stop) lenis.stop();
+};
+
+function initModalPlayer() {
+    const modal = document.getElementById('videoModal');
+    const container = document.getElementById('modalVideoContainer');
+    const closeBtn = document.querySelector('.modal-close-btn');
+    const backdrop = document.querySelector('.modal-backdrop');
+
+    const closeModal = () => {
+        if (!modal) return;
+        gsap.to(modal, { autoAlpha: 0, duration: 0.3, ease: "power2.in", onComplete: () => {
+            if (container) container.innerHTML = ''; 
+        }});
+        if (typeof lenis !== 'undefined' && lenis.start) lenis.start();
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+}
+
+// ==========================================================================
+// FEATURE WORK: INSTANT KILL & PLAY LOGIC  
 // ==========================================================================
 function killAllCoverflowVideosImmediately(swiper) {
     swiper.slides.forEach(slide => {
@@ -416,7 +497,10 @@ function killAllCoverflowVideosImmediately(swiper) {
             videoContainer.innerHTML = ''; 
             
             const soundBtn = slide.querySelector('.sound-btn');
-            if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
+            if(soundBtn) { 
+                soundBtn.classList.add('muted'); 
+                soundBtn.innerHTML = volumeOffIcon; 
+            }
         }
     });
 }
@@ -428,7 +512,7 @@ function playCenterCoverflowVideo(swiper) {
         const videoContainer = activeSlide.querySelector('.coverflow-inline-video');
         if (videoContainer && videoSrc && videoContainer.innerHTML === '') {
             videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
-            gsap.to(videoContainer, {opacity: 1, duration: 0.4});
+            gsap.to(videoContainer, { opacity: 1, duration: 0.4 });
         }
     }
 }
@@ -452,13 +536,13 @@ function initHoverToPlay() {
                 clearTimeout(globalHoverTimer);
                 if (currentActiveVideoContainer) {
                     currentActiveVideoContainer.innerHTML = '';
-                    gsap.to(currentActiveVideoContainer, {opacity: 0, duration: 0.1});
+                    gsap.to(currentActiveVideoContainer, { opacity: 0, duration: 0.1 });
                 }
                 currentActiveVideoContainer = videoContainer;
 
                 globalHoverTimer = setTimeout(() => {
                     videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
-                    gsap.to(videoContainer, {opacity: 1, duration: 0.4});
+                    gsap.to(videoContainer, { opacity: 1, duration: 0.4 });
                 }, 350); 
             }
         });
@@ -474,9 +558,12 @@ function initHoverToPlay() {
                 gsap.to(videoContainer, {
                     opacity: 0, duration: 0.2, onComplete: () => {
                         videoContainer.innerHTML = ''; 
-                        if(currentActiveVideoContainer === videoContainer) currentActiveVideoContainer = null;
+                        if (currentActiveVideoContainer === videoContainer) currentActiveVideoContainer = null;
                         const soundBtn = card.querySelector('.sound-btn');
-                        if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
+                        if (soundBtn) { 
+                            soundBtn.classList.add('muted'); 
+                            soundBtn.innerHTML = volumeOffIcon; 
+                        }
                     }
                 });
             }
@@ -488,24 +575,33 @@ function initHoverToPlay() {
                 const videoSrc = card.getAttribute('data-preview-src');
                 const videoContainer = card.querySelector('.portfolio-inline-video, .coverflow-inline-video'); 
                 
-                if(card.closest('.coverflow-swiper')) return; 
+                if (card.closest('.coverflow-swiper')) return; 
 
                 if (entry.isIntersecting) {
                     if (videoContainer && videoContainer.innerHTML === '') {
                         videoContainer.innerHTML = buildInlineVideoHTML(videoSrc);
-                        gsap.to(videoContainer, {opacity: 1, duration: 0.4});
-                        card.querySelector('.slide-controls').style.opacity = 1;
-                        card.querySelector('.slide-controls').style.pointerEvents = 'auto';
+                        gsap.to(videoContainer, { opacity: 1, duration: 0.4 });
+                        const controls = card.querySelector('.slide-controls');
+                        if (controls) {
+                            controls.style.opacity = 1;
+                            controls.style.pointerEvents = 'auto';
+                        }
                     }
                 } else {
                     if (videoContainer && videoContainer.innerHTML !== '') {
-                        gsap.to(videoContainer, {opacity: 0, duration: 0.2, onComplete: () => {
+                        gsap.to(videoContainer, { opacity: 0, duration: 0.2, onComplete: () => {
                             videoContainer.innerHTML = '';
                             const soundBtn = card.querySelector('.sound-btn');
-                            if(soundBtn) { soundBtn.classList.add('muted'); soundBtn.innerHTML = volumeOffIcon; }
+                            if (soundBtn) { 
+                                soundBtn.classList.add('muted'); 
+                                soundBtn.innerHTML = volumeOffIcon; 
+                            }
                         }});
-                        card.querySelector('.slide-controls').style.opacity = 0;
-                        card.querySelector('.slide-controls').style.pointerEvents = 'none';
+                        const controls = card.querySelector('.slide-controls');
+                        if (controls) {
+                            controls.style.opacity = 0;
+                            controls.style.pointerEvents = 'none';
+                        }
                     }
                 }
             });
@@ -520,26 +616,32 @@ function initHoverToPlay() {
 // ==========================================================================
 // Lenis Smooth Scroll Engine
 // ==========================================================================
-const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), direction: 'vertical', smooth: true });
+const lenis = new Lenis({ 
+    duration: 1.2, 
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+    direction: 'vertical', 
+    smooth: true 
+});
 lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 lenis.stop();
 
 function initGhostLogo() {
     const ghostLogo = document.querySelector('.fixed-ghost-logo');
-    if(!ghostLogo) return;
+    if (!ghostLogo) return;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > (window.innerHeight * 0.5)) { ghostLogo.classList.add('visible'); } 
-        else { ghostLogo.classList.remove('visible'); }
+        if (window.scrollY > (window.innerHeight * 0.5)) { 
+            ghostLogo.classList.add('visible'); 
+        } else { 
+            ghostLogo.classList.remove('visible'); 
+        }
     });
 }
 
 // ==========================================================================
-// PRELOADER KATANA AUDIO SYSTEM (RANDOM SOUND FIX)
+// PRELOADER KATANA AUDIO SYSTEM
 // ==========================================================================
-// Removed the hacky unlockAudioContext function entirely. 
-// We now just register if user has interacted during the page load to play it perfectly in sync.
 let userHasInteracted = false;
 window.addEventListener('click', () => { userHasInteracted = true; }, { once: true });
 window.addEventListener('touchstart', () => { userHasInteracted = true; }, { once: true });
@@ -548,43 +650,40 @@ function initAnimations() {
     splitTextReveal();
     const brandText = document.getElementById('brand-text');
     const tlLoader = gsap.timeline();
-    
     let katanaSfx = document.getElementById('katana-sfx');
 
     tlLoader.to('.loader-logo-img', { opacity: 1, scale: 1, duration: 1, ease: "power3.out" })
             .to('.loader-percentage', { opacity: 1, duration: 1 }, "-=1")
             .to({ val: 0 }, { val: 100, duration: 0.28, ease: "power3.inOut", onUpdate: function() { 
                 const pct = document.getElementById('load-percent');
-                if(pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
+                if (pct) pct.innerText = Math.round(this.targets()[0].val).toString().padStart(2, '0'); 
             } }, "-=0.5");
 
-    if(brandText) {
+    if (brandText) {
         const textContent = brandText.innerText;
         brandText.innerHTML = '';
         
         textContent.split('').forEach(char => {
             const span = document.createElement('span');
-            span.classList.add('type-char'); span.innerText = char;
+            span.classList.add('type-char'); 
+            span.innerText = char;
             brandText.appendChild(span);
         });
 
         tlLoader.to('.type-char', { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.05, stagger: 0.03, ease: "power2.out" }, "-=0.5")
                 .to('.type-char:nth-child(6), .type-char:nth-child(7)', { color: 'var(--acc)', textShadow: '0 0 20px rgba(226, 185, 56, 0.4)', duration: 0.1, yoyo: true, repeat: 1 }, "-=0.2")
-                
-                // Plays ONLY exactly on the slash. If it gets blocked, it dies quietly and won't haunt you later.
                 .call(() => {
-                    if(katanaSfx && userHasInteracted) {
+                    if (katanaSfx && userHasInteracted) {
                         katanaSfx.currentTime = 0;
                         katanaSfx.volume = 1.0;
                         let playPromise = katanaSfx.play();
                         if (playPromise !== undefined) {
-                            playPromise.catch((e) => {
-                                console.log("Autoplay blocked because no interaction occurred before animation sync.");
+                            playPromise.catch(() => {
+                                console.log("Autoplay blocked.");
                             });
                         }
                     }
                 }, null, "-=0.35") 
-
                 .to('.lightning-slash', { opacity: 1, duration: 0.1 }, "-=0.1")
                 .to('.lightning-slash', { left: '150%', duration: 0.3, ease: "power4.in" }, "-=0.1")
                 .to('.lightning-slash', { opacity: 0, duration: 0.1 }, "-=0.1")
@@ -613,7 +712,7 @@ function loadPortfolioData() {
         if (isHomePage) {
             // 1. FEATURED COVERFLOW
             const featuredGrid = document.querySelector('#dynamic-featured');
-            if(featuredGrid) {
+            if (featuredGrid) {
                 featuredGrid.innerHTML = '';
                 let featuredProjects = [...homeFeaturedData];
                 
@@ -622,11 +721,8 @@ function loadPortfolioData() {
                 }
 
                 featuredProjects.forEach((project) => {
-                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
-                    
-                    // Creates the Netflix style layout natively 
                     const projHTML = `
-                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                        <div class="swiper-slide tilt-card" data-preview-src="${project.previewVideo}">
                             <div class="featured-video-wrapper">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}" class="coverflow-img">
                                 <div class="coverflow-inline-video"></div>
@@ -650,15 +746,13 @@ function loadPortfolioData() {
                 
                 recentProjects.forEach((project, index) => {
                     const delay = index * 0.1; 
-                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
-                    
                     const isVert = project.format === '9x16';
                     const cardStyle = isVert ? 'max-width: 280px; margin: 0 auto; width: 100%;' : 'width: 100%;';
                     const thumbStyle = isVert ? 'aspect-ratio: 9/16; border-radius: 12px;' : 'aspect-ratio: 16/9;';
                     const textStyle = isVert ? 'text-align: center;' : '';
 
                     const projectHTML = `
-                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                        <div class="portfolio-item tilt-card fade-up" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}">
                             <div class="portfolio-thumb" style="${thumbStyle}">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
@@ -682,7 +776,7 @@ function loadPortfolioData() {
                 fullGrid.innerHTML = '';
 
                 let styleId = 'pattern-grid-style';
-                if(!document.getElementById(styleId)) {
+                if (!document.getElementById(styleId)) {
                     let style = document.createElement('style');
                     style.id = styleId;
                     style.innerHTML = `
@@ -706,7 +800,7 @@ function loadPortfolioData() {
                 let patternedData = [];
                 let wIdx = 0, vIdx = 0;
                 
-                while(wIdx < wides.length || vIdx < verts.length) {
+                while (wIdx < wides.length || vIdx < verts.length) {
                     if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
                     if (wIdx < wides.length) patternedData.push(wides[wIdx++]);
                     if (vIdx < verts.length) patternedData.push(verts[vIdx++]);
@@ -714,8 +808,6 @@ function loadPortfolioData() {
 
                 patternedData.forEach((project, index) => {
                     const delay = (index % 3) * 0.1; 
-                    const cardAction = project.redirectUrl ? `window.open('${project.redirectUrl}', '_blank')` : `openVideoModal('${project.previewVideo}')`;
-                    
                     const isVert = project.format === '9x16';
                     
                     const gridClass = isVert ? 'grid-vert' : 'grid-wide';
@@ -724,7 +816,7 @@ function loadPortfolioData() {
                     const textStyle = isVert ? 'text-align: center;' : '';
 
                     const slideHTML = `
-                        <div class="portfolio-item tilt-card fade-up ${gridClass}" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}" onclick="${cardAction}">
+                        <div class="portfolio-item tilt-card fade-up ${gridClass}" style="transition-delay: ${delay}s; ${cardStyle}" data-preview-src="${project.previewVideo}">
                             <div class="portfolio-thumb" style="${thumbStyle}">
                                 <img src="${getVideoThumbnail(project)}" alt="${project.title}">
                                 <div class="portfolio-inline-video"></div>
@@ -750,9 +842,19 @@ function loadPortfolioData() {
 
 function initScrollAnimations() {
     const textReveals = document.querySelectorAll('section:not(.hero) .text-reveal');
-    textReveals.forEach(text => { gsap.to(text.querySelectorAll('.word-inner'), { scrollTrigger: { trigger: text, start: "top 85%" }, y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" }); });
+    textReveals.forEach(text => { 
+        gsap.to(text.querySelectorAll('.word-inner'), { 
+            scrollTrigger: { trigger: text, start: "top 85%" }, 
+            y: 0, duration: 1.2, stagger: 0.05, ease: "power3.out" 
+        }); 
+    });
     const fadeUps = document.querySelectorAll('.fade-up');
-    fadeUps.forEach(el => { gsap.fromTo(el, { y: 40, opacity: 0 }, { scrollTrigger: { trigger: el, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }); });
+    fadeUps.forEach(el => { 
+        gsap.fromTo(el, { y: 40, opacity: 0 }, { 
+            scrollTrigger: { trigger: el, start: "top 85%" }, 
+            y: 0, opacity: 1, duration: 1.2, ease: "power3.out" 
+        }); 
+    });
 }
 
 function initTilt() {
@@ -760,16 +862,22 @@ function initTilt() {
         const cards = document.querySelectorAll('.tilt-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                const centerX = rect.width / 2; const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
+                const rect = card.getBoundingClientRect(); 
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2; 
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5; 
+                const rotateY = ((x - centerX) / centerX) * 5;
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
                 card.style.transition = 'transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)';
             });
-            card.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
+            card.addEventListener('mouseenter', () => { 
+                card.style.transition = 'none'; 
+            });
         });
     }
 }
@@ -780,10 +888,14 @@ function initializePostLoadEffects() {
     
     initHoverToPlay();
 
-    if(document.querySelector('.coverflow-swiper')) {
+    if (document.querySelector('.coverflow-swiper')) {
         new Swiper('.coverflow-swiper', {
-            effect: 'coverflow', grabCursor: true, centeredSlides: true, slidesPerView: 'auto',
-            loop: true, loopedSlides: 5, 
+            effect: 'coverflow', 
+            grabCursor: true, 
+            centeredSlides: true, 
+            slidesPerView: 'auto',
+            loop: true, 
+            loopedSlides: 5, 
             speed: 800,
             coverflowEffect: { 
                 rotate: 0, stretch: 0, depth: 100, modifier: 2, slideShadows: false 
@@ -817,10 +929,17 @@ function splitTextReveal() {
         el.innerHTML = '';
         const words = text.split(' ');
         words.forEach(word => {
-            const wordSpan = document.createElement('span'); wordSpan.classList.add('word');
-            const innerSpan = document.createElement('span'); innerSpan.classList.add('word-inner');
-            if (word === '<br>') { el.appendChild(document.createElement('br')); } 
-            else { innerSpan.innerHTML = word + '&nbsp;'; wordSpan.appendChild(innerSpan); el.appendChild(wordSpan); }
+            const wordSpan = document.createElement('span'); 
+            wordSpan.classList.add('word');
+            const innerSpan = document.createElement('span'); 
+            innerSpan.classList.add('word-inner');
+            if (word === '<br>') { 
+                el.appendChild(document.createElement('br')); 
+            } else { 
+                innerSpan.innerHTML = word + '&nbsp;'; 
+                wordSpan.appendChild(innerSpan); 
+                el.appendChild(wordSpan); 
+            }
         });
     });
 }
@@ -830,12 +949,14 @@ const cursorFollower = document.querySelector('.cursor-follower');
 let mouseX = 0, mouseY = 0, posX = 0, posY = 0;
 
 document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX; mouseY = e.clientY;
+    mouseX = e.clientX; 
+    mouseY = e.clientY;
     gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1, ease: "power2.out" });
 });
 
 gsap.ticker.add(() => {
-    posX += (mouseX - posX) * 0.15; posY += (mouseY - posY) * 0.15;
+    posX += (mouseX - posX) * 0.15; 
+    posY += (mouseY - posY) * 0.15;
     gsap.set(cursorFollower, { x: posX, y: posY });
 });
 
@@ -844,12 +965,22 @@ const attachHoverStates = () => {
     const portfolios = document.querySelectorAll('.portfolio-item, .swiper-slide');
 
     links.forEach(link => {
-        link.addEventListener('mouseenter', () => { cursor.classList.add('hover-btn'); cursorFollower.classList.add('hover-btn'); });
-        link.addEventListener('mouseleave', () => { cursor.classList.remove('hover-btn'); cursorFollower.classList.remove('hover-btn'); });
+        link.addEventListener('mouseenter', () => { 
+            cursor.classList.add('hover-btn'); 
+            cursorFollower.classList.add('hover-btn'); 
+        });
+        link.addEventListener('mouseleave', () => { 
+            cursor.classList.remove('hover-btn'); 
+            cursorFollower.classList.remove('hover-btn'); 
+        });
     });
     portfolios.forEach(item => {
-        item.addEventListener('mouseenter', () => { cursorFollower.classList.add('hover-portfolio'); });
-        item.addEventListener('mouseleave', () => { cursorFollower.classList.remove('hover-portfolio'); });
+        item.addEventListener('mouseenter', () => { 
+            cursorFollower.classList.add('hover-portfolio'); 
+        });
+        item.addEventListener('mouseleave', () => { 
+            cursorFollower.classList.remove('hover-portfolio'); 
+        });
     });
 };
 
@@ -868,7 +999,9 @@ function initThreeJS() {
     for(let i = 0; i < particlesCount * 3; i++) posArray[i] = (Math.random() - 0.5) * 20; 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
-    const material = new THREE.PointsMaterial({ size: 0.004, color: 0xE2B938, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+    const material = new THREE.PointsMaterial({ 
+        size: 0.004, color: 0xE2B938, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending 
+    });
     const particlesMesh = new THREE.Points(particlesGeometry, material);
     scene.add(particlesMesh);
     camera.position.z = 3;
@@ -909,17 +1042,28 @@ barba.init({
     sync: true,
     transitions: [{
         name: 'opacity-transition',
-        leave(data) { return gsap.to(data.current.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" }); },
+        leave(data) { 
+            return gsap.to(data.current.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" }); 
+        },
         enter(data) {
-            window.scrollTo(0, 0); lenis.scrollTo(0, { immediate: true });
-            loadPortfolioData(); attachHoverStates(); initTilt(); 
+            window.scrollTo(0, 0); 
+            lenis.scrollTo(0, { immediate: true });
+            loadPortfolioData(); 
+            attachHoverStates(); 
+            initTilt(); 
             return gsap.from(data.next.container, { opacity: 0, duration: 0.5, ease: "power2.inOut" });
         }
     }]
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    initThreeJS(); initAnimations(); attachHoverStates(); initTilt(); loadPortfolioData(); initModalPlayer(); initGhostLogo(); 
+    initThreeJS(); 
+    initAnimations(); 
+    attachHoverStates(); 
+    initTilt(); 
+    loadPortfolioData(); 
+    initModalPlayer(); 
+    initGhostLogo(); 
 });
 
 // ==========================================================================
